@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>helpers.server &mdash; IrcBot 0.7 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IrcBot 0.7 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">IrcBot 0.7 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for helpers.server</h1><div class="highlight"><pre>
+<span class="c"># Copyright (C) 2013-2015 Fox Wilson, Peter Foley, Srijay Kasturi, Samuel Damashek, James Forcier and Reed Koser</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or</span>
+<span class="c"># modify it under the terms of the GNU General Public License</span>
+<span class="c"># as published by the Free Software Foundation; either version 2</span>
+<span class="c"># of the License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, write to the Free Software</span>
+<span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+
+<span class="kn">import</span> <span class="nn">socketserver</span>
+<span class="kn">from</span> <span class="nn">.traceback</span> <span class="kn">import</span> <span class="n">get_traceback</span>
+<span class="kn">from</span> <span class="nn">.thread</span> <span class="kn">import</span> <span class="n">start</span>
+
+<span class="n">WELCOME</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">Welcome to the IRCbot console.</span>
+<span class="s">Copyright (c) 2013-2015 Fox Wilson, Peter Foley, Srijay Kasturi, Samuel Damashek, and James Forcier.</span>
+<span class="s">Licensed under the GNU GPL version 2.</span>
+
+<span class="s">Type &quot;help&quot; for a list of commands.</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">HELP</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">help</span><span class="se">\t\t\t</span><span class="s">show this help</span>
+<span class="s">admins</span><span class="se">\t\t\t</span><span class="s">show the list of admins</span>
+<span class="s">reload</span><span class="se">\t\t\t</span><span class="s">reload the bot</span>
+<span class="s">raw</span><span class="se">\t\t\t</span><span class="s">enter raw mode</span>
+<span class="s">endraw</span><span class="se">\t\t\t</span><span class="s">exit raw mode</span>
+<span class="s">quit</span><span class="se">\t\t\t</span><span class="s">quit the console session</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="init_server"><a class="viewcode-back" href="../../helpers.html#helpers.server.init_server">[docs]</a><span class="k">def</span> <span class="nf">init_server</span><span class="p">(</span><span class="n">bot</span><span class="p">):</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;core&#39;</span><span class="p">,</span> <span class="s">&#39;serverport&#39;</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">BotNetServer</span><span class="p">((</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">BotNetHandler</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">bot</span> <span class="o">=</span> <span class="n">bot</span>
+    <span class="n">start</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">server</span>
+
+</div>
+<div class="viewcode-block" id="BotNetServer"><a class="viewcode-back" href="../../helpers.html#helpers.server.BotNetServer">[docs]</a><span class="k">class</span> <span class="nc">BotNetServer</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">):</span>
+    <span class="n">allow_reuse_address</span> <span class="o">=</span> <span class="bp">True</span>
+
+</div>
+<div class="viewcode-block" id="BotNetHandler"><a class="viewcode-back" href="../../helpers.html#helpers.server.BotNetHandler">[docs]</a><span class="k">class</span> <span class="nc">BotNetHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BotNetHandler.get_data"><a class="viewcode-back" href="../../helpers.html#helpers.server.BotNetHandler.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">4096</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="n">data</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="n">SIZE</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">msg</span>
+</div>
+<div class="viewcode-block" id="BotNetHandler.handle"><a class="viewcode-back" href="../../helpers.html#helpers.server.BotNetHandler.handle">[docs]</a>    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+            <span class="n">bot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">bot</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Password: &quot;</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="n">ctrlpass</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">][</span><span class="s">&#39;ctrlpass&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span> <span class="ow">or</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="n">ctrlpass</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="s">&quot;Incorrect password.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="n">WELCOME</span><span class="p">)</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">end</span><span class="p">:</span>
+                    <span class="n">cmd</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="n">end</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                    <span class="n">end</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">send</span><span class="p">(</span><span class="s">&quot;ircbot&gt; &quot;</span><span class="p">)</span>
+                        <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="c"># connection has been closed</span>
+                        <span class="k">return</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">cmd</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;help&quot;</span><span class="p">:</span>
+                    <span class="n">send</span><span class="p">(</span><span class="n">HELP</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;admins&quot;</span><span class="p">:</span>
+                    <span class="n">admins</span> <span class="o">=</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">admins</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                    <span class="n">send</span><span class="p">(</span><span class="n">admins</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;reload&quot;</span><span class="p">:</span>
+                    <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
+                    <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
+                    <span class="n">output</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">do_reload</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">ctrlchan</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="s">&#39;server&#39;</span><span class="p">)</span>
+                    <span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">do_reload</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+                        <span class="n">send</span><span class="p">(</span><span class="n">output</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+                    <span class="n">send</span><span class="p">(</span><span class="s">&quot;Aye Aye Capt&#39;n</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                    <span class="n">bot</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">ctrlchan</span><span class="p">,</span> <span class="s">&quot;Aye Aye Capt&#39;n (triggered from server)&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;raw&quot;</span><span class="p">:</span>
+                    <span class="k">while</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;endraw&quot;</span><span class="p">:</span>
+                        <span class="n">send</span><span class="p">(</span><span class="s">&quot;ircbot-raw&gt; &quot;</span><span class="p">)</span>
+                        <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="s">&quot;endraw&quot;</span><span class="p">:</span>
+                            <span class="k">break</span>
+                        <span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">send_raw</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;quit&quot;</span><span class="p">:</span>
+                    <span class="n">send</span><span class="p">(</span><span class="s">&quot;Goodbye.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">send</span><span class="p">(</span><span class="s">&quot;Unknown command. Type help for more info.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+            <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
+            <span class="n">send</span><span class="p">(</span><span class="n">msg</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">ctrlchan</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2013-2015, Peter Foley.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

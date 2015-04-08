@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>scripts package &mdash; IrcBot 0.7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="IrcBot 0.7 documentation" href="index.html" />
+    <link rel="up" title="IrcBot" href="modules.html" />
+    <link rel="prev" title="hooks package" href="hooks.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hooks.html" title="hooks package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IrcBot 0.7 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">IrcBot</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="scripts-package">
+<h1>scripts package<a class="headerlink" href="#scripts-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-scripts.client">
+<span id="scripts-client-module"></span><h2>scripts.client module<a class="headerlink" href="#module-scripts.client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scripts.client.IrcClient">
+<em class="property">class </em><code class="descclassname">scripts.client.</code><code class="descname">IrcClient</code><span class="sig-paren">(</span><em>nick</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#IrcClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.IrcClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">irc.client.SimpleIRCClient</span></code></p>
+<dl class="method">
+<dt id="scripts.client.IrcClient.on_channelmodeis">
+<code class="descname">on_channelmodeis</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#IrcClient.on_channelmodeis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.IrcClient.on_channelmodeis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scripts.client.IrcClient.on_join">
+<code class="descname">on_join</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#IrcClient.on_join"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.IrcClient.on_join" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scripts.client.IrcClient.on_mode">
+<code class="descname">on_mode</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#IrcClient.on_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.IrcClient.on_mode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scripts.client.IrcClient.on_pubmsg">
+<code class="descname">on_pubmsg</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#IrcClient.on_pubmsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.IrcClient.on_pubmsg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scripts.client.IrcClient.on_welcome">
+<code class="descname">on_welcome</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#IrcClient.on_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.IrcClient.on_welcome" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="scripts.client.main">
+<code class="descclassname">scripts.client.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/client.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.client.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-scripts.gen_babble">
+<span id="scripts-gen-babble-module"></span><h2>scripts.gen_babble module<a class="headerlink" href="#module-scripts.gen_babble" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scripts.gen_babble.main">
+<code class="descclassname">scripts.gen_babble.</code><code class="descname">main</code><span class="sig-paren">(</span><em>config</em>, <em>speaker</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/gen_babble.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.gen_babble.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-scripts.parsedata">
+<span id="scripts-parsedata-module"></span><h2>scripts.parsedata module<a class="headerlink" href="#module-scripts.parsedata" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scripts.parsedata.get_polls">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">get_polls</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#get_polls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.get_polls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.get_quotes">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">get_quotes</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#get_quotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.get_quotes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.get_responses">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">get_responses</code><span class="sig-paren">(</span><em>session</em>, <em>polls</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#get_responses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.get_responses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.get_scores">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">get_scores</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#get_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.get_scores" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.get_urls">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">get_urls</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#get_urls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.get_urls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.get_winners">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">get_winners</code><span class="sig-paren">(</span><em>polls</em>, <em>responses</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#get_winners"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.get_winners" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.main">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">main</code><span class="sig-paren">(</span><em>config</em>, <em>outdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.output_polls">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">output_polls</code><span class="sig-paren">(</span><em>env</em>, <em>session</em>, <em>outdir</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#output_polls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.output_polls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.output_quotes">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">output_quotes</code><span class="sig-paren">(</span><em>env</em>, <em>session</em>, <em>outdir</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#output_quotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.output_quotes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.output_scores">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">output_scores</code><span class="sig-paren">(</span><em>env</em>, <em>session</em>, <em>outdir</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#output_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.output_scores" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parsedata.output_urls">
+<code class="descclassname">scripts.parsedata.</code><code class="descname">output_urls</code><span class="sig-paren">(</span><em>env</em>, <em>session</em>, <em>outdir</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parsedata.html#output_urls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parsedata.output_urls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-scripts.parselogs">
+<span id="scripts-parselogs-module"></span><h2>scripts.parselogs module<a class="headerlink" href="#module-scripts.parselogs" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scripts.parselogs.check_day">
+<code class="descclassname">scripts.parselogs.</code><code class="descname">check_day</code><span class="sig-paren">(</span><em>row</em>, <em>outdir</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parselogs.html#check_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parselogs.check_day" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parselogs.gen_log">
+<code class="descclassname">scripts.parselogs.</code><code class="descname">gen_log</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parselogs.html#gen_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parselogs.gen_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parselogs.get_id">
+<code class="descclassname">scripts.parselogs.</code><code class="descname">get_id</code><span class="sig-paren">(</span><em>config</em>, <em>outdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parselogs.html#get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parselogs.get_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parselogs.main">
+<code class="descclassname">scripts.parselogs.</code><code class="descname">main</code><span class="sig-paren">(</span><em>config</em>, <em>outdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parselogs.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parselogs.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parselogs.save_id">
+<code class="descclassname">scripts.parselogs.</code><code class="descname">save_id</code><span class="sig-paren">(</span><em>outdir</em>, <em>new_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parselogs.html#save_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parselogs.save_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scripts.parselogs.write_log">
+<code class="descclassname">scripts.parselogs.</code><code class="descname">write_log</code><span class="sig-paren">(</span><em>name</em>, <em>outdir</em>, <em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/parselogs.html#write_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.parselogs.write_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-scripts.test">
+<span id="scripts-test-module"></span><h2>scripts.test module<a class="headerlink" href="#module-scripts.test" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scripts.test.BotTest">
+<em class="property">class </em><code class="descclassname">scripts.test.</code><code class="descname">BotTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="scripts.test.BotTest.test_bot_init">
+<code class="descname">test_bot_init</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.test_bot_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.test_bot_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure the bot starts up correctly.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scripts" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">scripts package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-scripts.client">scripts.client module</a></li>
+<li><a class="reference internal" href="#module-scripts.gen_babble">scripts.gen_babble module</a></li>
+<li><a class="reference internal" href="#module-scripts.parsedata">scripts.parsedata module</a></li>
+<li><a class="reference internal" href="#module-scripts.parselogs">scripts.parselogs module</a></li>
+<li><a class="reference internal" href="#module-scripts.test">scripts.test module</a></li>
+<li><a class="reference internal" href="#module-scripts">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="hooks.html"
+                        title="previous chapter">hooks package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/scripts.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2013-2015, Peter Foley.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/scripts.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
