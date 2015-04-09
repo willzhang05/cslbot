@@ -82,6 +82,7 @@
 <span class="kn">import</span> <span class="nn">helpers.admin</span> <span class="kn">as</span> <span class="nn">admin</span>
 <span class="kn">import</span> <span class="nn">helpers.identity</span> <span class="kn">as</span> <span class="nn">identity</span>
 <span class="kn">import</span> <span class="nn">helpers.misc</span> <span class="kn">as</span> <span class="nn">misc</span>
+<span class="kn">import</span> <span class="nn">helpers.workers</span> <span class="kn">as</span> <span class="nn">workers</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">random</span>
 
@@ -102,6 +103,7 @@
 <span class="sd">        | db - Is a db wrapper for data storage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">=</span> <span class="n">workers</span><span class="o">.</span><span class="n">Workers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s">&#39;reloaded&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">guarded</span> <span class="o">=</span> <span class="p">[]</span>
