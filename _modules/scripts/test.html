@@ -70,7 +70,8 @@
 
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">irc.client</span>
@@ -81,14 +82,20 @@
 
 <div class="viewcode-block" id="BotTest"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest">[docs]</a><span class="k">class</span> <span class="nc">BotTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
-    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&#39;multiprocessing.Pool&#39;</span><span class="p">)</span>
-    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&#39;threading.Timer&#39;</span><span class="p">)</span>
     <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&#39;socket.socket&#39;</span><span class="p">)</span>
     <span class="nd">@mock.patch.object</span><span class="p">(</span><span class="n">irc</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Reactor</span><span class="p">,</span> <span class="s">&#39;process_forever&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="BotTest.test_bot_init"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.test_bot_init">[docs]</a>    <span class="k">def</span> <span class="nf">test_bot_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Make sure the bot starts up correctly.&quot;&quot;&quot;</span>
-        <span class="n">bot</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&#39;bot&#39;</span><span class="p">)</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+        <span class="n">bot_mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&#39;bot&#39;</span><span class="p">)</span>
+        <span class="n">server_mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&#39;helpers.server&#39;</span><span class="p">)</span>
+        <span class="n">botconfig</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="n">configfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;../config.cfg&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">conf</span><span class="p">:</span>
+            <span class="n">botconfig</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+        <span class="n">bot</span> <span class="o">=</span> <span class="n">bot_mod</span><span class="o">.</span><span class="n">IrcBot</span><span class="p">(</span><span class="n">botconfig</span><span class="p">)</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server_mod</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="n">bot</span><span class="p">)</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">stop_workers</span><span class="p">()</span>
 </div></div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
