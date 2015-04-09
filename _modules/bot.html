@@ -80,7 +80,6 @@
     <span class="kn">import</span> <span class="nn">helpers.config</span> <span class="kn">as</span> <span class="nn">config</span>
     <span class="kn">import</span> <span class="nn">helpers.traceback</span> <span class="kn">as</span> <span class="nn">traceback</span>
     <span class="kn">import</span> <span class="nn">helpers.misc</span> <span class="kn">as</span> <span class="nn">misc</span>
-    <span class="kn">import</span> <span class="nn">helpers.thread</span> <span class="kn">as</span> <span class="nn">thread</span>
     <span class="kn">import</span> <span class="nn">helpers.modutils</span> <span class="kn">as</span> <span class="nn">modutils</span>
     <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
     <span class="kn">from</span> <span class="nn">irc.bot</span> <span class="kn">import</span> <span class="n">ServerSpec</span><span class="p">,</span> <span class="n">SingleServerIRCBot</span>
@@ -182,16 +181,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">))</span>
         <span class="c"># preserve data</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
-        <span class="n">thread</span><span class="o">.</span><span class="n">restart_executor</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">BotHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">output</span>
 </div>
