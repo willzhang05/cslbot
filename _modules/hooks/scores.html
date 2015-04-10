@@ -72,7 +72,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 
 
-<span class="nd">@Hook</span><span class="p">(</span><span class="s">&#39;scores&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="s">&#39;privmsg&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;abuse&#39;</span><span class="p">])</span>
+<span class="nd">@Hook</span><span class="p">(</span><span class="s">&#39;scores&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="s">&#39;action&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;abuse&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="handle"><a class="viewcode-back" href="../../hooks.html#hooks.scores.handle">[docs]</a><span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Handles scores</span>
 
