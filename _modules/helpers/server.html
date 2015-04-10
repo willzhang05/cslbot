@@ -89,7 +89,7 @@
 
 <div class="viewcode-block" id="init_server"><a class="viewcode-back" href="../../helpers.html#helpers.server.init_server">[docs]</a><span class="k">def</span> <span class="nf">init_server</span><span class="p">(</span><span class="n">bot</span><span class="p">):</span>
     <span class="n">port</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;core&#39;</span><span class="p">,</span> <span class="s">&#39;serverport&#39;</span><span class="p">)</span>
-    <span class="n">server</span> <span class="o">=</span> <span class="n">BotNetServer</span><span class="p">((</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">BotNetHandler</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">BotNetServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">BotNetHandler</span><span class="p">)</span>
     <span class="n">server</span><span class="o">.</span><span class="n">bot</span> <span class="o">=</span> <span class="n">bot</span>
     <span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">start_thread</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">server</span>
@@ -138,7 +138,7 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">send</span><span class="p">(</span><span class="s">&quot;ircbot&gt; &quot;</span><span class="p">)</span>
                         <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">except</span> <span class="n">BrokenPipeError</span><span class="p">:</span>
                         <span class="c"># connection has been closed</span>
                         <span class="k">return</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">cmd</span><span class="p">:</span>
@@ -147,9 +147,10 @@
                     <span class="n">send</span><span class="p">(</span><span class="n">HELP</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;admins&quot;</span><span class="p">:</span>
                     <span class="n">admins</span> <span class="o">=</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">admins</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-                    <span class="n">send</span><span class="p">(</span><span class="n">admins</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+                    <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">admins</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;reload&quot;</span><span class="p">:</span>
                     <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
+                    <span class="n">bot</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
                     <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
                     <span class="n">output</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">do_reload</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">ctrlchan</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
@@ -175,7 +176,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
             <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
-            <span class="n">send</span><span class="p">(</span><span class="n">msg</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">ctrlchan</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
 </pre></div>
 

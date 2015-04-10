@@ -74,17 +74,18 @@
 <span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">import</span> <span class="nn">irc.client</span>
 
 <span class="c"># FIXME: sibling imports</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/..&#39;</span><span class="p">)</span>
 
 
+<span class="nd">@mock.patch.object</span><span class="p">(</span><span class="n">irc</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Reactor</span><span class="p">,</span> <span class="s">&#39;process_forever&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="BotTest"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest">[docs]</a><span class="k">class</span> <span class="nc">BotTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
-    <span class="nd">@mock.patch.object</span><span class="p">(</span><span class="n">irc</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Reactor</span><span class="p">,</span> <span class="s">&#39;process_forever&#39;</span><span class="p">)</span>
-<div class="viewcode-block" id="BotTest.test_bot_init"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.test_bot_init">[docs]</a>    <span class="k">def</span> <span class="nf">test_bot_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Make sure the bot starts up correctly.&quot;&quot;&quot;</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BotTest.setUpClass"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.setUpClass">[docs]</a>    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="n">bot_mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&#39;bot&#39;</span><span class="p">)</span>
         <span class="n">botconfig</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
         <span class="n">configfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;../config.cfg&#39;</span><span class="p">)</span>
@@ -93,10 +94,35 @@
         <span class="n">port</span> <span class="o">=</span> <span class="n">botconfig</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;core&#39;</span><span class="p">,</span> <span class="s">&#39;serverport&#39;</span><span class="p">)</span>
         <span class="c"># Avoid port conflicts with running bot</span>
         <span class="n">botconfig</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;serverport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">port</span> <span class="o">+</span> <span class="mi">1000</span><span class="p">)</span>
-        <span class="n">bot</span> <span class="o">=</span> <span class="n">bot_mod</span><span class="o">.</span><span class="n">IrcBot</span><span class="p">(</span><span class="n">botconfig</span><span class="p">)</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">bot</span> <span class="o">=</span> <span class="n">bot_mod</span><span class="o">.</span><span class="n">IrcBot</span><span class="p">(</span><span class="n">botconfig</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BotTest.tearDownClass"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.tearDownClass">[docs]</a>    <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="BotTest.test_bot_init"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.test_bot_init">[docs]</a>    <span class="k">def</span> <span class="nf">test_bot_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make sure the bot starts up correctly.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="c"># FIXME: run some commands or something?</span>
+</div>
+<div class="viewcode-block" id="BotTest.test_bot_reload"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.test_bot_reload">[docs]</a>    <span class="k">def</span> <span class="nf">test_bot_reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span>
+        <span class="c"># FIXME: this needs to run in a seperate thread to work.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;core&#39;</span><span class="p">,</span> <span class="s">&#39;serverport&#39;</span><span class="p">)</span>
+        <span class="n">passwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">][</span><span class="s">&#39;serverpass&#39;</span><span class="p">]</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s">reload&#39;</span> <span class="o">%</span> <span class="n">passwd</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">output</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s">&#39;Aye&#39;</span><span class="p">)</span>
 </div></div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
