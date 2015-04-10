@@ -74,7 +74,6 @@
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span>
 <span class="kn">from</span> <span class="nn">lxml.html</span> <span class="kn">import</span> <span class="n">fromstring</span><span class="p">,</span> <span class="n">tostring</span>
 <span class="kn">from</span> <span class="nn">html</span> <span class="kn">import</span> <span class="n">unescape</span>
-<span class="kn">from</span> <span class="nn">html.parser</span> <span class="kn">import</span> <span class="n">HTMLParser</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randrange</span>
 
 
@@ -137,11 +136,9 @@
 
 </div>
 <div class="viewcode-block" id="gen_slogan"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_slogan">[docs]</a><span class="k">def</span> <span class="nf">gen_slogan</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">html</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.sloganizer.net/en/outbound.php&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;slogan&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="p">})</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.sloganizer.net/en/outbound.php&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;slogan&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-7&#39;</span><span class="p">)})</span>
     <span class="n">slogan</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;&gt;(.*)&lt;&#39;</span><span class="p">,</span> <span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">HTMLParser</span><span class="p">()</span>
-    <span class="n">slogan</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">slogan</span><span class="p">))</span>
-    <span class="n">slogan</span> <span class="o">=</span> <span class="n">slogan</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">slogan</span> <span class="o">=</span> <span class="n">slogan</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-7&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slogan</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">slogan</span>
     <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
