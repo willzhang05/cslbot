@@ -137,7 +137,7 @@
         <span class="sd">&quot;&quot;&quot;Called from :func:`bot.IrcBot.do_reload` to restore the handler&#39;s data.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span><span class="p">[</span><span class="s">&#39;reloaded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="BotHandler.loadmodules"><a class="viewcode-back" href="../handler.html#handler.BotHandler.loadmodules">[docs]</a>    <span class="k">def</span> <span class="nf">loadmodules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load all the commands.</span>
@@ -448,11 +448,6 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid Argument: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">realargs</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_reload"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_reload">[docs]</a>    <span class="k">def</span> <span class="nf">do_reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span><span class="p">[</span><span class="s">&#39;reloaded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loadmodules</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loadhooks</span><span class="p">()</span>
-</div>
 <div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">nick</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span>
 </div>
@@ -554,7 +549,6 @@
             <span class="k">if</span> <span class="n">cmd</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):]</span> <span class="o">==</span> <span class="s">&#39;reload&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">nick</span> <span class="ow">in</span> <span class="n">admins</span><span class="p">:</span>
                     <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">do_reload</span><span class="p">()</span>
                     <span class="n">send</span><span class="p">(</span><span class="s">&quot;Aye Aye Capt&#39;n&quot;</span><span class="p">)</span>
             <span class="c"># everything below this point requires admin</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
