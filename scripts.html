@@ -204,8 +204,29 @@
 <em class="property">class </em><code class="descclassname">scripts.test.</code><code class="descname">BotTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
 <dl class="classmethod">
+<dt id="scripts.test.BotTest.config_mock">
+<em class="property">classmethod </em><code class="descname">config_mock</code><span class="sig-paren">(</span><em>section</em>, <em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.config_mock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.config_mock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scripts.test.BotTest.do_reload">
+<code class="descname">do_reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.do_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.do_reload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="scripts.test.BotTest.restart_workers">
+<code class="descname">restart_workers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.restart_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.restart_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force all the workers to restart so we get the log message.</p>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="scripts.test.BotTest.setUpClass">
 <em class="property">classmethod </em><code class="descname">setUpClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.setUpClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.setUpClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="scripts.test.BotTest.setup_handler">
+<em class="property">classmethod </em><code class="descname">setup_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.setup_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.setup_handler" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
@@ -214,15 +235,16 @@
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="scripts.test.BotTest.test_bot_init">
-<code class="descname">test_bot_init</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.test_bot_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.test_bot_init" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make sure the bot starts up correctly.</p>
+<dt id="scripts.test.BotTest.test_bot_reload">
+<code class="descname">test_bot_reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.test_bot_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.test_bot_reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure the bod can reload without errors.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="scripts.test.BotTest.test_bot_reload">
-<code class="descname">test_bot_reload</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.test_bot_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.test_bot_reload" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="scripts.test.BotTest.test_handle_msg">
+<code class="descname">test_handle_msg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/test.html#BotTest.test_handle_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scripts.test.BotTest.test_handle_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure the bot can handle a simple message.</p>
+</dd></dl>
 
 </dd></dl>
 
