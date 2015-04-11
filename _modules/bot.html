@@ -270,8 +270,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;quit&#39;</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="IrcBot.on_disconnect"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+        <span class="c"># Don&#39;t kill everything if we just ping timed-out</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="IrcBot.on_join"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_join">[docs]</a>    <span class="k">def</span> <span class="nf">on_join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handle joins.&quot;&quot;&quot;</span>
