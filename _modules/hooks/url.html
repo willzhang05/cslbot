@@ -70,7 +70,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">from</span> <span class="nn">helpers.urlutils</span> <span class="kn">import</span> <span class="n">get_title</span><span class="p">,</span> <span class="n">get_short</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">urlutils</span>
 <span class="kn">from</span> <span class="nn">helpers.orm</span> <span class="kn">import</span> <span class="n">Urls</span>
 <span class="kn">from</span> <span class="nn">helpers.hook</span> <span class="kn">import</span> <span class="n">Hook</span>
 
@@ -97,9 +97,9 @@
         <span class="n">send</span><span class="p">(</span><span class="s">&#39;Regex timed out.&#39;</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">get_title</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">urlutils</span><span class="o">.</span><span class="n">get_title</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;googleapikey&#39;</span><span class="p">]</span>
-        <span class="n">short</span> <span class="o">=</span> <span class="n">get_short</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">short</span> <span class="o">=</span> <span class="n">urlutils</span><span class="o">.</span><span class="n">get_short</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="n">last</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Urls</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Urls</span><span class="o">.</span><span class="n">url</span> <span class="o">==</span> <span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Urls</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;linkread&#39;</span><span class="p">):</span>
             <span class="c"># 604800 is the number of seconds in a week.</span>
