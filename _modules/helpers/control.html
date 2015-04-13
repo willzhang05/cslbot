@@ -71,6 +71,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">command</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">arguments</span>
 <span class="kn">from</span> <span class="nn">.orm</span> <span class="kn">import</span> <span class="n">Quotes</span><span class="p">,</span> <span class="n">Issues</span><span class="p">,</span> <span class="n">Polls</span>
+<span class="c"># FIXME: move to helpers</span>
 <span class="kn">from</span> <span class="nn">commands.issue</span> <span class="kn">import</span> <span class="n">create_issue</span>
 
 
@@ -438,7 +439,7 @@
     <span class="k">return</span> <span class="n">parser</span>
 
 </div>
-<div class="viewcode-block" id="handle_ctrlchan"><a class="viewcode-back" href="../../helpers.html#helpers.control.handle_ctrlchan">[docs]</a><span class="k">def</span> <span class="nf">handle_ctrlchan</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">send</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_ctrlchan"><a class="viewcode-back" href="../../helpers.html#helpers.control.handle_ctrlchan">[docs]</a><span class="k">def</span> <span class="nf">handle_ctrlchan</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">send</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Handle the control channel.&quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">handler</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session_scope</span><span class="p">()</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">init_parser</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span>
@@ -446,7 +447,7 @@
             <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgumentException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c"># FIXME: figure out a better way to allow non-commands without spamming the channel.</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s">&quot;invalid choice: .* \(choose from &#39;quote&#39;, &#39;help&#39;, &#39;chanserv&#39;, &#39;cs&#39;, &#39;disable&#39;, &#39;enable&#39;, &#39;guard&#39;, &#39;unguard&#39;, &#39;show&#39;, &#39;accept&#39;, &#39;reject&#39;\)&quot;</span>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s">r&quot;invalid choice: .* \(choose from &#39;quote&#39;, &#39;help&#39;, &#39;chanserv&#39;, &#39;cs&#39;, &#39;disable&#39;, &#39;enable&#39;, &#39;guard&#39;, &#39;unguard&#39;, &#39;show&#39;, &#39;accept&#39;, &#39;reject&#39;\)&quot;</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">err_str</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)):</span>
                 <span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">return</span>

@@ -72,16 +72,16 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">helpers.control</span> <span class="kn">as</span> <span class="nn">control</span>
-<span class="kn">import</span> <span class="nn">helpers.sql</span> <span class="kn">as</span> <span class="nn">sql</span>
-<span class="kn">import</span> <span class="nn">helpers.hook</span> <span class="kn">as</span> <span class="nn">hook</span>
-<span class="kn">import</span> <span class="nn">helpers.modutils</span> <span class="kn">as</span> <span class="nn">modutils</span>
-<span class="kn">import</span> <span class="nn">helpers.command</span> <span class="kn">as</span> <span class="nn">command</span>
-<span class="kn">import</span> <span class="nn">helpers.textutils</span> <span class="kn">as</span> <span class="nn">textutils</span>
-<span class="kn">import</span> <span class="nn">helpers.admin</span> <span class="kn">as</span> <span class="nn">admin</span>
-<span class="kn">import</span> <span class="nn">helpers.identity</span> <span class="kn">as</span> <span class="nn">identity</span>
-<span class="kn">import</span> <span class="nn">helpers.misc</span> <span class="kn">as</span> <span class="nn">misc</span>
-<span class="kn">import</span> <span class="nn">helpers.workers</span> <span class="kn">as</span> <span class="nn">workers</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">control</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">sql</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">hook</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">modutils</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">command</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">textutils</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">identity</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">misc</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">workers</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">random</span>
 
@@ -139,7 +139,8 @@
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span><span class="p">[</span><span class="s">&#39;reloaded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="BotHandler.loadmodules"><a class="viewcode-back" href="../handler.html#handler.BotHandler.loadmodules">[docs]</a>    <span class="k">def</span> <span class="nf">loadmodules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BotHandler.loadmodules"><a class="viewcode-back" href="../handler.html#handler.BotHandler.loadmodules">[docs]</a>    <span class="k">def</span> <span class="nf">loadmodules</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Load all the commands.</span>
 
 <span class="sd">        | Globs over all the .py files in the commands dir.</span>
@@ -148,7 +149,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">command</span><span class="o">.</span><span class="n">scan_for_commands</span><span class="p">(</span><span class="s">&#39;commands&#39;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.loadhooks"><a class="viewcode-back" href="../handler.html#handler.BotHandler.loadhooks">[docs]</a>    <span class="k">def</span> <span class="nf">loadhooks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BotHandler.loadhooks"><a class="viewcode-back" href="../handler.html#handler.BotHandler.loadhooks">[docs]</a>    <span class="k">def</span> <span class="nf">loadhooks</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Load all the hooks.</span>
 
 <span class="sd">        | Globs over all the .py files in the hooks dir.</span>
@@ -250,7 +252,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.get_split_pos"><a class="viewcode-back" href="../handler.html#handler.BotHandler.get_split_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BotHandler.get_split_pos"><a class="viewcode-back" href="../handler.html#handler.BotHandler.get_split_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_pos</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets the proper split position at or around position 400 of</span>
 <span class="sd">           a message.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">385</span><span class="p">,</span> <span class="mi">415</span><span class="p">):</span>
@@ -425,7 +428,7 @@
             <span class="n">c</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_args"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_args">[docs]</a>    <span class="k">def</span> <span class="nf">do_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_args"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_args">[docs]</a>    <span class="k">def</span> <span class="nf">do_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Handle the various args that modules need.&quot;&quot;&quot;</span>
         <span class="n">realargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;nick&#39;</span><span class="p">:</span> <span class="n">nick</span><span class="p">,</span>
@@ -448,7 +451,7 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid Argument: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">realargs</span>
 </div>
-<div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">nick</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span>
 </div>
 <div class="viewcode-block" id="BotHandler.handle_msg"><a class="viewcode-back" href="../handler.html#handler.BotHandler.handle_msg">[docs]</a>    <span class="k">def</span> <span class="nf">handle_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
@@ -484,9 +487,9 @@
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;pubnotice&#39;</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                <span class="n">realargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
+                <span class="n">realargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
                 <span class="n">h</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">realargs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;nick&#39;</span><span class="p">:</span>
@@ -514,9 +517,9 @@
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]:</span>
-            <span class="n">control</span><span class="o">.</span><span class="n">handle_ctrlchan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">send</span><span class="p">)</span>
+            <span class="n">control</span><span class="o">.</span><span class="n">handle_ctrlchan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">send</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
             <span class="k">return</span>
 
         <span class="n">msg</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_cmdchar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
@@ -528,8 +531,8 @@
         <span class="n">cmdlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">s&#39;</span> <span class="o">%</span> <span class="n">cmdchar</span><span class="p">):</span>
             <span class="c"># escape special regex chars</span>
-            <span class="n">raw_cmdchar</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">cmdchar</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&#39;[\[\].^$*+?]&#39;</span><span class="p">,</span> <span class="n">cmdchar</span><span class="p">)</span> <span class="k">else</span> <span class="n">cmdchar</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">s(\W)&#39;</span> <span class="o">%</span> <span class="n">raw_cmdchar</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+            <span class="n">raw_cmdchar</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">cmdchar</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;[\[\].^$*+?]&#39;</span><span class="p">,</span> <span class="n">cmdchar</span><span class="p">)</span> <span class="k">else</span> <span class="n">cmdchar</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;</span><span class="si">%s</span><span class="s">s(\W)&#39;</span> <span class="o">%</span> <span class="n">raw_cmdchar</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
                 <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">cmdlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
@@ -542,7 +545,7 @@
                 <span class="n">cmd_obj</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">cmd_obj</span><span class="o">.</span><span class="n">is_limited</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">abusecheck</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmd_obj</span><span class="o">.</span><span class="n">limit</span><span class="p">,</span> <span class="n">cmd</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):]):</span>
                     <span class="k">return</span>
-                <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">cmd_obj</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">cmd_obj</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
                 <span class="n">cmd_obj</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="c"># special commands</span>
         <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):</span>

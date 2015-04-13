@@ -91,8 +91,8 @@
     <span class="kn">from</span> <span class="nn">irc.bot</span> <span class="kn">import</span> <span class="n">ServerSpec</span><span class="p">,</span> <span class="n">SingleServerIRCBot</span>
     <span class="kn">from</span> <span class="nn">irc.connection</span> <span class="kn">import</span> <span class="n">Factory</span>
     <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">exists</span>
-<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unable to import all required modules: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unable to import all required modules: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">ex</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="IrcBot"><a class="viewcode-back" href="../bot.html#bot.IrcBot">[docs]</a><span class="k">class</span> <span class="nc">IrcBot</span><span class="p">(</span><span class="n">SingleServerIRCBot</span><span class="p">):</span>
@@ -201,7 +201,8 @@
         <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">output</span>
 </div>
-<div class="viewcode-block" id="IrcBot.get_version"><a class="viewcode-back" href="../bot.html#bot.IrcBot.get_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="IrcBot.get_version"><a class="viewcode-back" href="../bot.html#bot.IrcBot.get_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_version</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Get the version.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s">&quot;cslbot - v0.8&quot;</span>
 </div>
@@ -212,7 +213,7 @@
 <span class="sd">        | Join the primary channel.</span>
 <span class="sd">        | Join the control channel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Connected to server </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;host&#39;</span><span class="p">])</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Connected to server </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;host&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">get_admins</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
@@ -240,7 +241,7 @@
         <span class="sd">&quot;&quot;&quot;Pass private notices to :func:`handle_msg`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_msg</span><span class="p">(</span><span class="s">&#39;privnotice&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="IrcBot.on_welcome"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_welcome">[docs]</a>    <span class="k">def</span> <span class="nf">on_welcome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="IrcBot.on_welcome"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_welcome">[docs]</a>    <span class="k">def</span> <span class="nf">on_welcome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">do_welcome</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="IrcBot.on_pubnotice"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_pubnotice">[docs]</a>    <span class="k">def</span> <span class="nf">on_pubnotice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
@@ -257,19 +258,19 @@
         <span class="sd">&quot;&quot;&quot;Pass mode changes to :func:`handle_msg`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_msg</span><span class="p">(</span><span class="s">&#39;mode&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="IrcBot.on_error"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_error">[docs]</a>    <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="IrcBot.on_error"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_error">[docs]</a>    <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handle ping timeouts.&quot;&quot;&quot;</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="c"># trigger channel joining, etc. on reconnection.</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">,</span> <span class="s">&#39;connection&#39;</span><span class="p">):</span>
             <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">,</span> <span class="s">&#39;connection&#39;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="IrcBot.handle_quit"><a class="viewcode-back" href="../bot.html#bot.IrcBot.handle_quit">[docs]</a>    <span class="k">def</span> <span class="nf">handle_quit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="IrcBot.handle_quit"><a class="viewcode-back" href="../bot.html#bot.IrcBot.handle_quit">[docs]</a>    <span class="k">def</span> <span class="nf">handle_quit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Log quits.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_channels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;quit&#39;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="IrcBot.on_disconnect"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="IrcBot.on_disconnect"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="c"># Don&#39;t kill everything if we just ping timed-out</span>
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
@@ -299,11 +300,12 @@
             <span class="k">return</span>
         <span class="n">c</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </div>
-<div class="viewcode-block" id="IrcBot.on_ctcpreply"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_ctcpreply">[docs]</a>    <span class="k">def</span> <span class="nf">on_ctcpreply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="IrcBot.on_ctcpreply"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_ctcpreply">[docs]</a>    <span class="k">def</span> <span class="nf">on_ctcpreply</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">misc</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
 </div>
-<div class="viewcode-block" id="IrcBot.on_nicknameinuse"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_nicknameinuse">[docs]</a>    <span class="k">def</span> <span class="nf">on_nicknameinuse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="IrcBot.on_nicknameinuse"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_nicknameinuse">[docs]</a>    <span class="k">def</span> <span class="nf">on_nicknameinuse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">nick</span><span class="p">(</span><span class="s">&#39;Guest</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">send_raw</span><span class="p">(</span><span class="s">&#39;NS REGAIN </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;nick&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">][</span><span class="s">&#39;nickpass&#39;</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">defer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_welcome</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
@@ -319,7 +321,7 @@
         <span class="c"># we don&#39;t care about other people.</span>
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">c</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Kicked from channel </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Kicked from channel </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">defer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
 
 </div></div>
@@ -347,8 +349,8 @@
     <span class="n">multiprocessing</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s">&#39;spawn&#39;</span><span class="p">)</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span> <span class="s">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;Enable debug logging.&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">parser_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">parser_args</span><span class="p">)</span>
 </pre></div>
 
           </div>

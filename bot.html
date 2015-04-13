@@ -96,9 +96,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="bot.IrcBot.get_version">
-<code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.get_version" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.get_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the version.</p>
 </dd></dl>
 
@@ -120,7 +120,7 @@
 
 <dl class="method">
 <dt id="bot.IrcBot.handle_quit">
-<code class="descname">handle_quit</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.handle_quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.handle_quit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">handle_quit</code><span class="sig-paren">(</span><em>_</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.handle_quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.handle_quit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log quits.</p>
 </dd></dl>
 
@@ -135,19 +135,19 @@
 <code class="descname">on_bannedfromchan</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_bannedfromchan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_bannedfromchan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="bot.IrcBot.on_ctcpreply">
-<code class="descname">on_ctcpreply</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_ctcpreply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_ctcpreply" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">on_ctcpreply</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_ctcpreply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_ctcpreply" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="bot.IrcBot.on_disconnect">
-<code class="descname">on_disconnect</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_disconnect</code><span class="sig-paren">(</span><em>_</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_disconnect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="bot.IrcBot.on_error">
-<code class="descname">on_error</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_error" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_error</code><span class="sig-paren">(</span><em>_</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle ping timeouts.</p>
 </dd></dl>
 
@@ -182,7 +182,7 @@
 
 <dl class="method">
 <dt id="bot.IrcBot.on_nicknameinuse">
-<code class="descname">on_nicknameinuse</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_nicknameinuse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_nicknameinuse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_nicknameinuse</code><span class="sig-paren">(</span><em>c</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_nicknameinuse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_nicknameinuse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -220,7 +220,7 @@
 
 <dl class="method">
 <dt id="bot.IrcBot.on_welcome">
-<code class="descname">on_welcome</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_welcome" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_welcome</code><span class="sig-paren">(</span><em>c</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_welcome" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

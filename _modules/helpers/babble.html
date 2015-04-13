@@ -230,10 +230,12 @@
             <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;LOCK TABLE babble_count IN EXCLUSIVE MODE NOWAIT&#39;</span><span class="p">)</span>
             <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;LOCK TABLE babble_last IN EXCLUSIVE MODE NOWAIT&#39;</span><span class="p">)</span>
         <span class="n">build_markov</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">cmdchar</span><span class="p">,</span> <span class="n">ctrlchan</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
     <span class="k">except</span> <span class="n">OperationalError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
         <span class="c"># If we can&#39;t lock the table, silently skip updating and wait for the next time we&#39;re called.</span>
         <span class="k">if</span> <span class="s">&#39;could not obtain lock on relation &quot;babble&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">):</span>
-            <span class="k">raise</span></div>
+            <span class="k">raise</span>
+        <span class="k">return</span> <span class="bp">False</span></div>
 </pre></div>
 
           </div>

@@ -85,8 +85,8 @@
 
 <div class="viewcode-block" id="scan_for_commands"><a class="viewcode-back" href="../../helpers.html#helpers.command.scan_for_commands">[docs]</a><span class="k">def</span> <span class="nf">scan_for_commands</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Scans folder for commands &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">_known_commands</span><span class="p">,</span> <span class="n">_disabled_commands</span>
-    <span class="n">_known_commands</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">global</span> <span class="n">_disabled_commands</span>
+    <span class="n">_known_commands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">_disabled_commands</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">get_disabled</span><span class="p">(</span><span class="s">&quot;commands&quot;</span><span class="p">)</span>
     <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s">&quot;commands&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_known_commands</span>
@@ -114,25 +114,23 @@
 </div>
 <div class="viewcode-block" id="disable_command"><a class="viewcode-back" href="../../helpers.html#helpers.command.disable_command">[docs]</a><span class="k">def</span> <span class="nf">disable_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; adds a command to the disabled comands list&quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">_disabled_commands</span>
-    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;commands.&quot;</span> <span class="o">+</span> <span class="n">command</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">command</span> <span class="o">+</span> <span class="s">&quot; is not a loaded module&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;commands.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">command</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is not a loaded module&quot;</span> <span class="o">%</span> <span class="n">command</span>
     <span class="k">if</span> <span class="n">command</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
         <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">&quot;Disabled command &quot;</span> <span class="o">+</span> <span class="n">command</span>
+        <span class="k">return</span> <span class="s">&quot;Disabled command </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">command</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="s">&quot;That command is already disabled!&quot;</span>
 
 </div>
 <div class="viewcode-block" id="enable_command"><a class="viewcode-back" href="../../helpers.html#helpers.command.enable_command">[docs]</a><span class="k">def</span> <span class="nf">enable_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; removes a command from the disabled commands list&quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">_disabled_commands</span>
     <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">:</span>
-        <span class="n">_disabled_commands</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">return</span> <span class="s">&quot;Enabled all modules.&quot;</span>
     <span class="k">elif</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
         <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">command</span> <span class="o">+</span> <span class="s">&quot; reenabled&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> reenabled&quot;</span> <span class="o">%</span> <span class="n">command</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="s">&quot;That command isn&#39;t disabled!&quot;</span>
 
@@ -170,7 +168,7 @@
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span>
-                <span class="n">thread_id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&#39;Thread-\d+&#39;</span><span class="p">,</span> <span class="n">thread</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">thread_id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;Thread-\d+&#39;</span><span class="p">,</span> <span class="n">thread</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="n">thread</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> running command.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session_scope</span><span class="p">()</span> <span class="k">as</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]:</span>
                     <span class="n">func</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
