@@ -167,7 +167,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&quot;Now ignoring </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.is_admin"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_admin">[docs]</a>    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">complain</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.is_admin"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_admin">[docs]</a>    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if a nick is a admin.</span>
 
 <span class="sd">        | If the nick is not in self.admins then it&#39;s not a admin.</span>
@@ -184,7 +184,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">admins</span><span class="p">[</span><span class="n">nick</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">admins</span><span class="p">[</span><span class="n">nick</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">send_raw</span><span class="p">(</span><span class="s">&#39;NS ACC </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">complain</span><span class="p">:</span>
+            <span class="c"># We don&#39;t necessarily want to complain in all cases.</span>
+            <span class="k">if</span> <span class="n">send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">send</span><span class="p">(</span><span class="s">&quot;Unverified admin: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;channel&#39;</span><span class="p">])</span>
             <span class="k">return</span> <span class="bp">False</span>
         <span class="k">else</span><span class="p">:</span>
@@ -516,10 +517,10 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
             <span class="n">control</span><span class="o">.</span><span class="n">handle_ctrlchan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">send</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
             <span class="k">return</span>
 
         <span class="n">msg</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_cmdchar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
