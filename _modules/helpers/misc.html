@@ -271,11 +271,11 @@
     <span class="n">req</span> <span class="o">=</span> <span class="n">post</span><span class="p">(</span><span class="s">&#39;https://api.github.com/repos/</span><span class="si">%s</span><span class="s">/issues&#39;</span> <span class="o">%</span> <span class="n">repo</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
     <span class="k">if</span> <span class="s">&#39;html_url&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;html_url&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;html_url&#39;</span><span class="p">],</span> <span class="bp">True</span>
     <span class="k">elif</span> <span class="s">&#39;message&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;message&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;message&#39;</span><span class="p">],</span> <span class="bp">False</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span></div>
+        <span class="k">return</span> <span class="s">&quot;Unknown error&quot;</span><span class="p">,</span> <span class="bp">False</span></div>
 </pre></div>
 
           </div>
