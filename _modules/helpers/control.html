@@ -69,10 +69,8 @@
 
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">command</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">arguments</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">command</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">misc</span>
 <span class="kn">from</span> <span class="nn">.orm</span> <span class="kn">import</span> <span class="n">Quotes</span><span class="p">,</span> <span class="n">Issues</span><span class="p">,</span> <span class="n">Polls</span>
-<span class="c"># FIXME: move to helpers</span>
-<span class="kn">from</span> <span class="nn">commands.issue</span> <span class="kn">import</span> <span class="n">create_issue</span>
 
 
 <div class="viewcode-block" id="handle_chanserv"><a class="viewcode-back" href="../../helpers.html#helpers.control.handle_chanserv">[docs]</a><span class="k">def</span> <span class="nf">handle_chanserv</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -268,7 +266,9 @@
         <span class="k">return</span> <span class="s">&quot;Not a valid issue&quot;</span>
     <span class="n">repo</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;githubrepo&#39;</span><span class="p">]</span>
     <span class="n">apikey</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;githubapikey&#39;</span><span class="p">]</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">create_issue</span><span class="p">(</span><span class="n">issue</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">apikey</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">create_issue</span><span class="p">(</span><span class="n">issue</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">apikey</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;Unknown Issue&quot;</span>
     <span class="n">issue</span><span class="o">.</span><span class="n">accepted</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
     <span class="n">channel</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;channel&#39;</span><span class="p">]</span>
