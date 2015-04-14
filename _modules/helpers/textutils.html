@@ -69,6 +69,7 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,</span>
 <span class="c"># USA.</span>
 
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span>
@@ -104,6 +105,17 @@
     <span class="n">response</span> <span class="o">=</span> <span class="n">tostring</span><span class="p">(</span><span class="n">fromstring</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;.//textarea&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-7&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;.*&lt;/textarea&gt;&quot;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">unescape</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="gen_shakespeare"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_shakespeare">[docs]</a><span class="k">def</span> <span class="nf">gen_shakespeare</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c"># Originally from http://www.shmoop.com/shakespeare-translator/</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;static/shakespeare-dictionary.json&#39;</span><span class="p">))</span>
+    <span class="n">replist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+    <span class="n">replist</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\b(&#39;</span> <span class="o">+</span> <span class="s">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">replist</span><span class="p">)</span> <span class="o">+</span> <span class="s">r&#39;)\b&#39;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">table</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">()],</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
 
 </div>
 <div class="viewcode-block" id="gen_praise"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_praise">[docs]</a><span class="k">def</span> <span class="nf">gen_praise</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
@@ -263,7 +275,26 @@
 
 </div>
 <div class="viewcode-block" id="gen_lenny"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_lenny">[docs]</a><span class="k">def</span> <span class="nf">gen_lenny</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> ( ͡° ͜ʖ ͡°)&quot;</span> <span class="o">%</span> <span class="n">msg</span></div>
+    <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> ( ͡° ͜ʖ ͡°)&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+</div>
+<span class="n">output_filters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;hashtag&quot;</span><span class="p">:</span> <span class="n">gen_hashtag</span><span class="p">,</span>
+    <span class="s">&quot;fwilson&quot;</span><span class="p">:</span> <span class="n">gen_fwilson</span><span class="p">,</span>
+    <span class="s">&quot;creffett&quot;</span><span class="p">:</span> <span class="n">gen_creffett</span><span class="p">,</span>
+    <span class="s">&quot;slogan&quot;</span><span class="p">:</span> <span class="n">gen_slogan</span><span class="p">,</span>
+    <span class="s">&quot;insult&quot;</span><span class="p">:</span> <span class="n">gen_insult</span><span class="p">,</span>
+    <span class="s">&quot;morse&quot;</span><span class="p">:</span> <span class="n">gen_morse</span><span class="p">,</span>
+    <span class="s">&quot;removevowels&quot;</span><span class="p">:</span> <span class="n">removevowels</span><span class="p">,</span>
+    <span class="s">&quot;binary&quot;</span><span class="p">:</span> <span class="n">gen_binary</span><span class="p">,</span>
+    <span class="s">&quot;xkcd&quot;</span><span class="p">:</span> <span class="n">do_xkcd_sub</span><span class="p">,</span>
+    <span class="s">&quot;praise&quot;</span><span class="p">:</span> <span class="n">gen_praise</span><span class="p">,</span>
+    <span class="s">&quot;reverse&quot;</span><span class="p">:</span> <span class="n">reverse</span><span class="p">,</span>
+    <span class="s">&quot;lenny&quot;</span><span class="p">:</span> <span class="n">gen_lenny</span><span class="p">,</span>
+    <span class="s">&quot;yoda&quot;</span><span class="p">:</span> <span class="n">gen_yoda</span><span class="p">,</span>
+    <span class="s">&quot;gizoogle&quot;</span><span class="p">:</span> <span class="n">gen_gizoogle</span><span class="p">,</span>
+    <span class="s">&quot;shakespeare&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span><span class="p">,</span>
+    <span class="s">&quot;bard&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span>
+<span class="p">}</span>
 </pre></div>
 
           </div>

@@ -51,6 +51,14 @@ commands.babble module
     :undoc-members:
     :show-inheritance:
 
+commands.bard module
+--------------------
+
+.. automodule:: commands.bard
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 commands.bc module
 ------------------
 
