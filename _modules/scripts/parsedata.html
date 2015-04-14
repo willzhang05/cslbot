@@ -167,8 +167,8 @@
     <span class="nb">open</span><span class="p">(</span><span class="n">outdir</span> <span class="o">+</span> <span class="s">&#39;/urls.html&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../scripts.html#scripts.parsedata.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
-    <span class="n">session</span> <span class="o">=</span> <span class="n">get_session</span><span class="p">(</span><span class="n">config</span><span class="p">)()</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../scripts.html#scripts.parsedata.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">get_session</span><span class="p">(</span><span class="n">cfg</span><span class="p">)()</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">loader</span><span class="o">=</span><span class="n">FileSystemLoader</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/../static/templates&#39;</span><span class="p">))</span>
     <span class="n">time</span> <span class="o">=</span> <span class="n">strftime</span><span class="p">(</span><span class="s">&#39;Last Updated at %I:%M %p on %a, %b </span><span class="si">%d</span><span class="s">, %Y&#39;</span><span class="p">)</span>
 
@@ -186,8 +186,8 @@
     <span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/../config.cfg&#39;</span><span class="p">))</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;output&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;The output dir.&#39;</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
 </pre></div>
 
           </div>
