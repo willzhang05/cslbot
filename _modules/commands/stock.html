@@ -105,11 +105,11 @@
 </div>
 <div class="viewcode-block" id="random_stock"><a class="viewcode-back" href="../../commands.html#commands.stock.random_stock">[docs]</a><span class="k">def</span> <span class="nf">random_stock</span><span class="p">():</span>
     <span class="n">html</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.openicon.com/rsp/rsp_n100.php&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;\((.*)\)&#39;</span><span class="p">,</span> <span class="n">html</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">r&#39;\((.*)\)&#39;</span><span class="p">,</span> <span class="n">html</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 </div>
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;stock&#39;</span><span class="p">)</span>
-<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.stock.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.stock.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets a stock quote.</span>
 <span class="sd">    Syntax: !stock &lt;symbol&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>

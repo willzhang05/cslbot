@@ -73,12 +73,12 @@
 
 
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;threads&#39;</span><span class="p">)</span>
-<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.threads.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.threads.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Enumerate threads.</span>
 <span class="sd">    Syntax: !threads</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">enumerate</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&#39;Thread-\d+$&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;Thread-\d+$&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
             <span class="c"># Handle the main server thread (permanently listed as _worker)</span>
             <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_target</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;_worker&#39;</span><span class="p">:</span>
                 <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> running server thread&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>

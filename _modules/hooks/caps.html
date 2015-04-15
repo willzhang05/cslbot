@@ -76,7 +76,7 @@
 
 
 <span class="nd">@Hook</span><span class="p">(</span><span class="s">&#39;caps&#39;</span><span class="p">,</span> <span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;do_kick&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">])</span>
-<div class="viewcode-block" id="handle"><a class="viewcode-back" href="../../hooks.html#hooks.caps.handle">[docs]</a><span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="handle"><a class="viewcode-back" href="../../hooks.html#hooks.caps.handle">[docs]</a><span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Check for capslock abuse.</span>
 
 <span class="sd">    | Check if a line is more than THRESHOLD percent uppercase.</span>
