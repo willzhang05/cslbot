@@ -169,7 +169,7 @@
 
 </div>
 <div class="viewcode-block" id="Babble"><a class="viewcode-back" href="../../helpers.html#helpers.orm.Babble">[docs]</a><span class="k">class</span> <span class="nc">Babble</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">source</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">word</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
