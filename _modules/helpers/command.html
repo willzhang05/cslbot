@@ -153,11 +153,12 @@
 </div>
 <div class="viewcode-block" id="Command"><a class="viewcode-back" href="../../helpers.html#helpers.command.Command">[docs]</a><span class="k">class</span> <span class="nc">Command</span><span class="p">():</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">admin</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="k">global</span> <span class="n">_known_commands</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">names</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">names</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="n">limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin</span> <span class="o">=</span> <span class="n">admin</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_known_commands</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;There is already a command registered with the name </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="p">)</span>
@@ -196,7 +197,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc</span>
 </div>
 <div class="viewcode-block" id="Command.is_limited"><a class="viewcode-back" href="../../helpers.html#helpers.command.Command.is_limited">[docs]</a>    <span class="k">def</span> <span class="nf">is_limited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">!=</span> <span class="mi">0</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">!=</span> <span class="mi">0</span>
+</div>
+<div class="viewcode-block" id="Command.requires_admin"><a class="viewcode-back" href="../../helpers.html#helpers.command.Command.requires_admin">[docs]</a>    <span class="k">def</span> <span class="nf">requires_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">admin</span></div></div>
 </pre></div>
 
           </div>

@@ -92,10 +92,14 @@
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">option_strings</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">namespace</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;chanregex&#39;</span><span class="p">],</span> <span class="n">value</span><span class="p">):</span>
-            <span class="n">namespace</span><span class="o">.</span><span class="n">chan</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArgumentException</span><span class="p">(</span><span class="s">&quot;Invalid chan </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+        <span class="n">namespace</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">namespace</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;chanregex&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">):</span>
+                <span class="n">namespace</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ArgumentException</span><span class="p">(</span><span class="s">&quot;Invalid chan </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="DateParser"><a class="viewcode-back" href="../../helpers.html#helpers.arguments.DateParser">[docs]</a><span class="k">class</span> <span class="nc">DateParser</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>

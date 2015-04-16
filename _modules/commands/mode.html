@@ -83,7 +83,7 @@
     <span class="k">except</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgumentException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">return</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">chan</span> <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">chan</span> <span class="k">else</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;target&#39;</span><span class="p">]</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">channels</span> <span class="k">else</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;target&#39;</span><span class="p">]</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mode</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&#39;Please specify a mode.&#39;</span><span class="p">)</span>
