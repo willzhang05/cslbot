@@ -266,8 +266,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cap</span><span class="p">(</span><span class="s">&#39;END&#39;</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="IrcBot.on_pubnotice"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_pubnotice">[docs]</a>    <span class="k">def</span> <span class="nf">on_pubnotice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Pass public notices to :func:`handle_msg`.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">handle_msg</span><span class="p">(</span><span class="s">&#39;pubnotice&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;This is mostly informational stuff from the server that we don&#39;t do anything with right now.&quot;&quot;&quot;</span>
+        <span class="c"># self.handle_msg(&#39;pubnotice&#39;, c, e)</span>
 </div>
 <div class="viewcode-block" id="IrcBot.on_nick"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_nick">[docs]</a>    <span class="k">def</span> <span class="nf">on_nick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Log nick changes.&quot;&quot;&quot;</span>
