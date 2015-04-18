@@ -387,7 +387,7 @@
 
 </div>
 <div class="viewcode-block" id="init_parser"><a class="viewcode-back" href="../../helpers.html#helpers.control.init_parser">[docs]</a><span class="k">def</span> <span class="nf">init_parser</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">send</span><span class="o">=</span><span class="n">send</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="n">handler</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">)</span>
     <span class="n">subparser</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">()</span>
 

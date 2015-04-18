@@ -101,9 +101,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">failedNicks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">successfulNicks</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Note left for </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">successfulNicks</span><span class="p">])))</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Note left for </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">successfulNicks</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">failedNicks</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid nick(s): </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">failedNicks</span><span class="p">])))</span></div>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid nick(s): </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">failedNicks</span><span class="p">))</span></div>
 </pre></div>
 
           </div>
