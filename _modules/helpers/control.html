@@ -150,18 +150,18 @@
 </div>
 <div class="viewcode-block" id="handle_guard"><a class="viewcode-back" href="../../helpers.html#helpers.control.handle_guard">[docs]</a><span class="k">def</span> <span class="nf">handle_guard</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">guarded</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&quot;Already guarding </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;Already guarding </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">args</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">guarded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">&quot;Guarding </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;Guarding </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="handle_unguard"><a class="viewcode-back" href="../../helpers.html#helpers.control.handle_unguard">[docs]</a><span class="k">def</span> <span class="nf">handle_unguard</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">guarded</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is not being guarded&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> is not being guarded&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">args</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">guarded</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">&quot;No longer guarding </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;No longer guarding </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="handle_show"><a class="viewcode-back" href="../../helpers.html#helpers.control.handle_show">[docs]</a><span class="k">def</span> <span class="nf">handle_show</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -387,7 +387,7 @@
 
 </div>
 <div class="viewcode-block" id="init_parser"><a class="viewcode-back" href="../../helpers.html#helpers.control.init_parser">[docs]</a><span class="k">def</span> <span class="nf">init_parser</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">send</span><span class="o">=</span><span class="n">send</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="n">handler</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">)</span>
     <span class="n">subparser</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">()</span>
 
@@ -420,6 +420,12 @@
     <span class="n">unguard_parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s">&#39;unguard&#39;</span><span class="p">)</span>
     <span class="n">unguard_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">arguments</span><span class="o">.</span><span class="n">NickParser</span><span class="p">)</span>
     <span class="n">unguard_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">handle_unguard</span><span class="p">)</span>
+
+    <span class="c"># We need the config in the guard_parser and unguard_parser namespaces but there&#39;s no way to pass arbitrary</span>
+    <span class="c"># arguments to subparser.add_parser, and now way to talk to the parent parser from subparsers. Thus, we must</span>
+    <span class="c"># fall back on hacky crap like this</span>
+    <span class="n">guard_parser</span><span class="o">.</span><span class="n">namespace</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">config</span>
+    <span class="n">unguard_parser</span><span class="o">.</span><span class="n">namespace</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">config</span>
 
     <span class="n">show_parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s">&#39;show&#39;</span><span class="p">)</span>
     <span class="n">show_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;cmd&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;guarded&#39;</span><span class="p">,</span> <span class="s">&#39;issues&#39;</span><span class="p">,</span> <span class="s">&#39;quotes&#39;</span><span class="p">,</span> <span class="s">&#39;polls&#39;</span><span class="p">,</span> <span class="s">&#39;pending&#39;</span><span class="p">,</span> <span class="s">&#39;disabled&#39;</span><span class="p">,</span> <span class="s">&#39;enabled&#39;</span><span class="p">])</span>
