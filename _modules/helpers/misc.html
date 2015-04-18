@@ -82,14 +82,6 @@
 <span class="n">_pinglist</span> <span class="o">=</span> <span class="p">{}</span>
 
 
-<div class="viewcode-block" id="check_exists"><a class="viewcode-back" href="../../helpers.html#helpers.misc.check_exists">[docs]</a><span class="k">def</span> <span class="nf">check_exists</span><span class="p">(</span><span class="n">subreddit</span><span class="p">):</span>
-    <span class="n">req</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.reddit.com/r/</span><span class="si">%s</span><span class="s">/about.json&#39;</span> <span class="o">%</span> <span class="n">subreddit</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;CslBot/1.0&#39;</span><span class="p">})</span>
-    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;kind&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;Listing&#39;</span><span class="p">:</span>
-        <span class="c"># no subreddit exists, search results page is shown</span>
-        <span class="k">return</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-
-</div>
 <div class="viewcode-block" id="parse_time"><a class="viewcode-back" href="../../helpers.html#helpers.misc.parse_time">[docs]</a><span class="k">def</span> <span class="nf">parse_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
     <span class="n">time</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">time</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>

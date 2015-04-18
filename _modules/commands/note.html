@@ -91,13 +91,19 @@
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Not enough arguments.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="n">nickregex</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;nickregex&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;+$&#39;</span>
+    <span class="n">successfulNicks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">failedNicks</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">nick</span> <span class="ow">in</span> <span class="n">nicks</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">nickregex</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">Notes</span><span class="p">(</span><span class="n">note</span><span class="o">=</span><span class="n">note</span><span class="p">,</span> <span class="n">submitter</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">],</span> <span class="n">nick</span><span class="o">=</span><span class="n">nick</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">())</span>
             <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Note left for </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
+            <span class="n">successfulNicks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid nick: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span></div>
+            <span class="n">failedNicks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">successfulNicks</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Note left for </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">successfulNicks</span><span class="p">])))</span>
+    <span class="k">if</span> <span class="n">failedNicks</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid nick(s): </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">failedNicks</span><span class="p">])))</span></div>
 </pre></div>
 
           </div>

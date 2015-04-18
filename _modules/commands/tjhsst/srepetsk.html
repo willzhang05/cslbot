@@ -6,25 +6,25 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>commands.reddit &mdash; IrcBot 0.7 documentation</title>
+    <title>commands.tjhsst.srepetsk &mdash; IrcBot 0.7 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../../../',
         VERSION:     '0.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="IrcBot 0.7 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="IrcBot 0.7 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -35,13 +35,13 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
+          <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">IrcBot 0.7 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">IrcBot 0.7 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,8 +50,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for commands.reddit</h1><div class="highlight"><pre>
-<span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
+  <h1>Source code for commands.tjhsst.srepetsk</h1><div class="highlight"><pre>
+<span class="c"># Copyright (C) 2013-2014 Fox Wilson, Peter Foley, Srijay Kasturi, Samuel Damashek, James Forcier and Reed Koser</span>
 <span class="c">#</span>
 <span class="c"># This program is free software; you can redistribute it and/or</span>
 <span class="c"># modify it under the terms of the GNU General Public License</span>
@@ -68,19 +68,15 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
 <span class="kn">from</span> <span class="nn">helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
-<span class="kn">from</span> <span class="nn">helpers.reddit</span> <span class="kn">import</span> <span class="n">check_exists</span><span class="p">,</span> <span class="n">random_post</span>
+<span class="kn">from</span> <span class="nn">helpers.reddit</span> <span class="kn">import</span> <span class="n">random_post</span>
 
 
-<span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;reddit&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">])</span>
-<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.reddit.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Gets a random Reddit post.</span>
-<span class="sd">    Syntax: !reddit &lt;subreddit&gt;</span>
+<span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;srepetsk&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../commands.tjhsst.html#commands.tjhsst.srepetsk.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets a random nottheonion post.</span>
+<span class="sd">    Syntax: !srepetsk &lt;subreddit&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">msg</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">check_exists</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Non-existant subreddit.&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="n">subreddit</span> <span class="o">=</span> <span class="n">msg</span> <span class="k">if</span> <span class="n">msg</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">random_post</span><span class="p">(</span><span class="n">subreddit</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;googleapikey&#39;</span><span class="p">]))</span></div>
+    <span class="n">send</span><span class="p">(</span><span class="n">random_post</span><span class="p">(</span><span class="s">&#39;nottheonion&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;googleapikey&#39;</span><span class="p">]))</span></div>
 </pre></div>
 
           </div>
@@ -90,7 +86,7 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
