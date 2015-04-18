@@ -75,7 +75,6 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Need Python 3.4 or higher.&quot;</span><span class="p">)</span>
     <span class="kn">import</span> <span class="nn">logging</span>
     <span class="kn">import</span> <span class="nn">base64</span>
-    <span class="kn">import</span> <span class="nn">importlib</span>
     <span class="kn">import</span> <span class="nn">argparse</span>
     <span class="kn">import</span> <span class="nn">ssl</span>
     <span class="kn">import</span> <span class="nn">time</span>
@@ -185,10 +184,20 @@
             <span class="n">srcdir</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">do_pull</span><span class="p">(</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">)</span>
             <span class="n">c</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+        <span class="n">reload_ok</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">failed_modules</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">modutils</span><span class="o">.</span><span class="n">get_enabled</span><span class="p">(</span><span class="s">&#39;helpers&#39;</span><span class="p">,</span> <span class="s">&#39;helpers&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-                <span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
-        <span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+                <span class="n">mod_reload_ok</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">safe_reload</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">mod_reload_ok</span><span class="p">:</span>
+                    <span class="n">failed_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">reload_ok</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">reload_ok</span><span class="p">:</span>
+            <span class="n">controlchan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">controlchan</span><span class="p">,</span>
+                                    <span class="s">&quot;Failed to reload some helper modules. Some commands may not work as expected, see the console for details&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">controlchan</span><span class="p">,</span> <span class="s">&quot;Failures: &quot;</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">failed_modules</span><span class="p">))</span>
+        <span class="n">modutils</span><span class="o">.</span><span class="n">safe_reload</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
         <span class="n">configfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;config.cfg&#39;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
