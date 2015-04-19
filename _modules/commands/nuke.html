@@ -71,7 +71,7 @@
 <span class="kn">from</span> <span class="nn">helpers.misc</span> <span class="kn">import</span> <span class="n">do_nuke</span>
 
 
-<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;nuke&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;botnick&#39;</span><span class="p">])</span>
+<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;nuke&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;botnick&#39;</span><span class="p">],</span> <span class="n">admin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.nuke.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Nukes somebody.</span>
 <span class="sd">    Syntax: !nuke target</span>
@@ -81,15 +81,12 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Nuke who?&quot;</span><span class="p">)</span>
         <span class="k">return</span>
-    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;is_admin&#39;</span><span class="p">](</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">]):</span>
-        <span class="k">if</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">users</span><span class="p">():</span>
-            <span class="n">do_nuke</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">msg</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;botnick&#39;</span><span class="p">]:</span>
-            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Sorry, Self-Nuking is disabled pending aquisition of a Lead-Lined Fridge.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">send</span><span class="p">(</span><span class="s">&quot;I&#39;m sorry. Anonymous Nuking is not allowed&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">users</span><span class="p">():</span>
+        <span class="n">do_nuke</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">msg</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;botnick&#39;</span><span class="p">]:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Sorry, Self-Nuking is disabled pending aquisition of a Lead-Lined Fridge.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;I&#39;m sorry. Nukes are a admin-only feature&quot;</span><span class="p">)</span></div>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;I&#39;m sorry. Anonymous Nuking is not allowed&quot;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
