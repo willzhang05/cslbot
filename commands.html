@@ -105,7 +105,7 @@ Syntax: !about</p>
 <dt id="commands.abuse.cmd">
 <code class="descclassname">commands.abuse.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/abuse.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.abuse.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shows or clears the abuse list
-Syntax: !abuse (&#8211;clear) (&#8211;show)</p>
+Syntax: !abuse &lt;&#8211;clear|&#8211;show&gt;</p>
 </dd></dl>
 
 </div>
@@ -146,7 +146,7 @@ Syntax: !admins</p>
 <dt id="commands.babble.cmd">
 <code class="descclassname">commands.babble.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/babble.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.babble.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Babbles like a user
-Syntax: !babble (nick) (&#8211;start &lt;word&gt;)</p>
+Syntax: !babble [nick] [&#8211;start &lt;word&gt;]</p>
 </dd></dl>
 
 <dl class="function">
@@ -197,7 +197,7 @@ Syntax: !bike</p>
 <dt id="commands.blame.cmd">
 <code class="descclassname">commands.blame.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/blame.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.blame.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blames a random user for something.
-Syntax: !blame &lt;reason&gt;</p>
+Syntax: !blame [reason]</p>
 </dd></dl>
 
 </div>
@@ -207,7 +207,7 @@ Syntax: !blame &lt;reason&gt;</p>
 <dt id="commands.botsnack.cmd">
 <code class="descclassname">commands.botsnack.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/botsnack.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.botsnack.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Causes the bot to snack on something.
-Syntax: !botsnack &lt;object&gt;</p>
+Syntax: !botsnack [object]</p>
 </dd></dl>
 
 </div>
@@ -242,7 +242,7 @@ Syntax: !cadmin</p>
 <dt id="commands.cancel.cmd">
 <code class="descclassname">commands.cancel.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/cancel.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.cancel.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cancels a deferred action with the given id.
-Syntax: !cancel id</p>
+Syntax: !cancel &lt;id&gt;</p>
 </dd></dl>
 
 </div>
@@ -282,7 +282,7 @@ Syntax: !cidr &lt;range&gt;</p>
 <dt id="commands.coin.cmd">
 <code class="descclassname">commands.coin.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/coin.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.coin.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flips a coin a number of times.
-Syntax: !coin &lt;number&gt;</p>
+Syntax: !coin [number]</p>
 </dd></dl>
 
 </div>
@@ -432,7 +432,7 @@ Syntax: !fml</p>
 <dt id="commands.fortune.cmd">
 <code class="descclassname">commands.fortune.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/fortune.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.fortune.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a fortune.
-Syntax: !fortune &lt;list|(-a|-o) (module)&gt;</p>
+Syntax: !fortune &lt;list|[-a|-o] [module]&gt;</p>
 </dd></dl>
 
 </div>
@@ -482,7 +482,7 @@ Syntax: !google &lt;term&gt;</p>
 <dt id="commands.grep.cmd">
 <code class="descclassname">commands.grep.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/grep.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.grep.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Greps the log for a string.
-Syntax: !grep (&#8211;nick &lt;nick&gt;) &lt;string&gt;</p>
+Syntax: !grep [&#8211;nick &lt;nick&gt;] &lt;string&gt;</p>
 </dd></dl>
 
 </div>
@@ -502,7 +502,7 @@ Syntax: !guarded</p>
 <dt id="commands.help.cmd">
 <code class="descclassname">commands.help.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/help.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.help.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives help.
-Syntax: !help &lt;command&gt;</p>
+Syntax: !help [command]</p>
 </dd></dl>
 
 </div>
@@ -512,7 +512,7 @@ Syntax: !help &lt;command&gt;</p>
 <dt id="commands.highlight.cmd">
 <code class="descclassname">commands.highlight.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/highlight.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.highlight.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>When a nick was last pinged.
-Syntax: !highlight (nick)</p>
+Syntax: !highlight [nick]</p>
 </dd></dl>
 
 <dl class="function">
@@ -537,7 +537,7 @@ Syntax: !hooks</p>
 <dt id="commands.ignore.cmd">
 <code class="descclassname">commands.ignore.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/ignore.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.ignore.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles ignoring/unignoring people
-Syntax: !ignore (&#8211;clear) (&#8211;show/&#8211;list) (&#8211;delete) nick</p>
+Syntax: !ignore &lt;&#8211;clear|&#8211;show/&#8211;list|&#8211;delete|nick&gt;</p>
 </dd></dl>
 
 </div>
@@ -556,7 +556,8 @@ Syntax: !movie</p>
 <dl class="function">
 <dt id="commands.inspect.cmd">
 <code class="descclassname">commands.inspect.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/inspect.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.inspect.cmd" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8216;Inspect&#8217; a bot attribute.</p>
+<dd><p>&#8216;Inspects a bot attribute.
+Syntax: !inspect &lt;attr&gt;</p>
 </dd></dl>
 
 </div>
@@ -566,7 +567,7 @@ Syntax: !movie</p>
 <dt id="commands.insult.cmd">
 <code class="descclassname">commands.insult.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/insult.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.insult.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insults a user.
-Syntax: !insult (nick)</p>
+Syntax: !insult [nick]</p>
 </dd></dl>
 
 </div>
@@ -591,7 +592,7 @@ Syntax: !nato &lt;text&gt;</p>
 <dt id="commands.issue.cmd">
 <code class="descclassname">commands.issue.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/issue.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.issue.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Files a github issue or gets a open one.
-Syntax: !issue (title (&#8211;desc description)|&#8211;get number)</p>
+Syntax: !issue &lt;title [&#8211;desc description]|&#8211;get &lt;number&gt;&gt;</p>
 </dd></dl>
 
 </div>
@@ -621,7 +622,7 @@ Syntax: !jargon</p>
 <dt id="commands.join.cmd">
 <code class="descclassname">commands.join.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/join.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.join.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Orders the bot to join a channel
-Syntax: !join (channel)</p>
+Syntax: !join &lt;channel&gt; [channel] ...</p>
 </dd></dl>
 
 </div>
@@ -681,7 +682,7 @@ Syntax: !mission</p>
 <dt id="commands.mode.cmd">
 <code class="descclassname">commands.mode.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/mode.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.mode.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a mode.
-Syntax: !mode (&#8211;chan &lt;chan&gt;) &lt;mode&gt;</p>
+Syntax: !mode [&#8211;chan &lt;chan&gt;] &lt;mode&gt;</p>
 </dd></dl>
 
 </div>
@@ -691,7 +692,7 @@ Syntax: !mode (&#8211;chan &lt;chan&gt;) &lt;mode&gt;</p>
 <dt id="commands.morse.cmd">
 <code class="descclassname">commands.morse.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/morse.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.morse.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts text to morse code.
-Syntax: !morse &lt;text&gt;</p>
+Syntax: !morse [text]</p>
 </dd></dl>
 
 </div>
@@ -721,7 +722,7 @@ Syntax: !nicks &lt;nick&gt;</p>
 <dt id="commands.note.cmd">
 <code class="descclassname">commands.note.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/note.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.note.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Leaves a note for a user or users.
-Syntax: !note &lt;nick(,nick2)&gt; &lt;note&gt;</p>
+Syntax: !note &lt;nick&gt;[,nick2,...] &lt;note&gt;</p>
 </dd></dl>
 
 </div>
@@ -731,7 +732,7 @@ Syntax: !note &lt;nick(,nick2)&gt; &lt;note&gt;</p>
 <dt id="commands.nuke.cmd">
 <code class="descclassname">commands.nuke.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/nuke.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.nuke.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Nukes somebody.
-Syntax: !nuke target</p>
+Syntax: !nuke &lt;target&gt;</p>
 </dd></dl>
 
 </div>
@@ -741,7 +742,7 @@ Syntax: !nuke target</p>
 <dt id="commands.part.cmd">
 <code class="descclassname">commands.part.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/part.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.part.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Orders the bot to leave a channel
-Syntax: !part (channel)</p>
+Syntax: !part &lt;channel&gt;</p>
 </dd></dl>
 
 </div>
@@ -801,7 +802,7 @@ Syntax: !quit</p>
 <dt id="commands.quote.cmd">
 <code class="descclassname">commands.quote.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/quote.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.quote.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles quotes.
-Syntax: !quote (number|nick), !quote add &lt;quote&gt; &#8211; &lt;nick&gt;, !quote list, !quote remove &lt;number&gt;, !quote edit &lt;number&gt; &lt;quote&gt; &#8211; &lt;nick&gt;</p>
+Syntax: !quote &lt;number|nick&gt;, !quote add &lt;quote&gt; &#8211; &lt;nick&gt;, !quote list, !quote remove &lt;number&gt;, !quote edit &lt;number&gt; &lt;quote&gt; &#8211; &lt;nick&gt;</p>
 </dd></dl>
 
 <dl class="function">
@@ -841,7 +842,7 @@ Syntax: !quote (number|nick), !quote add &lt;quote&gt; &#8211; &lt;nick&gt;, !qu
 <dt id="commands.random.cmd">
 <code class="descclassname">commands.random.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/random.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.random.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>For when you don&#8217;t have enough randomness in your life.
-Syntax: !random (&#8211;int) (len)</p>
+Syntax: !random [&#8211;int] [len]</p>
 </dd></dl>
 
 <dl class="function">
@@ -856,7 +857,7 @@ Syntax: !random (&#8211;int) (len)</p>
 <dt id="commands.reddit.cmd">
 <code class="descclassname">commands.reddit.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/reddit.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.reddit.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a random Reddit post.
-Syntax: !reddit &lt;subreddit&gt;</p>
+Syntax: !reddit [subreddit]</p>
 </dd></dl>
 
 </div>
@@ -866,7 +867,7 @@ Syntax: !reddit &lt;subreddit&gt;</p>
 <dt id="commands.roman.cmd">
 <code class="descclassname">commands.roman.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/roman.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.roman.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a number to the roman numeral equivalent.
-Syntax: !roman &lt;number&gt;</p>
+Syntax: !roman [number]</p>
 </dd></dl>
 
 <dl class="function">
@@ -941,7 +942,7 @@ Syntax: !sha512 &lt;msg&gt;</p>
 <dt id="commands.shibe.cmd">
 <code class="descclassname">commands.shibe.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/shibe.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.shibe.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a shibe reaction.
-Syntax: !shibe (topic1)...(topicn)</p>
+Syntax: !shibe [topic1]...[topicn]</p>
 </dd></dl>
 
 </div>
@@ -961,7 +962,7 @@ Syntax: !signal &lt;signal|list&gt;</p>
 <dt id="commands.slap.cmd">
 <code class="descclassname">commands.slap.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/slap.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.slap.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Slap somebody.
-Syntax: !slap &lt;nick&gt; for &lt;reason&gt;</p>
+Syntax: !slap &lt;nick&gt; [for &lt;reason&gt;]</p>
 </dd></dl>
 
 </div>
@@ -971,7 +972,7 @@ Syntax: !slap &lt;nick&gt; for &lt;reason&gt;</p>
 <dt id="commands.slogan.cmd">
 <code class="descclassname">commands.slogan.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/slogan.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.slogan.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a slogan.
-Syntax: !slogan &lt;text&gt;</p>
+Syntax: !slogan [text]</p>
 </dd></dl>
 
 </div>
@@ -1011,7 +1012,7 @@ Syntax: !stats &lt;&#8211;high|&#8211;low|&#8211;userhigh|&#8211;nick &lt;nick&g
 <dt id="commands.stock.cmd">
 <code class="descclassname">commands.stock.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/stock.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.stock.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a stock quote.
-Syntax: !stock &lt;symbol&gt;</p>
+Syntax: !stock [symbol]</p>
 </dd></dl>
 
 <dl class="function">
@@ -1096,7 +1097,7 @@ Syntax: !threads</p>
 <dt id="commands.throw.cmd">
 <code class="descclassname">commands.throw.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/throw.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.throw.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Throw something.
-Syntax: !throw &lt;object&gt; at &lt;target&gt;</p>
+Syntax: !throw &lt;object&gt; [at &lt;target&gt;]</p>
 </dd></dl>
 
 </div>
@@ -1116,7 +1117,7 @@ Syntax: !time</p>
 <dt id="commands.timeout.cmd">
 <code class="descclassname">commands.timeout.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/timeout.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.timeout.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Quiets a user, then unquiets them after the specified period of time.
-Syntax: !timeout timespec nickname
+Syntax: !timeout &lt;timespec&gt; &lt;nickname&gt;
 timespec is in the format: {number}{unit}, where unit is s, m, h, or d.</p>
 </dd></dl>
 
@@ -1136,7 +1137,8 @@ Syntax: !timeuntil &lt;time&gt;</p>
 <dl class="function">
 <dt id="commands.tjbash.cmd">
 <code class="descclassname">commands.tjbash.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/tjbash.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.tjbash.cmd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds a random quote from tjbash.org given search criteria.</p>
+<dd><p>Finds a random quote from tjbash.org given search criteria.
+Syntax: !tjbash [searchstring]</p>
 </dd></dl>
 
 </div>
@@ -1171,7 +1173,7 @@ Syntax: !uptime</p>
 <dt id="commands.urban.cmd">
 <code class="descclassname">commands.urban.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/urban.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.urban.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a definition from urban dictionary.
-Syntax: !urban (#&lt;num&gt;) &lt;term&gt;</p>
+Syntax: !urban [#&lt;num&gt;] &lt;term&gt;</p>
 </dd></dl>
 
 </div>
@@ -1181,7 +1183,7 @@ Syntax: !urban (#&lt;num&gt;) &lt;term&gt;</p>
 <dt id="commands.version.cmd">
 <code class="descclassname">commands.version.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/version.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.version.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the git revison.
-Syntax: !version &lt;check|master&gt;</p>
+Syntax: !version [check|master]</p>
 </dd></dl>
 
 </div>
@@ -1264,7 +1266,7 @@ Syntax: !wai</p>
 <dt id="commands.weather.cmd">
 <code class="descclassname">commands.weather.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/weather.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.weather.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the weather.
-Syntax: !weather [&#8211;date date] [&#8211;hour hour] &lt;location|&#8211;set default&gt;
+Syntax: !weather &lt;[&#8211;date date] [&#8211;hour hour] location|&#8211;set default&gt;
 Powered by Weather Underground, www.wunderground.com</p>
 </dd></dl>
 
@@ -1306,7 +1308,7 @@ Powered by Weather Underground, www.wunderground.com</p>
 <dt id="commands.wiki.cmd">
 <code class="descclassname">commands.wiki.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/wiki.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.wiki.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the first wikipedia result for the argument.
-Syntax: !wiki &lt;term&gt;</p>
+Syntax: !wiki [term]</p>
 </dd></dl>
 
 <dl class="function">
@@ -1321,7 +1323,7 @@ Syntax: !wiki &lt;term&gt;</p>
 <dt id="commands.wikipath.cmd">
 <code class="descclassname">commands.wikipath.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/wikipath.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.wikipath.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find a path between two wikipedia articles.
-Syntax: !wikipath &lt;article&gt; &lt;article&gt;</p>
+Syntax: !wikipath [&lt;article&gt; &lt;article&gt;]</p>
 </dd></dl>
 
 <dl class="function">
@@ -1371,7 +1373,7 @@ Syntax: !wtf &lt;term&gt;</p>
 <dt id="commands.xkcd.cmd">
 <code class="descclassname">commands.xkcd.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/commands/xkcd.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.xkcd.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a xkcd comic.
-Syntax: !xkcd &lt;num|latest|term&gt;</p>
+Syntax: !xkcd [num|latest|term]</p>
 </dd></dl>
 
 <dl class="function">

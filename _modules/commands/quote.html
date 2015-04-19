@@ -150,7 +150,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;quote&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.quote.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles quotes.</span>
-<span class="sd">    Syntax: !quote (number|nick), !quote add &lt;quote&gt; -- &lt;nick&gt;, !quote list, !quote remove &lt;number&gt;, !quote edit &lt;number&gt; &lt;quote&gt; -- &lt;nick&gt;</span>
+<span class="sd">    Syntax: !quote &lt;number|nick&gt;, !quote add &lt;quote&gt; -- &lt;nick&gt;, !quote list, !quote remove &lt;number&gt;, !quote edit &lt;number&gt; &lt;quote&gt; -- &lt;nick&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c"># FIXME: use argparse</span>
     <span class="n">session</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span>

@@ -72,7 +72,9 @@
 
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;inspect&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">],</span> <span class="n">admin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.inspect.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;&#39;Inspect&#39; a bot attribute.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;&#39;Inspects a bot attribute.</span>
+<span class="sd">    Syntax: !inspect &lt;attr&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">):</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;That attribute was not found in the handler.&quot;</span><span class="p">)</span>
         <span class="k">return</span>

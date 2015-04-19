@@ -75,7 +75,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;random&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.random.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;For when you don&#39;t have enough randomness in your life.</span>
-<span class="sd">    Syntax: !random (--int) (len)</span>
+<span class="sd">    Syntax: !random [--int] [len]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;--(.+?)\b&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
     <span class="n">randtype</span> <span class="o">=</span> <span class="s">&#39;hex&#39;</span>

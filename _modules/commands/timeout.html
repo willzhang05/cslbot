@@ -75,7 +75,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;botnick&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">],</span> <span class="n">admin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.timeout.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Quiets a user, then unquiets them after the specified period of time.</span>
-<span class="sd">    Syntax: !timeout timespec nickname</span>
+<span class="sd">    Syntax: !timeout &lt;timespec&gt; &lt;nickname&gt;</span>
 <span class="sd">    timespec is in the format: {number}{unit}, where unit is s, m, h, or d.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nickregex</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;nickregex&#39;</span><span class="p">]</span>
