@@ -176,6 +176,17 @@
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">stop_workers</span><span class="p">()</span>
 </div>
+<div class="viewcode-block" id="IrcBot.shutdown_mp"><a class="viewcode-back" href="../bot.html#bot.IrcBot.shutdown_mp">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_mp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Shutdown all the multiprocessing that we know about, uncleanly &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="IrcBot.kill"><a class="viewcode-back" href="../bot.html#bot.IrcBot.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; forcibly kills everything &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="IrcBot.do_reload"><a class="viewcode-back" href="../bot.html#bot.IrcBot.do_reload">[docs]</a>    <span class="k">def</span> <span class="nf">do_reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The reloading magic.</span>
 
@@ -209,8 +220,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">cfgfile</span><span class="p">)</span>
         <span class="c"># preserve data</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">BotHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">c</span>
@@ -309,8 +319,7 @@
 <div class="viewcode-block" id="IrcBot.on_disconnect"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="c"># Don&#39;t kill everything if we just ping timed-out</span>
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="IrcBot.on_join"><a class="viewcode-back" href="../bot.html#bot.IrcBot.on_join">[docs]</a>    <span class="k">def</span> <span class="nf">on_join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handle joins.&quot;&quot;&quot;</span>
@@ -379,7 +388,20 @@
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">conf</span><span class="p">:</span>
         <span class="n">botconfig</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">bot</span> <span class="o">=</span> <span class="n">IrcBot</span><span class="p">(</span><span class="n">botconfig</span><span class="p">)</span>
-    <span class="n">bot</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c"># keyboard interrupt means someone tried to ^C, shut down the bot</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;The bot died! </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="p">(</span><span class="n">typ3</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+        <span class="n">errmsg</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">typ3</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">errmsg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">errmsg</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">multiprocessing</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s">&#39;spawn&#39;</span><span class="p">)</span>

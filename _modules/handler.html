@@ -411,6 +411,16 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid Argument: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">realargs</span>
 </div>
+<div class="viewcode-block" id="BotHandler.shutdown"><a class="viewcode-back" href="../handler.html#handler.BotHandler.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Cleanly shut ourself down &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">,</span> <span class="s">&#39;Please ^C me, I won</span><span class="se">\&#39;</span><span class="s">t die all the way =(&#39;</span><span class="p">,</span> <span class="s">&#39;privmsg&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">stop_workers</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="BotHandler.kill"><a class="viewcode-back" href="../handler.html#handler.BotHandler.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Forcibly kill ourself &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">kill_workers</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">nick</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span>
 </div>
