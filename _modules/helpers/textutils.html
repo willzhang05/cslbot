@@ -78,6 +78,8 @@
 <span class="kn">from</span> <span class="nn">html</span> <span class="kn">import</span> <span class="n">escape</span><span class="p">,</span> <span class="n">unescape</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randrange</span>
 
+<span class="n">slogan_cache</span> <span class="o">=</span> <span class="p">[]</span>
+
 
 <div class="viewcode-block" id="removevowels"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.removevowels">[docs]</a><span class="k">def</span> <span class="nf">removevowels</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;[aeiouy]&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
@@ -148,10 +150,10 @@
 </div>
 <div class="viewcode-block" id="gen_slogan"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_slogan">[docs]</a><span class="k">def</span> <span class="nf">gen_slogan</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
     <span class="c"># Originally from sloganizer.com</span>
-    <span class="c"># FIXME: cache this somewhere</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/../static/slogans.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">slogans</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">choice</span><span class="p">(</span><span class="n">slogans</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">slogan_cache</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/../static/slogans.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">slogan_cache</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">choice</span><span class="p">(</span><span class="n">slogan_cache</span><span class="p">))</span>
 
 </div>
 <div class="viewcode-block" id="gen_morse"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_morse">[docs]</a><span class="k">def</span> <span class="nf">gen_morse</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
