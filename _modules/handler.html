@@ -230,7 +230,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../handler.html#handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../handler.html#handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Send a message.</span>
 
 <span class="sd">        Records the message in the log.</span>
@@ -246,8 +246,9 @@
             <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">[:</span><span class="n">split_pos</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="n">split_pos</span><span class="p">:]</span>
         <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-        <span class="c"># Never send more then two lines to avoid Excess Flood errors</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="c"># Avoid sending more then two lines to avoid Excess Flood errors and spam</span>
+        <span class="n">msgs</span> <span class="o">=</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">ignore_length</span> <span class="k">else</span> <span class="n">msgs</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;action&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
@@ -447,8 +448,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span>
 
-        <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;privnotice&#39;</span><span class="p">:</span>
             <span class="c"># FIXME: come up with a better way to prevent admin abuse.</span>
