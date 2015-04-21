@@ -125,7 +125,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;botnick&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.s.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Corrects a previous message.</span>
-<span class="sd">    Syntax: !s/&lt;msg&gt;/&lt;replacement&gt;/&lt;ig|nick&gt;</span>
+<span class="sd">    Syntax: {command}/&lt;msg&gt;/&lt;replacement&gt;/&lt;ig|nick&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid Syntax.&quot;</span><span class="p">)</span>

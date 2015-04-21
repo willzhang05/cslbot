@@ -75,7 +75,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;pull&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;botnick&#39;</span><span class="p">],</span> <span class="n">admin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.pull.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pull changes.</span>
-<span class="sd">    Syntax: !pull &lt;branch&gt;</span>
+<span class="sd">    Syntax: {command} &lt;branch&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="n">do_pull</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;botnick&#39;</span><span class="p">]))</span>

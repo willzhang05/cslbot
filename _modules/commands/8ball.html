@@ -74,7 +74,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;8ball&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.8ball.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Asks the Magic 8-Ball a question.</span>
-<span class="sd">    Syntax: !8ball &lt;question&gt;</span>
+<span class="sd">    Syntax: {command} &lt;question&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;What is your question?&quot;</span><span class="p">)</span>

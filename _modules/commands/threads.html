@@ -75,7 +75,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;threads&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.threads.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Enumerate threads.</span>
-<span class="sd">    Syntax: !threads</span>
+<span class="sd">    Syntax: {command}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">thread_names</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">enumerate</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>

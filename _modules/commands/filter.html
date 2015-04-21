@@ -92,7 +92,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">],</span> <span class="n">admin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.filter.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Changes the output filter.</span>
-<span class="sd">    Syntax: !filter &lt;filter|--show|--list|--reset|--chain filter,[filter2,...]&gt;</span>
+<span class="sd">    Syntax: {command} &lt;filter|--show|--list|--reset|--chain filter,[filter2,...]&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;privmsg&#39;</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&#39;Filters must be set in channels, not via private message.&#39;</span><span class="p">)</span>

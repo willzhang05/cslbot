@@ -91,7 +91,7 @@
 <span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;dvorak&#39;</span><span class="p">,</span> <span class="s">&#39;sdamashek&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.dvorak.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts a message to/from dvorak.</span>
-<span class="sd">    Syntax: !dvorak &lt;--nick &lt;nick&gt;|msg&gt;</span>
+<span class="sd">    Syntax: {command} &lt;--nick &lt;nick&gt;|msg&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--nick&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">arguments</span><span class="o">.</span><span class="n">NickParser</span><span class="p">)</span>

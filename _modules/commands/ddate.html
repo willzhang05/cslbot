@@ -74,7 +74,7 @@
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;ddate&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.ddate.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the Discordian date.</span>
-<span class="sd">    Syntax: !ddate</span>
+<span class="sd">    Syntax: {command}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">toSend</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;ddate&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
