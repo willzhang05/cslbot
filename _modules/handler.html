@@ -71,6 +71,7 @@
 
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">arguments</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">control</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">sql</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">hook</span>
@@ -230,7 +231,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../handler.html#handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../handler.html#handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Send a message.</span>
 
 <span class="sd">        Records the message in the log.</span>
@@ -238,7 +239,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Trying to send a </span><span class="si">%s</span><span class="s"> to irc, only strings allowed.&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
         <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputfilter</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">filters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputfilter</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">target</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="n">i</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">400</span><span class="p">:</span>
@@ -504,6 +507,24 @@
                 <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">cmdlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
         <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="n">cmdlen</span><span class="p">:]</span>
+
+        <span class="c"># parse out any filters</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--filter&#39;</span><span class="p">)</span>
+        <span class="n">parsedfilters</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
+        <span class="n">cmdargs</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span>
+        <span class="n">filter_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">parsedfilters</span><span class="o">.</span><span class="n">filter</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">parsedfilters</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">filter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="p">[</span><span class="n">next_filter</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid filter </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">next_filter</span><span class="p">)</span>
+
+        <span class="c"># define a new send to handle filter chaining</span>
+        <span class="k">def</span> <span class="nf">filtersend</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filter_list</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;action&#39;</span><span class="p">:</span>
             <span class="n">cmd_name</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):]</span>
             <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">is_registered</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">):</span>
@@ -514,7 +535,7 @@
                     <span class="n">send</span><span class="p">(</span><span class="s">&quot;This command requires admin privileges.&quot;</span><span class="p">)</span>
                     <span class="k">return</span>
                 <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">cmd_obj</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
-                <span class="n">cmd_obj</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">cmd_obj</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">filtersend</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
             <span class="c"># special commands</span>
             <span class="k">elif</span> <span class="n">cmd</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):]</span> <span class="o">==</span> <span class="s">&#39;reload&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">nick</span> <span class="ow">in</span> <span class="n">admins</span><span class="p">:</span>
