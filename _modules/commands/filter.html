@@ -89,13 +89,14 @@
     <span class="k">return</span> <span class="s">&quot;Okay!&quot;</span>
 
 </div>
-<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">],</span> <span class="n">admin</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.filter.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Changes the output filter.</span>
 <span class="sd">    Syntax: {command} &lt;filter|--show|--list|--reset|--chain filter,[filter2,...]&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;privmsg&#39;</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&#39;Filters must be set in channels, not via private message.&#39;</span><span class="p">)</span>
+    <span class="n">isadmin</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;is_admin&#39;</span><span class="p">](</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">])</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
     <span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
     <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
@@ -113,20 +114,22 @@
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">list</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Available filters are </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">reset</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">reset</span> <span class="ow">and</span> <span class="n">isadmin</span><span class="p">:</span>
         <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">outputfilter</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Okay!&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">chain</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">chain</span> <span class="ow">and</span> <span class="n">isadmin</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">outputfilter</span><span class="p">:</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&quot;Must have a filter set in order to chain.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="n">send</span><span class="p">(</span><span class="n">append_filters</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">],</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">chain</span><span class="p">))</span>
     <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">show</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="n">get_filters</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]))</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">isadmin</span><span class="p">:</span>
         <span class="c"># If we&#39;re just adding a filter without chain, blow away any existing filters.</span>
         <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">outputfilter</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="n">send</span><span class="p">(</span><span class="n">append_filters</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">))</span></div>
+        <span class="n">send</span><span class="p">(</span><span class="n">append_filters</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&#39;This command requires admin privileges.&#39;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
