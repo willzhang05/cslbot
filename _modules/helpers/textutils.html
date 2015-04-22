@@ -278,6 +278,7 @@
     <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> ( ͡° ͜ʖ ͡°)&quot;</span> <span class="o">%</span> <span class="n">msg</span>
 </div>
 <span class="n">output_filters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;passthrough&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
     <span class="s">&quot;hashtag&quot;</span><span class="p">:</span> <span class="n">gen_hashtag</span><span class="p">,</span>
     <span class="s">&quot;fwilson&quot;</span><span class="p">:</span> <span class="n">gen_fwilson</span><span class="p">,</span>
     <span class="s">&quot;creffett&quot;</span><span class="p">:</span> <span class="n">gen_creffett</span><span class="p">,</span>
