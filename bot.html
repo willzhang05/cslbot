@@ -65,54 +65,19 @@
 <em class="property">class </em><code class="descclassname">bot.</code><code class="descname">IrcBot</code><span class="sig-paren">(</span><em>botconfig</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">irc.bot.SingleServerIRCBot</span></code></p>
 <dl class="method">
-<dt id="bot.IrcBot.check_reload">
-<code class="descname">check_reload</code><span class="sig-paren">(</span><em>target</em>, <em>c</em>, <em>e</em>, <em>msgtype</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.check_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.check_reload" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.debug_send">
-<code class="descname">debug_send</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.debug_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.debug_send" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send a message to the control channel, with no dependency on anything but
-our state being valid</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.debug_send_many">
-<code class="descname">debug_send_many</code><span class="sig-paren">(</span><em>msgs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.debug_send_many"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.debug_send_many" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send many messages, with rate limiting</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="bot.IrcBot.do_rejoin">
 <code class="descname">do_rejoin</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.do_rejoin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.do_rejoin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.do_reload">
-<code class="descname">do_reload</code><span class="sig-paren">(</span><em>c</em>, <em>target</em>, <em>cmdargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.do_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.do_reload" title="Permalink to this definition">¶</a></dt>
-<dd><p>The reloading magic.</p>
-<div class="line-block">
-<div class="line">First, reload handler.py.</div>
-<div class="line">Then make copies of all the handler data we want to keep.</div>
-<div class="line">Create a new handler and restore all the data.</div>
-</div>
-</dd></dl>
 
 <dl class="method">
 <dt id="bot.IrcBot.do_sasl">
 <code class="descname">do_sasl</code><span class="sig-paren">(</span><em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.do_sasl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.do_sasl" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="bot.IrcBot.do_welcome">
-<code class="descname">do_welcome</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.do_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.do_welcome" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do setup when connected to server.</p>
-<div class="line-block">
-<div class="line">Pass the connection to handler.</div>
-<div class="line">Join the primary channel.</div>
-<div class="line">Join the control channel.</div>
-</div>
-</dd></dl>
+<dl class="staticmethod">
+<dt id="bot.IrcBot.get_target">
+<em class="property">static </em><code class="descname">get_target</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.get_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.get_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="bot.IrcBot.get_version">
@@ -121,13 +86,17 @@ our state being valid</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="bot.IrcBot.handle_event">
+<code class="descname">handle_event</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.handle_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.handle_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="bot.IrcBot.handle_msg">
-<code class="descname">handle_msg</code><span class="sig-paren">(</span><em>msgtype</em>, <em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.handle_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.handle_msg" title="Permalink to this definition">¶</a></dt>
+<code class="descname">handle_msg</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.handle_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.handle_msg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles all messages.</p>
 <div class="line-block">
 <div class="line">If a exception is thrown, catch it and display a nice traceback instead of crashing.</div>
-<div class="line">If we receive a !reload command, do the reloading magic.</div>
-<div class="line">Call the appropriate handler method for processing.</div>
+<div class="line">Do the appropriate processing for each event type.</div>
 </div>
 </dd></dl>
 
@@ -144,123 +113,15 @@ our state being valid</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="bot.IrcBot.on_903">
-<code class="descname">on_903</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_903"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_903" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_action">
-<code class="descname">on_action</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_action" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pass actions to <a class="reference internal" href="#bot.IrcBot.handle_msg" title="bot.IrcBot.handle_msg"><code class="xref py py-func docutils literal"><span class="pre">handle_msg()</span></code></a>.</p>
+<dt id="bot.IrcBot.reload_handler">
+<code class="descname">reload_handler</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.reload_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.reload_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This handles reloads.</p>
 </dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_authenticate">
-<code class="descname">on_authenticate</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_authenticate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_bannedfromchan">
-<code class="descname">on_bannedfromchan</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_bannedfromchan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_bannedfromchan" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_cap">
-<code class="descname">on_cap</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_cap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_cap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="bot.IrcBot.on_ctcpreply">
-<em class="property">static </em><code class="descname">on_ctcpreply</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_ctcpreply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_ctcpreply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_disconnect">
-<code class="descname">on_disconnect</code><span class="sig-paren">(</span><em>_</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_disconnect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_error">
-<code class="descname">on_error</code><span class="sig-paren">(</span><em>_</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle ping timeouts.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_join">
-<code class="descname">on_join</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_join"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_join" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle joins.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_kick">
-<code class="descname">on_kick</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_kick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_kick" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle kicks.</p>
-<div class="line-block">
-<div class="line">If somebody else was kicked, just log it.</div>
-<div class="line">Record who kicked us and what for to use in <a class="reference internal" href="#bot.IrcBot.on_join" title="bot.IrcBot.on_join"><code class="xref py py-func docutils literal"><span class="pre">on_join()</span></code></a>.</div>
-<div class="line">Wait 5 seconds and then rejoin.</div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_mode">
-<code class="descname">on_mode</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pass mode changes to <a class="reference internal" href="#bot.IrcBot.handle_msg" title="bot.IrcBot.handle_msg"><code class="xref py py-func docutils literal"><span class="pre">handle_msg()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_nick">
-<code class="descname">on_nick</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_nick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_nick" title="Permalink to this definition">¶</a></dt>
-<dd><p>Log nick changes.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_nicknameinuse">
-<code class="descname">on_nicknameinuse</code><span class="sig-paren">(</span><em>c</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_nicknameinuse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_nicknameinuse" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_part">
-<code class="descname">on_part</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_part"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_part" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle parts.</p>
-<div class="line-block">
-<div class="line">If another user is parting, just log it.</div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_privmsg">
-<code class="descname">on_privmsg</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_privmsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_privmsg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pass private messages to <a class="reference internal" href="#bot.IrcBot.handle_msg" title="bot.IrcBot.handle_msg"><code class="xref py py-func docutils literal"><span class="pre">handle_msg()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_privnotice">
-<code class="descname">on_privnotice</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_privnotice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_privnotice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pass private notices to <a class="reference internal" href="#bot.IrcBot.handle_msg" title="bot.IrcBot.handle_msg"><code class="xref py py-func docutils literal"><span class="pre">handle_msg()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_pubmsg">
-<code class="descname">on_pubmsg</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_pubmsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_pubmsg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pass public messages to <a class="reference internal" href="#bot.IrcBot.handle_msg" title="bot.IrcBot.handle_msg"><code class="xref py py-func docutils literal"><span class="pre">handle_msg()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_pubnotice">
-<code class="descname">on_pubnotice</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_pubnotice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_pubnotice" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is mostly informational stuff from the server that we don&#8217;t do anything with right now.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.on_welcome">
-<code class="descname">on_welcome</code><span class="sig-paren">(</span><em>c</em>, <em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.on_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.on_welcome" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="bot.IrcBot.shutdown_mp">
 <code class="descname">shutdown_mp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.shutdown_mp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.shutdown_mp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shutdown all the multiprocessing that we know about, uncleanly</p>
+<dd><p>Shutdown all the multiprocessing that we know about.</p>
 </dd></dl>
 
 <dl class="method">

@@ -6,25 +6,25 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>handler &mdash; IrcBot 0.7 documentation</title>
+    <title>helpers.handler &mdash; IrcBot 0.7 documentation</title>
     
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
+        URL_ROOT:    '../../',
         VERSION:     '0.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="IrcBot 0.7 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" />
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IrcBot 0.7 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -35,13 +35,13 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">IrcBot 0.7 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">IrcBot 0.7 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,7 +50,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for handler</h1><div class="highlight"><pre>
+  <h1>Source code for helpers.handler</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
 <span class="c">#</span>
@@ -85,7 +85,7 @@
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">random</span>
 
 
-<div class="viewcode-block" id="BotHandler"><a class="viewcode-back" href="../handler.html#handler.BotHandler">[docs]</a><span class="k">class</span> <span class="nc">BotHandler</span><span class="p">():</span>
+<div class="viewcode-block" id="BotHandler"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler">[docs]</a><span class="k">class</span> <span class="nc">BotHandler</span><span class="p">():</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Set everything up.</span>
@@ -118,7 +118,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log_to_ctrlchan</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Sql</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BotHandler.get_data"><a class="viewcode-back" href="../handler.html#handler.BotHandler.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.get_data"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Saves the handler&#39;s data for :func:`bot.IrcBot.do_reload`&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;caps&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">caps</span><span class="p">[:]</span>
@@ -129,13 +129,13 @@
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;abuselist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">abuselist</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">data</span>
 </div>
-<div class="viewcode-block" id="BotHandler.set_data"><a class="viewcode-back" href="../handler.html#handler.BotHandler.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.set_data"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called from :func:`bot.IrcBot.do_reload` to restore the handler&#39;s data.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span><span class="p">[</span><span class="s">&#39;reloaded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="BotHandler.ignore"><a class="viewcode-back" href="../handler.html#handler.BotHandler.ignore">[docs]</a>    <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.ignore"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.ignore">[docs]</a>    <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Ignores a nick.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">nick</span><span class="p">:</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&quot;Ignore who?&quot;</span><span class="p">)</span>
@@ -143,7 +143,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&quot;Now ignoring </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.is_admin"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_admin">[docs]</a>    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.is_admin"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.is_admin">[docs]</a>    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if a nick is a admin.</span>
 
 <span class="sd">        | If the nick is not in self.admins then it&#39;s not a admin.</span>
@@ -170,7 +170,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">send_raw</span><span class="p">(</span><span class="s">&#39;NS ACC </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="BotHandler.get_admins"><a class="viewcode-back" href="../handler.html#handler.BotHandler.get_admins">[docs]</a>    <span class="k">def</span> <span class="nf">get_admins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.get_admins"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.get_admins">[docs]</a>    <span class="k">def</span> <span class="nf">get_admins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check verification for all admins.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;nickserv&#39;</span><span class="p">):</span>
             <span class="k">return</span>
@@ -179,7 +179,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">defer</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">send_raw</span><span class="p">,</span> <span class="s">&#39;NS ACC </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 </div>
-<div class="viewcode-block" id="BotHandler.abusecheck"><a class="viewcode-back" href="../handler.html#handler.BotHandler.abusecheck">[docs]</a>    <span class="k">def</span> <span class="nf">abusecheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.abusecheck"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.abusecheck">[docs]</a>    <span class="k">def</span> <span class="nf">abusecheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Rate-limits commands.</span>
 
 <span class="sd">        | If a nick uses commands with the limit attr set, record the time</span>
@@ -206,7 +206,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../handler.html#handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Send a message.</span>
 
 <span class="sd">        Records the message in the log.</span>
@@ -234,7 +234,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 </div>
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="BotHandler.get_split_pos"><a class="viewcode-back" href="../handler.html#handler.BotHandler.get_split_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_pos</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.get_split_pos"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.get_split_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_pos</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets the proper split position at or around position 400 of</span>
 <span class="sd">           a message.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">385</span><span class="p">,</span> <span class="mi">415</span><span class="p">):</span>
@@ -242,7 +242,7 @@
                 <span class="k">return</span> <span class="n">i</span>
         <span class="k">return</span> <span class="mi">400</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_log"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_log">[docs]</a>    <span class="k">def</span> <span class="nf">do_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_log"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_log">[docs]</a>    <span class="k">def</span> <span class="nf">do_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Handles logging.</span>
 
 <span class="sd">        | Logs to a sql db.</span>
@@ -273,7 +273,7 @@
                 <span class="c"># If we call self.send, we&#39;ll get a infinite loop.</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">ctrlchan</span><span class="p">,</span> <span class="n">ctrlmsg</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_part"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_part">[docs]</a>    <span class="k">def</span> <span class="nf">do_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_part"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_part">[docs]</a>    <span class="k">def</span> <span class="nf">do_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Leaves a channel.</span>
 
 <span class="sd">        Prevent user from leaving the primary channel.</span>
@@ -300,7 +300,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="s">&quot;Leaving at the request of </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
         <span class="n">c</span><span class="o">.</span><span class="n">part</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_join"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_join">[docs]</a>    <span class="k">def</span> <span class="nf">do_join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_join"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_join">[docs]</a>    <span class="k">def</span> <span class="nf">do_join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Join a channel.</span>
 
 <span class="sd">        | Checks if bot is already joined to channel.</span>
@@ -321,7 +321,7 @@
         <span class="n">c</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nick</span><span class="p">,</span> <span class="s">&quot;Joined at the request of &quot;</span> <span class="o">+</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_mode"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_mode">[docs]</a>    <span class="k">def</span> <span class="nf">do_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">send</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_mode"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_mode">[docs]</a>    <span class="k">def</span> <span class="nf">do_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">send</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; reop and handle guard violations &quot;&quot;&quot;</span>
         <span class="c"># reop</span>
         <span class="n">botnick</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;nick&#39;</span><span class="p">]</span>
@@ -340,7 +340,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">modestring</span><span class="p">)</span>
                 <span class="n">send</span><span class="p">(</span><span class="s">&#39;Mode </span><span class="si">%s</span><span class="s"> on </span><span class="si">%s</span><span class="s"> by the guard system&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">modestring</span><span class="p">,</span> <span class="n">target</span><span class="p">),</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">])</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_kick"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_kick">[docs]</a>    <span class="k">def</span> <span class="nf">do_kick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">slogan</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_kick"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_kick">[docs]</a>    <span class="k">def</span> <span class="nf">do_kick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">slogan</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Kick users.</span>
 
 <span class="sd">        | If kick is disabled, don&#39;t do anything.</span>
@@ -369,7 +369,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kick</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="BotHandler.do_args"><a class="viewcode-back" href="../handler.html#handler.BotHandler.do_args">[docs]</a>    <span class="k">def</span> <span class="nf">do_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_args"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_args">[docs]</a>    <span class="k">def</span> <span class="nf">do_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Handle the various args that modules need.&quot;&quot;&quot;</span>
         <span class="n">realargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;nick&#39;</span><span class="p">:</span> <span class="n">nick</span><span class="p">,</span>
@@ -392,20 +392,38 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid Argument: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">realargs</span>
 </div>
-<div class="viewcode-block" id="BotHandler.shutdown"><a class="viewcode-back" href="../handler.html#handler.BotHandler.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.shutdown"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Cleanly shut ourself down &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">,</span> <span class="s">&#39;Please ^C me, I won</span><span class="se">\&#39;</span><span class="s">t die all the way =(&#39;</span><span class="p">,</span> <span class="s">&#39;privmsg&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">stop_workers</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="BotHandler.kill"><a class="viewcode-back" href="../handler.html#handler.BotHandler.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.do_welcome"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.do_welcome">[docs]</a>    <span class="k">def</span> <span class="nf">do_welcome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Do setup when connected to server.</span>
+
+<span class="sd">        | Join the primary channel.</span>
+<span class="sd">        | Join the control channel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">channels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_admins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;channel&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">][</span><span class="s">&#39;ctrlkey&#39;</span><span class="p">])</span>
+        <span class="n">extrachans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;extrachans&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">extrachans</span><span class="p">:</span>
+            <span class="n">extrachans</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">extrachans</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)]</span>
+            <span class="c"># Delay joining extra channels to prevent excess flood.</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">extrachans</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">defer</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">extrachans</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="BotHandler.kill"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Forcibly kill ourself &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">kill_workers</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../handler.html#handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">nick</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span>
 </div>
-<div class="viewcode-block" id="BotHandler.handle_msg"><a class="viewcode-back" href="../handler.html#handler.BotHandler.handle_msg">[docs]</a>    <span class="k">def</span> <span class="nf">handle_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="BotHandler.handle_msg"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.handle_msg">[docs]</a>    <span class="k">def</span> <span class="nf">handle_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The Heart and Soul of IrcBot.&quot;&quot;&quot;</span>
 
         <span class="n">nick</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span>
@@ -436,8 +454,7 @@
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">):</span>
-            <span class="n">enabled_hooks</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hook</span><span class="o">.</span><span class="n">get_known_hooks</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">h</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hook</span><span class="o">.</span><span class="n">get_disabled_hooks</span><span class="p">()]</span>
-            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">enabled_hooks</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hook</span><span class="o">.</span><span class="n">get_hook_objects</span><span class="p">():</span>
                 <span class="n">realargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
                 <span class="n">h</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">realargs</span><span class="p">)</span>
 
@@ -460,6 +477,18 @@
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;join&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">nick</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">:</span>
                 <span class="n">send</span><span class="p">(</span><span class="s">&quot;Joined channel </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">target</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">])</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;part&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nick</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="s">&quot;Parted channel </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">target</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">])</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;kick&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nick</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="s">&quot;Kicked from channel </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">target</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">])</span>
+                <span class="c"># Auto-rejoin after 5 seconds.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">defer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
@@ -532,7 +561,7 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
+    <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
