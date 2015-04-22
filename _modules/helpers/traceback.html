@@ -69,14 +69,19 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,</span>
 <span class="c"># USA.</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">basename</span>
 
 
-<div class="viewcode-block" id="get_traceback"><a class="viewcode-back" href="../../helpers.html#helpers.traceback.get_traceback">[docs]</a><span class="k">def</span> <span class="nf">get_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">):</span>
+<div class="viewcode-block" id="output_traceback"><a class="viewcode-back" href="../../helpers.html#helpers.traceback.output_traceback">[docs]</a><span class="k">def</span> <span class="nf">output_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Returns a tuple of a prettyprinted error message and string representation of the error &quot;&quot;&quot;</span>
     <span class="c"># Dump full traceback to console.</span>
-    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+    <span class="p">(</span><span class="n">typ3</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+    <span class="n">errmsg</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">typ3</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">errmsg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="c"># Force traceback to be flushed</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
     <span class="n">trace</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">extract_tb</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -88,7 +93,7 @@
 
 </div>
 <div class="viewcode-block" id="handle_traceback"><a class="viewcode-back" href="../../helpers.html#helpers.traceback.handle_traceback">[docs]</a><span class="k">def</span> <span class="nf">handle_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&quot;the bot&quot;</span><span class="p">):</span>
-    <span class="n">msg</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="n">get_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="n">output_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span>
     <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
     <span class="n">prettyerrors</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;prettyerrors&#39;</span><span class="p">)</span>

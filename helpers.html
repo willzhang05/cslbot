@@ -246,6 +246,18 @@
 <dt id="helpers.command.scan_for_commands">
 <code class="descclassname">helpers.command.</code><code class="descname">scan_for_commands</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/command.html#scan_for_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.command.scan_for_commands" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scans folder for commands</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.4)"><em>str</em></a>) &#8211; The folder in which to look for commands</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict, list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dict represents a list of known commands, while the list is a list of modules that failed to reload</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -442,6 +454,18 @@
 <dt id="helpers.hook.scan_for_hooks">
 <code class="descclassname">helpers.hook.</code><code class="descname">scan_for_hooks</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/hook.html#scan_for_hooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.hook.scan_for_hooks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scans folder for hooks</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.4)"><em>str</em></a>) &#8211; The folder in which to look for hooks</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict, list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dict represents a list of known hooks, while the list is a list of modules that failed to reload</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -599,12 +623,35 @@
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="helpers.modutils.safe_load">
+<code class="descclassname">helpers.modutils.</code><code class="descname">safe_load</code><span class="sig-paren">(</span><em>modname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/modutils.html#safe_load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.modutils.safe_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a module, logging errors instead of dying if it fails to load</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool, str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True when import was successful. String is the first line of the error message</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="helpers.modutils.safe_reload">
 <code class="descclassname">helpers.modutils.</code><code class="descname">safe_reload</code><span class="sig-paren">(</span><em>modname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/modutils.html#safe_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.modutils.safe_reload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Catch and log any errors that arise from reimporting a module, but do not die.</p>
-<div class="line-block">
-<div class="line">Returns True when import was successful</div>
-</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool, str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True when import was successful. String is the first line of the error message</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -1238,14 +1285,15 @@
 <div class="section" id="module-helpers.traceback">
 <span id="helpers-traceback-module"></span><h2>helpers.traceback module<a class="headerlink" href="#module-helpers.traceback" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="helpers.traceback.get_traceback">
-<code class="descclassname">helpers.traceback.</code><code class="descname">get_traceback</code><span class="sig-paren">(</span><em>ex</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/traceback.html#get_traceback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.traceback.get_traceback" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="helpers.traceback.handle_traceback">
 <code class="descclassname">helpers.traceback.</code><code class="descname">handle_traceback</code><span class="sig-paren">(</span><em>ex</em>, <em>c</em>, <em>target</em>, <em>config</em>, <em>source='the bot'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/traceback.html#handle_traceback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.traceback.handle_traceback" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="function">
+<dt id="helpers.traceback.output_traceback">
+<code class="descclassname">helpers.traceback.</code><code class="descname">output_traceback</code><span class="sig-paren">(</span><em>ex</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/traceback.html#output_traceback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.traceback.output_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of a prettyprinted error message and string representation of the error</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-helpers.urlutils">

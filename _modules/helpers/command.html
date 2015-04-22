@@ -84,12 +84,18 @@
 
 
 <div class="viewcode-block" id="scan_for_commands"><a class="viewcode-back" href="../../helpers.html#helpers.command.scan_for_commands">[docs]</a><span class="k">def</span> <span class="nf">scan_for_commands</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Scans folder for commands &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scans folder for commands</span>
+
+<span class="sd">    :param str folder: The folder in which to look for commands</span>
+<span class="sd">    :rtype: dict, list</span>
+<span class="sd">    :return: The dict represents a list of known commands, while the list is a list of modules that failed to reload</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">_disabled_commands</span>
     <span class="n">_known_commands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">_disabled_commands</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">get_disabled</span><span class="p">(</span><span class="s">&quot;commands&quot;</span><span class="p">)</span>
-    <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s">&quot;commands&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_known_commands</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s">&quot;commands&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_known_commands</span><span class="p">,</span> <span class="n">errors</span>
 
 </div>
 <div class="viewcode-block" id="is_registered"><a class="viewcode-back" href="../../helpers.html#helpers.command.is_registered">[docs]</a><span class="k">def</span> <span class="nf">is_registered</span><span class="p">(</span><span class="n">command_name</span><span class="p">):</span>

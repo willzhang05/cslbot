@@ -68,7 +68,7 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
 <span class="kn">import</span> <span class="nn">socketserver</span>
-<span class="kn">from</span> <span class="nn">.traceback</span> <span class="kn">import</span> <span class="n">get_traceback</span>
+<span class="kn">from</span> <span class="nn">.traceback</span> <span class="kn">import</span> <span class="n">output_traceback</span>
 
 <span class="n">WELCOME</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">Welcome to the IRCbot console.</span>
@@ -174,7 +174,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">send</span><span class="p">(</span><span class="s">&quot;Unknown command. Type help for more info.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+            <span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">output_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
             <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">ctrlchan</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>

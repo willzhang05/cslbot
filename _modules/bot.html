@@ -84,9 +84,11 @@
     <span class="kn">import</span> <span class="nn">handler</span>
     <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">server</span>
     <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">config</span>
+    <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">command</span>
     <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">traceback</span>
     <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">misc</span>
     <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">modutils</span>
+    <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">hook</span>
     <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
     <span class="kn">from</span> <span class="nn">irc.bot</span> <span class="kn">import</span> <span class="n">ServerSpec</span><span class="p">,</span> <span class="n">SingleServerIRCBot</span>
     <span class="kn">from</span> <span class="nn">irc.connection</span> <span class="kn">import</span> <span class="n">Factory</span>
@@ -118,7 +120,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">botconfig</span>
+
+        <span class="n">modutils</span><span class="o">.</span><span class="n">init_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">])</span>
+        <span class="n">modutils</span><span class="o">.</span><span class="n">init_groups</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;groups&#39;</span><span class="p">])</span>
+        <span class="n">commands</span><span class="p">,</span> <span class="n">errored_commands</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">scan_for_commands</span><span class="p">(</span><span class="s">&#39;commands&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errored_commands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Failed to reload some commands, things may not work as expected&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">errored_commands</span><span class="p">]))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">hooks</span><span class="p">,</span> <span class="n">errored_hooks</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">scan_for_hooks</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errored_hooks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Failed to reload some hooks, there may be significant spam or silent bot failures&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">errored_hooks</span><span class="p">]))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span> <span class="o">=</span> <span class="bp">False</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">BotHandler</span><span class="p">(</span><span class="n">botconfig</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">botconfig</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="c"># properly log quits.</span>
@@ -140,13 +158,15 @@
             <span class="n">target</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span>
+        <span class="n">reloading</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-            <span class="n">reloading</span> <span class="o">=</span> <span class="bp">False</span>
             <span class="k">if</span> <span class="n">msgtype</span> <span class="o">!=</span> <span class="s">&#39;mode&#39;</span> <span class="ow">and</span> <span class="n">msgtype</span> <span class="o">!=</span> <span class="s">&#39;nick&#39;</span> <span class="ow">and</span> <span class="n">msgtype</span> <span class="o">!=</span> <span class="s">&#39;join&#39;</span><span class="p">:</span>
                 <span class="n">reloading</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_reload</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">handle_msg</span><span class="p">(</span><span class="n">msgtype</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">handle_msg</span><span class="p">(</span><span class="n">msgtype</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="c"># reloading blew up, but we don&#39;t want to lock up on the next spin through here</span>
             <span class="k">if</span> <span class="n">reloading</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="n">traceback</span><span class="o">.</span><span class="n">handle_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
@@ -187,6 +207,19 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
 </div>
+<div class="viewcode-block" id="IrcBot.debug_send"><a class="viewcode-back" href="../bot.html#bot.IrcBot.debug_send">[docs]</a>    <span class="k">def</span> <span class="nf">debug_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Send a message to the control channel, with no dependency on anything but</span>
+<span class="sd">                our state being valid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">controlchan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">controlchan</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IrcBot.debug_send_many"><a class="viewcode-back" href="../bot.html#bot.IrcBot.debug_send_many">[docs]</a>    <span class="k">def</span> <span class="nf">debug_send_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Send many messages, with rate limiting &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c"># rate limit</span>
+</div>
 <div class="viewcode-block" id="IrcBot.do_reload"><a class="viewcode-back" href="../bot.html#bot.IrcBot.do_reload">[docs]</a>    <span class="k">def</span> <span class="nf">do_reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The reloading magic.</span>
 
@@ -201,19 +234,47 @@
             <span class="n">output</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">do_pull</span><span class="p">(</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">)</span>
             <span class="n">c</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
         <span class="n">reload_ok</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c"># Reimport helpers</span>
         <span class="n">failed_modules</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">modutils</span><span class="o">.</span><span class="n">get_enabled</span><span class="p">(</span><span class="s">&#39;helpers&#39;</span><span class="p">,</span> <span class="s">&#39;helpers&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-                <span class="n">mod_reload_ok</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">safe_reload</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                <span class="n">mod_reload_ok</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">safe_reload</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">mod_reload_ok</span><span class="p">:</span>
-                    <span class="n">failed_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">failed_modules</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
                     <span class="n">reload_ok</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">reload_ok</span><span class="p">:</span>
-            <span class="n">controlchan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">controlchan</span><span class="p">,</span>
-                                    <span class="s">&quot;Failed to reload some helper modules. Some commands may not work as expected, see the console for details&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">controlchan</span><span class="p">,</span> <span class="s">&quot;Failures: &quot;</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">failed_modules</span><span class="p">))</span>
-        <span class="n">modutils</span><span class="o">.</span><span class="n">safe_reload</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="s">&quot;Failed to reload some helper modules. Going in to reload-only mode&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="s">&quot;Failures: &quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send_many</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">failed_modules</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="c"># reimport the handler</span>
+        <span class="n">handler_ok</span><span class="p">,</span> <span class="n">handler_err</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">safe_reload</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">handler_ok</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="s">&quot;Failed to reload the helper module&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="n">handler_err</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="c"># reimport the commands and hooks</span>
+        <span class="n">modutils</span><span class="o">.</span><span class="n">init_aux</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">])</span>
+        <span class="n">modutils</span><span class="o">.</span><span class="n">init_groups</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;groups&#39;</span><span class="p">])</span>
+        <span class="n">commands</span><span class="p">,</span> <span class="n">errored_commands</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">scan_for_commands</span><span class="p">(</span><span class="s">&#39;commands&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errored_commands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="s">&quot;Failed to reload some commands. Going in to reload-only mode&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send_many</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">errored_commands</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="n">hooks</span><span class="p">,</span> <span class="n">errored_hooks</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">scan_for_hooks</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errored_hooks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send</span><span class="p">(</span><span class="s">&quot;Failed to reload some hooks. Going in to reload-only mode&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_send_many</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">errored_hooks</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+            <span class="k">return</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
         <span class="n">configfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;config.cfg&#39;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
@@ -227,6 +288,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reload_only</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">output</span>

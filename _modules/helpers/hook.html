@@ -81,12 +81,18 @@
 
 
 <div class="viewcode-block" id="scan_for_hooks"><a class="viewcode-back" href="../../helpers.html#helpers.hook.scan_for_hooks">[docs]</a><span class="k">def</span> <span class="nf">scan_for_hooks</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Scans folder for hooks &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scans folder for hooks</span>
+
+<span class="sd">    :param str folder: The folder in which to look for hooks</span>
+<span class="sd">    :rtype: dict, list</span>
+<span class="sd">    :return: The dict represents a list of known hooks, while the list is a list of modules that failed to reload</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">_known_hooks</span><span class="p">,</span> <span class="n">_disabled_hooks</span>
     <span class="n">_known_hooks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">_disabled_hooks</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">get_disabled</span><span class="p">(</span><span class="s">&quot;hooks&quot;</span><span class="p">)</span>
-    <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s">&quot;hooks&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_known_hooks</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s">&quot;hooks&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_known_hooks</span><span class="p">,</span> <span class="n">errors</span>
 
 </div>
 <div class="viewcode-block" id="get_known_hooks"><a class="viewcode-back" href="../../helpers.html#helpers.hook.get_known_hooks">[docs]</a><span class="k">def</span> <span class="nf">get_known_hooks</span><span class="p">():</span>
