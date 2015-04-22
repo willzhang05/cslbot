@@ -491,18 +491,18 @@
             <span class="n">parsedfilters</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">parsedfilters</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
-                <span class="n">cmdargs</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span>
-                <span class="n">filter_list</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">if</span> <span class="n">parsedfilters</span><span class="o">.</span><span class="n">filter</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">parsedfilters</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                            <span class="n">filter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="p">[</span><span class="n">next_filter</span><span class="p">])</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid filter </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">next_filter</span><span class="p">)</span>
-                            <span class="k">return</span>
-            <span class="k">except</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgumentException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">send</span><span class="p">(</span><span class="s">&quot;--filter needs at least one argument&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgumentException</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
                 <span class="k">return</span>
+            <span class="n">cmdargs</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span>
+            <span class="n">filter_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">parsedfilters</span><span class="o">.</span><span class="n">filter</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">parsedfilters</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">filter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="p">[</span><span class="n">next_filter</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid filter </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">next_filter</span><span class="p">)</span>
+                        <span class="k">return</span>
 
             <span class="c"># define a new send to handle filter chaining</span>
             <span class="k">def</span> <span class="nf">filtersend</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
