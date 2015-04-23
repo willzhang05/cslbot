@@ -247,9 +247,6 @@
 
 <span class="sd">        | Logs to a sql db.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># We don&#39;t log NickServ auth calls.</span>
-        <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;privnotice&#39;</span><span class="p">:</span>
-            <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;IRC doesn&#39;t like it when you send it a </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -416,16 +413,21 @@
 <div class="viewcode-block" id="BotHandler.handle_msg"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.handle_msg">[docs]</a>    <span class="k">def</span> <span class="nf">handle_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The Heart and Soul of IrcBot.&quot;&quot;&quot;</span>
 
-        <span class="n">nick</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span>
-
-        <span class="c"># modes have separate arguments, everything else just one</span>
-        <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;mode&#39;</span> <span class="ow">or</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;nick&#39;</span> <span class="ow">or</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;join&#39;</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">msgtype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;join&#39;</span><span class="p">,</span> <span class="s">&#39;part&#39;</span><span class="p">,</span> <span class="s">&#39;quit&#39;</span><span class="p">]:</span>
+            <span class="n">nick</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">nick</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span>
+
+        <span class="c"># kick has multiple arguments.</span>
+        <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;kick&#39;</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c"># join and nick don&#39;t have any arguments.</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
 
         <span class="c"># ignore empty messages</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span> <span class="ow">and</span> <span class="n">msgtype</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="s">&#39;privnotice&#39;</span><span class="p">,</span> <span class="s">&#39;pubnotice&#39;</span><span class="p">]:</span>
             <span class="k">return</span>
 
         <span class="c"># Send the response to private messages to the sending nick.</span>
@@ -441,16 +443,14 @@
             <span class="c"># FIXME: come up with a better way to prevent admin abuse.</span>
             <span class="k">if</span> <span class="n">nick</span> <span class="o">==</span> <span class="s">&#39;NickServ&#39;</span><span class="p">:</span>
                 <span class="n">admin</span><span class="o">.</span><span class="n">set_admin</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-            <span class="k">return</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hook</span><span class="o">.</span><span class="n">get_hook_objects</span><span class="p">():</span>
-                <span class="n">realargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
-                <span class="n">h</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">realargs</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="c"># Don&#39;t bother logging all the server messages before we get the welcome event.</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span>
 
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;nick&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;nickserv&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">admins</span><span class="p">:</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">send_raw</span><span class="p">(</span><span class="s">&#39;NS ACC </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="s">&#39;NickServ&#39;</span><span class="p">,</span> <span class="s">&#39;ACC </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">identity</span><span class="o">.</span><span class="n">handle_nick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_channels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="s">&quot;identity crisis&quot;</span><span class="p">)</span>
@@ -459,6 +459,11 @@
         <span class="c"># must come after set_admin to prevent spam from all the NickServ ACC responses</span>
         <span class="c"># We log nick changes in bot.py so that they show up for all channels.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ignored</span><span class="p">(</span><span class="n">nick</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hook</span><span class="o">.</span><span class="n">get_hook_objects</span><span class="p">():</span>
+                <span class="n">realargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_args</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">realargs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;mode&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_mode</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">send</span><span class="p">)</span>
