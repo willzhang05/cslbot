@@ -548,12 +548,6 @@ a message.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="helpers.handler.BotHandler.kill">
-<code class="descname">kill</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.kill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.kill" title="Permalink to this definition">¶</a></dt>
-<dd><p>Forcibly kill ourself</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="helpers.handler.BotHandler.send">
 <code class="descname">send</code><span class="sig-paren">(</span><em>target</em>, <em>nick</em>, <em>msg</em>, <em>msgtype</em>, <em>ignore_length=False</em>, <em>filters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.send" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a message.</p>
@@ -564,12 +558,6 @@ a message.</p>
 <dt id="helpers.handler.BotHandler.set_data">
 <code class="descname">set_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called from <code class="xref py py-func docutils literal"><span class="pre">bot.IrcBot.do_reload()</span></code> to restore the handler&#8217;s data.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="helpers.handler.BotHandler.shutdown">
-<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.shutdown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cleanly shut ourself down</p>
 </dd></dl>
 
 </dd></dl>
@@ -1535,9 +1523,9 @@ a message.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="helpers.workers.Workers.kill_workers">
-<code class="descname">kill_workers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/workers.html#Workers.kill_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.workers.Workers.kill_workers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Forcibly kill all worker threads</p>
+<dt id="helpers.workers.Workers.pool_init">
+<code class="descname">pool_init</code><span class="sig-paren">(</span><em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/workers.html#Workers.pool_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.workers.Workers.pool_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>We ignore Ctrl-C in the poll workers, so that we can clean things up properly.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1562,8 +1550,8 @@ a message.</p>
 
 <dl class="method">
 <dt id="helpers.workers.Workers.stop_workers">
-<code class="descname">stop_workers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/workers.html#Workers.stop_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.workers.Workers.stop_workers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cleanly stop workers and deferred events</p>
+<code class="descname">stop_workers</code><span class="sig-paren">(</span><em>clean</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/workers.html#Workers.stop_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.workers.Workers.stop_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop workers and deferred events</p>
 </dd></dl>
 
 </dd></dl>

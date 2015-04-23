@@ -101,8 +101,7 @@
 </div>
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="BotTest.tearDownClass"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.tearDownClass">[docs]</a>    <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
 </div>
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="BotTest.setup_handler"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.setup_handler">[docs]</a>    <span class="k">def</span> <span class="nf">setup_handler</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
@@ -120,8 +119,7 @@
 </div>
 <div class="viewcode-block" id="BotTest.restart_workers"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest.restart_workers">[docs]</a>    <span class="k">def</span> <span class="nf">restart_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Force all the workers to restart so we get the log message.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="p">)</span>
         <span class="n">server_mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&#39;helpers.server&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server_mod</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="p">)</span>

@@ -117,14 +117,12 @@
 
         <span class="k">if</span> <span class="n">botconfig</span><span class="p">[</span><span class="s">&#39;feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">init_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="c"># properly log quits.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">add_global_handler</span><span class="p">(</span><span class="s">&quot;quit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_quit</span><span class="p">,</span> <span class="o">-</span><span class="mi">21</span><span class="p">)</span>
         <span class="c"># fix unicode problems</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">buffer_class</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="s">&#39;replace&#39;</span>
 
 <div class="viewcode-block" id="IrcBot.handle_event"><a class="viewcode-back" href="../bot.html#bot.IrcBot.handle_event">[docs]</a>    <span class="k">def</span> <span class="nf">handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-        <span class="n">handled_types</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;903&#39;</span><span class="p">,</span> <span class="s">&#39;action&#39;</span><span class="p">,</span> <span class="s">&#39;authenticate&#39;</span><span class="p">,</span> <span class="s">&#39;bannedfromchan&#39;</span><span class="p">,</span> <span class="s">&#39;cap&#39;</span><span class="p">,</span> <span class="s">&#39;ctcpreply&#39;</span><span class="p">,</span> <span class="s">&#39;disconnect&#39;</span><span class="p">,</span> <span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="s">&#39;join&#39;</span><span class="p">,</span> <span class="s">&#39;kick&#39;</span><span class="p">,</span>
-                         <span class="s">&#39;mode&#39;</span><span class="p">,</span> <span class="s">&#39;nicknameinuse&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;part&#39;</span><span class="p">,</span> <span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="s">&#39;privnotice&#39;</span><span class="p">,</span> <span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="s">&#39;welcome&#39;</span><span class="p">]</span>
+        <span class="n">handled_types</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;903&#39;</span><span class="p">,</span> <span class="s">&#39;action&#39;</span><span class="p">,</span> <span class="s">&#39;authenticate&#39;</span><span class="p">,</span> <span class="s">&#39;bannedfromchan&#39;</span><span class="p">,</span> <span class="s">&#39;cap&#39;</span><span class="p">,</span> <span class="s">&#39;ctcpreply&#39;</span><span class="p">,</span> <span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="s">&#39;join&#39;</span><span class="p">,</span> <span class="s">&#39;kick&#39;</span><span class="p">,</span>
+                         <span class="s">&#39;mode&#39;</span><span class="p">,</span> <span class="s">&#39;nicknameinuse&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;part&#39;</span><span class="p">,</span> <span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="s">&#39;privnotice&#39;</span><span class="p">,</span> <span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="s">&#39;quit&#39;</span><span class="p">,</span> <span class="s">&#39;welcome&#39;</span><span class="p">]</span>
         <span class="c"># We only need to do stuff for a sub-set of events.</span>
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">handled_types</span><span class="p">:</span>
             <span class="k">return</span>
@@ -154,30 +152,22 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span>
 </div>
-<div class="viewcode-block" id="IrcBot.handle_quit"><a class="viewcode-back" href="../bot.html#bot.IrcBot.handle_quit">[docs]</a>    <span class="k">def</span> <span class="nf">handle_quit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Log quits.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_channels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;quit&#39;</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="IrcBot.kill"><a class="viewcode-back" href="../bot.html#bot.IrcBot.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; forcibly kills everything &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-</div>
 <div class="viewcode-block" id="IrcBot.shutdown_server"><a class="viewcode-back" href="../bot.html#bot.IrcBot.shutdown_server">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;server&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="IrcBot.shutdown_workers"><a class="viewcode-back" href="../bot.html#bot.IrcBot.shutdown_workers">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IrcBot.shutdown_workers"><a class="viewcode-back" href="../bot.html#bot.IrcBot.shutdown_workers">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">stop_workers</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">stop_workers</span><span class="p">(</span><span class="n">clean</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="IrcBot.shutdown_mp"><a class="viewcode-back" href="../bot.html#bot.IrcBot.shutdown_mp">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_mp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Shutdown all the multiprocessing that we know about.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IrcBot.shutdown_mp"><a class="viewcode-back" href="../bot.html#bot.IrcBot.shutdown_mp">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_mp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Shutdown all the multiprocessing.</span>
+
+<span class="sd">        :param bool clean: Whether to shutdown things cleanly, or force a quick and dirty shutdown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_server</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_workers</span><span class="p">(</span><span class="n">clean</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="IrcBot.do_rejoin"><a class="viewcode-back" href="../bot.html#bot.IrcBot.do_rejoin">[docs]</a>    <span class="k">def</span> <span class="nf">do_rejoin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
@@ -229,10 +219,15 @@
                 <span class="n">misc</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
         <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s">&#39;error&#39;</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s">&#39;disconnect&#39;</span><span class="p">:</span>
-            <span class="c"># Don&#39;t kill everything if we just ping timed-out</span>
-            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s">&#39;quit&#39;</span><span class="p">:</span>
+            <span class="c"># Log quits.</span>
+            <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_channels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;quit&#39;</span><span class="p">)</span>
+            <span class="c"># If we&#39;re the one quiting, shut things down cleanly.</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">:</span>
+                <span class="c"># FIXME: If this hangs or takes more then 5 seconds, we&#39;ll just reconnect.</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Un-handled event type </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
 </div>
@@ -267,15 +262,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">reload_event</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
 </div></div>
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../bot.html#bot.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../bot.html#bot.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;The bot&#39;s main entry point.</span>
 
-<span class="sd">    | Setup logging.</span>
-<span class="sd">    | When troubleshooting startup, it may help to change the INFO to DEBUG.</span>
 <span class="sd">    | Initialize the bot and start processing messages.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">loglevel</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">loglevel</span><span class="p">)</span>
     <span class="n">config_file</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;config.cfg&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Setting up config file&quot;</span><span class="p">)</span>
@@ -288,11 +279,11 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">bot</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-        <span class="c"># keyboard interrupt means someone tried to ^C, shut down the bot</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="c"># KeyboardInterrupt means someone tried to ^C, so shut down the bot</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;The bot died! </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
@@ -303,8 +294,10 @@
     <span class="n">multiprocessing</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s">&#39;spawn&#39;</span><span class="p">)</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span> <span class="s">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;Enable debug logging.&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
-    <span class="n">parser_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">parser_args</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">loglevel</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">loglevel</span><span class="p">)</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
           </div>

@@ -75,7 +75,8 @@
     <span class="sd">&quot;&quot;&quot;Makes the bot disconnect and shut off</span>
 <span class="sd">    Syntax: {command}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span></div>
+    <span class="c"># We can&#39;t actually shutdown the bot here, because this command is executing on one of the worker threads.</span>
+    <span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">quit</span><span class="p">(</span><span class="s">&#39;Goodbye, Cruel World!&#39;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

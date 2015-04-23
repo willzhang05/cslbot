@@ -101,21 +101,9 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="bot.IrcBot.handle_quit">
-<code class="descname">handle_quit</code><span class="sig-paren">(</span><em>_</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.handle_quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.handle_quit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Log quits.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="bot.IrcBot.is_reload">
 <code class="descname">is_reload</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.is_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.is_reload" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="bot.IrcBot.kill">
-<code class="descname">kill</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.kill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.kill" title="Permalink to this definition">¶</a></dt>
-<dd><p>forcibly kills everything</p>
-</dd></dl>
 
 <dl class="method">
 <dt id="bot.IrcBot.reload_handler">
@@ -125,8 +113,16 @@
 
 <dl class="method">
 <dt id="bot.IrcBot.shutdown_mp">
-<code class="descname">shutdown_mp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.shutdown_mp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.shutdown_mp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shutdown all the multiprocessing that we know about.</p>
+<code class="descname">shutdown_mp</code><span class="sig-paren">(</span><em>clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.shutdown_mp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.shutdown_mp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutdown all the multiprocessing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>clean</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Whether to shutdown things cleanly, or force a quick and dirty shutdown.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -136,18 +132,16 @@
 
 <dl class="method">
 <dt id="bot.IrcBot.shutdown_workers">
-<code class="descname">shutdown_workers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.shutdown_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.shutdown_workers" title="Permalink to this definition">¶</a></dt>
+<code class="descname">shutdown_workers</code><span class="sig-paren">(</span><em>clean</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#IrcBot.shutdown_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.IrcBot.shutdown_workers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="bot.main">
-<code class="descclassname">bot.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.main" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">bot.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bot.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bot.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bot&#8217;s main entry point.</p>
 <div class="line-block">
-<div class="line">Setup logging.</div>
-<div class="line">When troubleshooting startup, it may help to change the INFO to DEBUG.</div>
 <div class="line">Initialize the bot and start processing messages.</div>
 </div>
 </dd></dl>
