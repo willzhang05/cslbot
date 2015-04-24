@@ -69,9 +69,9 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,</span>
 <span class="c"># USA.</span>
 
+<span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copyfile</span>
-<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
 
 
 <div class="viewcode-block" id="do_config"><a class="viewcode-back" href="../../helpers.html#helpers.config.do_config">[docs]</a><span class="k">def</span> <span class="nf">do_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
@@ -111,7 +111,7 @@
 <div class="viewcode-block" id="do_setup"><a class="viewcode-back" href="../../helpers.html#helpers.config.do_setup">[docs]</a><span class="k">def</span> <span class="nf">do_setup</span><span class="p">(</span><span class="n">configfile</span><span class="p">):</span>
     <span class="n">examplefile</span> <span class="o">=</span> <span class="n">configfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;cfg&#39;</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
     <span class="n">copyfile</span><span class="p">(</span><span class="n">examplefile</span><span class="p">,</span> <span class="n">configfile</span><span class="p">)</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
         <span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">cfgfile</span><span class="p">)</span>
     <span class="n">do_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
