@@ -107,6 +107,7 @@
         <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s">&#39;reloaded&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">guarded</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ping_map</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputfilter</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kick_enabled</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">caps</span> <span class="o">=</span> <span class="p">[]</span>
@@ -438,6 +439,10 @@
 
         <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s">&#39;privmsg&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">real_nickname</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">mtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;ctcpreply&#39;</span><span class="p">,</span> <span class="s">&#39;nosuchnick&#39;</span><span class="p">]:</span>
+            <span class="n">misc</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ping_map</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+            <span class="k">return</span>
 
         <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;privnotice&#39;</span><span class="p">:</span>
             <span class="c"># FIXME: come up with a better way to prevent admin abuse.</span>
