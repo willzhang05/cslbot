@@ -433,7 +433,7 @@
 <span id="helpers-handler-module"></span><h2>helpers.handler module<a class="headerlink" href="#module-helpers.handler" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="helpers.handler.BotHandler">
-<em class="property">class </em><code class="descclassname">helpers.handler.</code><code class="descname">BotHandler</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">helpers.handler.</code><code class="descname">BotHandler</code><span class="sig-paren">(</span><em>config</em>, <em>connection</em>, <em>channels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="helpers.handler.BotHandler.abusecheck">
@@ -496,8 +496,13 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="helpers.handler.BotHandler.do_rejoin">
+<code class="descname">do_rejoin</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.do_rejoin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.do_rejoin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="helpers.handler.BotHandler.do_welcome">
-<code class="descname">do_welcome</code><span class="sig-paren">(</span><em>bot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.do_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.do_welcome" title="Permalink to this definition">¶</a></dt>
+<code class="descname">do_welcome</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.do_welcome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.do_welcome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do setup when connected to server.</p>
 <div class="line-block">
 <div class="line">Join the primary channel.</div>
@@ -517,6 +522,12 @@
 <dd><p>Saves the handler&#8217;s data for <code class="xref py py-func docutils literal"><span class="pre">bot.IrcBot.do_reload()</span></code></p>
 </dd></dl>
 
+<dl class="method">
+<dt id="helpers.handler.BotHandler.get_filtered_send">
+<code class="descname">get_filtered_send</code><span class="sig-paren">(</span><em>cmdargs</em>, <em>send</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.get_filtered_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.get_filtered_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse out any filters.</p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="helpers.handler.BotHandler.get_split_pos">
 <em class="property">static </em><code class="descname">get_split_pos</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.get_split_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.get_split_pos" title="Permalink to this definition">¶</a></dt>
@@ -525,8 +536,13 @@ a message.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="helpers.handler.BotHandler.handle_event">
+<code class="descname">handle_event</code><span class="sig-paren">(</span><em>msg</em>, <em>send</em>, <em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.handle_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.handle_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="helpers.handler.BotHandler.handle_msg">
-<code class="descname">handle_msg</code><span class="sig-paren">(</span><em>msgtype</em>, <em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.handle_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.handle_msg" title="Permalink to this definition">¶</a></dt>
+<code class="descname">handle_msg</code><span class="sig-paren">(</span><em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.handle_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.handle_msg" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Heart and Soul of IrcBot.</p>
 </dd></dl>
 
@@ -663,6 +679,11 @@ a message.</p>
 <div class="section" id="module-helpers.misc">
 <span id="helpers-misc-module"></span><h2>helpers.misc module<a class="headerlink" href="#module-helpers.misc" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
+<dt id="helpers.misc.append_filters">
+<code class="descclassname">helpers.misc.</code><code class="descname">append_filters</code><span class="sig-paren">(</span><em>filters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#append_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.append_filters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="helpers.misc.create_issue">
 <code class="descclassname">helpers.misc.</code><code class="descname">create_issue</code><span class="sig-paren">(</span><em>title</em>, <em>desc</em>, <em>nick</em>, <em>repo</em>, <em>apikey</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#create_issue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.create_issue" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -705,6 +726,11 @@ a message.</p>
 <dl class="function">
 <dt id="helpers.misc.get_urban_definition">
 <code class="descclassname">helpers.misc.</code><code class="descname">get_urban_definition</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#get_urban_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.get_urban_definition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="helpers.misc.get_version">
+<code class="descclassname">helpers.misc.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.get_version" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
