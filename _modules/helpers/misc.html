@@ -79,7 +79,7 @@
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">unquote</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">post</span><span class="p">,</span> <span class="n">get</span>
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">ReadTimeout</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">textutils</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">orm</span><span class="p">,</span> <span class="n">textutils</span>
 
 
 <div class="viewcode-block" id="parse_time"><a class="viewcode-back" href="../../helpers.html#helpers.misc.parse_time">[docs]</a><span class="k">def</span> <span class="nf">parse_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
@@ -213,6 +213,16 @@
     <span class="k">elif</span> <span class="n">msg</span><span class="p">:</span>
         <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is not a valid fortune module&quot;</span> <span class="o">%</span> <span class="n">msg</span>
     <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="ignore"><a class="viewcode-back" href="../../helpers.html#helpers.misc.ignore">[docs]</a><span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">orm</span><span class="o">.</span><span class="n">Ignore</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">orm</span><span class="o">.</span><span class="n">Ignore</span><span class="o">.</span><span class="n">nick</span> <span class="o">==</span> <span class="n">nick</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="c"># FIXME: support expiration times for ignores</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orm</span><span class="o">.</span><span class="n">Ignore</span><span class="p">(</span><span class="n">nick</span><span class="o">=</span><span class="n">nick</span><span class="p">,</span> <span class="n">expire</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s">&quot;Now ignoring </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">nick</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is already ignored.&quot;</span> <span class="o">%</span> <span class="n">nick</span>
 
 </div>
 <div class="viewcode-block" id="get_rand_word"><a class="viewcode-back" href="../../helpers.html#helpers.misc.get_rand_word">[docs]</a><span class="k">def</span> <span class="nf">get_rand_word</span><span class="p">():</span>

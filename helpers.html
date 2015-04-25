@@ -547,12 +547,6 @@ a message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="helpers.handler.BotHandler.ignore">
-<code class="descname">ignore</code><span class="sig-paren">(</span><em>send</em>, <em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.ignore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.ignore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ignores a nick.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="helpers.handler.BotHandler.is_admin">
 <code class="descname">is_admin</code><span class="sig-paren">(</span><em>send</em>, <em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler.is_admin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler.is_admin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a nick is a admin.</p>
@@ -731,6 +725,11 @@ a message.</p>
 <dl class="function">
 <dt id="helpers.misc.get_version">
 <code class="descclassname">helpers.misc.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.get_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="helpers.misc.ignore">
+<code class="descclassname">helpers.misc.</code><code class="descname">ignore</code><span class="sig-paren">(</span><em>session</em>, <em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#ignore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.ignore" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -948,6 +947,27 @@ a message.</p>
 <dl class="attribute">
 <dt id="helpers.orm.Commands.nick">
 <code class="descname">nick</code><a class="headerlink" href="#helpers.orm.Commands.nick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="helpers.orm.Ignore">
+<em class="property">class </em><code class="descclassname">helpers.orm.</code><code class="descname">Ignore</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/orm.html#Ignore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.orm.Ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="helpers.orm.Ignore.expire">
+<code class="descname">expire</code><a class="headerlink" href="#helpers.orm.Ignore.expire" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="helpers.orm.Ignore.id">
+<code class="descname">id</code><a class="headerlink" href="#helpers.orm.Ignore.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="helpers.orm.Ignore.nick">
+<code class="descname">nick</code><a class="headerlink" href="#helpers.orm.Ignore.nick" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

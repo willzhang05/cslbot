@@ -77,6 +77,7 @@
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">control</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">sql</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">hook</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">orm</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">command</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">textutils</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">admin</span>
@@ -94,8 +95,6 @@
 
 <span class="sd">        | kick_enabled controls whether the bot will kick people or not.</span>
 <span class="sd">        | caps is a array of the nicks who have abused capslock.</span>
-<span class="sd">        | ignored is a array of the nicks who are currently ignored for</span>
-<span class="sd">        |   bot abuse.</span>
 <span class="sd">        | abuselist is a dict keeping track of how many times nicks have used</span>
 <span class="sd">        |   rate-limited commands.</span>
 <span class="sd">        | modules is a dict containing the commands the bot supports.</span>
@@ -113,7 +112,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">outputfilter</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kick_enabled</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">caps</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">abuselist</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">admins</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">][</span><span class="s">&#39;admins&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">admins</span> <span class="o">=</span> <span class="p">{</span><span class="n">nick</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">nick</span> <span class="ow">in</span> <span class="n">admins</span><span class="p">}</span>
@@ -125,7 +123,6 @@
         <span class="sd">&quot;&quot;&quot;Saves the handler&#39;s data for :func:`bot.IrcBot.do_reload`&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;caps&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">caps</span><span class="p">[:]</span>
-        <span class="n">data</span><span class="p">[</span><span class="s">&#39;ignored&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span><span class="p">[:]</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;guarded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guarded</span><span class="p">[:]</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;admins&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">admins</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;uptime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -137,14 +134,6 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span><span class="p">[</span><span class="s">&#39;reloaded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="BotHandler.ignore"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.ignore">[docs]</a>    <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Ignores a nick.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">nick</span><span class="p">:</span>
-            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Ignore who?&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">nick</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nick</span><span class="p">)</span>
-            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Now ignoring </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="BotHandler.is_admin"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.is_admin">[docs]</a>    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if a nick is a admin.</span>
@@ -205,7 +194,8 @@
             <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: don&#39;t abuse scores&quot;</span> <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="s">&#39;scores&#39;</span> <span class="k">else</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: stop abusing the bot&quot;</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">textutils</span><span class="o">.</span><span class="n">gen_creffett</span><span class="p">(</span><span class="n">text</span> <span class="o">%</span> <span class="n">nick</span><span class="p">)</span>
             <span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ignore</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">)</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session_scope</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="n">misc</span><span class="o">.</span><span class="n">ignore</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">nick</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 </div>
@@ -383,7 +373,6 @@
                 <span class="s">&#39;target&#39;</span><span class="p">:</span> <span class="n">target</span> <span class="k">if</span> <span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;#&quot;</span> <span class="k">else</span> <span class="s">&quot;private&quot;</span><span class="p">,</span>
                 <span class="s">&#39;do_kick&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span>
                 <span class="s">&#39;is_admin&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">nick</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">),</span>
-                <span class="s">&#39;ignore&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">nick</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">),</span>
                 <span class="s">&#39;abuse&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">nick</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">abusecheck</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)}</span>
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">modargs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
@@ -409,7 +398,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">defer</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">extrachans</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </div>
 <div class="viewcode-block" id="BotHandler.is_ignored"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.is_ignored">[docs]</a>    <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">nick</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session_scope</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">orm</span><span class="o">.</span><span class="n">Ignore</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">orm</span><span class="o">.</span><span class="n">Ignore</span><span class="o">.</span><span class="n">nick</span> <span class="o">==</span> <span class="n">nick</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="BotHandler.get_filtered_send"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.get_filtered_send">[docs]</a>    <span class="k">def</span> <span class="nf">get_filtered_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Parse out any filters.&quot;&quot;&quot;</span>
