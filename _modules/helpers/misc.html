@@ -96,9 +96,6 @@
 
 </div>
 <div class="viewcode-block" id="do_pull"><a class="viewcode-back" href="../../helpers.html#helpers.misc.do_pull">[docs]</a><span class="k">def</span> <span class="nf">do_pull</span><span class="p">(</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">nick</span><span class="p">):</span>
-    <span class="c"># FIXME: Permissions hack.</span>
-    <span class="k">if</span> <span class="n">nick</span> <span class="o">==</span> <span class="s">&quot;msbobBot&quot;</span><span class="p">:</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&quot;sudo&quot;</span><span class="p">,</span> <span class="s">&quot;-n&quot;</span><span class="p">,</span> <span class="s">&quot;/home/peter/ircbot/scripts/fixperms.sh&quot;</span><span class="p">],</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;pull&#39;</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
 </div>
