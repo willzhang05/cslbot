@@ -86,9 +86,7 @@
 
 </div>
 <div class="viewcode-block" id="gen_word"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_word">[docs]</a><span class="k">def</span> <span class="nf">gen_word</span><span class="p">():</span>
-    <span class="n">html</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://randomword.setgetgo.com/get.php&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-    <span class="c"># Strip BOM</span>
-    <span class="k">return</span> <span class="n">html</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://randomword.setgetgo.com/get.php&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="gen_hashtag"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_hashtag">[docs]</a><span class="k">def</span> <span class="nf">gen_hashtag</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>

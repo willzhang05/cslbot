@@ -67,33 +67,56 @@
 <span class="c"># along with this program; if not, write to the Free Software</span>
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
-<span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">textutils</span>
 <span class="kn">from</span> <span class="nn">helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
 
 
+<div class="viewcode-block" id="strip_colon"><a class="viewcode-back" href="../../commands.html#commands.define.strip_colon">[docs]</a><span class="k">def</span> <span class="nf">strip_colon</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;^:|:$&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+</div>
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../commands.html#commands.define.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets the definition of a word.</span>
-<span class="sd">    Syntax: {command} &lt;word&gt;</span>
+<span class="sd">    Syntax: {command} [--entry &lt;num&gt;] &lt;word&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Define what?&quot;</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--entry&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;word&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgumentException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">return</span>
-    <span class="n">req</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.dictionaryapi.com/api/v1/references/collegiate/xml/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;dictionaryapikey&#39;</span><span class="p">]})</span>
-    <span class="n">xml</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">word</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;./entry/def/dt&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">word</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Definition not found&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; :&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;,&#39;</span><span class="p">:</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;:&#39;</span><span class="p">:</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">word</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Definition not found&quot;</span><span class="p">)</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></div>
+    <span class="n">word</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">word</span> <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">word</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">textutils</span><span class="o">.</span><span class="n">gen_word</span><span class="p">()</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.dictionaryapi.com/api/v1/references/collegiate/xml/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">word</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;dictionaryapikey&#39;</span><span class="p">]})</span>
+    <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">defs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">defn</span> <span class="ow">in</span> <span class="n">xml</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;./entry/def/dt&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">defn</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">elems</span> <span class="o">=</span> <span class="p">[</span><span class="n">strip_colon</span><span class="p">(</span><span class="n">defn</span><span class="o">.</span><span class="n">text</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">elems</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">defn</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;*[not(self::ca|self::dx|self::vi|self::un|self::sx)]&#39;</span><span class="p">):</span>
+            <span class="n">elems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strip_colon</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+        <span class="n">def_str</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elems</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">def_str</span><span class="p">:</span>
+            <span class="n">defs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">def_str</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">entry</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">defs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">word</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Definition not found&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">: Definition not found&quot;</span> <span class="o">%</span> <span class="n">word</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">word</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="n">defs</span><span class="p">[</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">entry</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">defs</span><span class="p">[</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">entry</span><span class="p">]))</span></div>
 </pre></div>
 
           </div>
