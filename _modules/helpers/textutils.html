@@ -76,7 +76,7 @@
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span>
 <span class="kn">from</span> <span class="nn">lxml.html</span> <span class="kn">import</span> <span class="n">fromstring</span><span class="p">,</span> <span class="n">tostring</span>
 <span class="kn">from</span> <span class="nn">html</span> <span class="kn">import</span> <span class="n">escape</span><span class="p">,</span> <span class="n">unescape</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randrange</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randrange</span><span class="p">,</span> <span class="n">randint</span>
 
 <span class="n">slogan_cache</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -276,6 +276,21 @@
 </div>
 <div class="viewcode-block" id="gen_lenny"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_lenny">[docs]</a><span class="k">def</span> <span class="nf">gen_lenny</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
     <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> ( ͡° ͜ʖ ͡°)&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+
+</div>
+<div class="viewcode-block" id="gen_shibe"><a class="viewcode-back" href="../../helpers.html#helpers.textutils.gen_shibe">[docs]</a><span class="k">def</span> <span class="nf">gen_shibe</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">topics</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">msg</span> <span class="k">else</span> <span class="p">[</span><span class="n">gen_word</span><span class="p">()]</span>
+
+    <span class="n">reaction</span> <span class="o">=</span> <span class="s">&#39;wow&#39;</span>
+    <span class="n">adverbs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;so&#39;</span><span class="p">,</span> <span class="s">&#39;such&#39;</span><span class="p">,</span> <span class="s">&#39;very&#39;</span><span class="p">,</span> <span class="s">&#39;much&#39;</span><span class="p">,</span> <span class="s">&#39;many&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
+        <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">choice</span><span class="p">(</span><span class="n">adverbs</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;omg&#39;</span><span class="p">,</span> <span class="s">&#39;amaze&#39;</span><span class="p">,</span> <span class="s">&#39;nice&#39;</span><span class="p">,</span> <span class="s">&#39;clap&#39;</span><span class="p">,</span> <span class="s">&#39;cool&#39;</span><span class="p">,</span> <span class="s">&#39;doge&#39;</span><span class="p">,</span> <span class="s">&#39;shibe&#39;</span><span class="p">,</span> <span class="s">&#39;ooh&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
+        <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">choice</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span>
+    <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; wow&#39;</span>
+    <span class="k">return</span> <span class="n">reaction</span>
 </div>
 <span class="n">output_filters</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&quot;passthrough&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -294,7 +309,8 @@
     <span class="s">&quot;yoda&quot;</span><span class="p">:</span> <span class="n">gen_yoda</span><span class="p">,</span>
     <span class="s">&quot;gizoogle&quot;</span><span class="p">:</span> <span class="n">gen_gizoogle</span><span class="p">,</span>
     <span class="s">&quot;shakespeare&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span><span class="p">,</span>
-    <span class="s">&quot;bard&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span>
+    <span class="s">&quot;bard&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span><span class="p">,</span>
+    <span class="s">&quot;shibe&quot;</span><span class="p">:</span> <span class="n">gen_shibe</span>
 <span class="p">}</span>
 </pre></div>
 

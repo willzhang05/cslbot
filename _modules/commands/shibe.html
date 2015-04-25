@@ -67,9 +67,8 @@
 <span class="c"># along with this program; if not, write to the Free Software</span>
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
-<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randint</span>
 <span class="kn">from</span> <span class="nn">helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
-<span class="kn">from</span> <span class="nn">helpers.textutils</span> <span class="kn">import</span> <span class="n">gen_word</span>
+<span class="kn">from</span> <span class="nn">helpers.textutils</span> <span class="kn">import</span> <span class="n">gen_shibe</span>
 
 
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;shibe&#39;</span><span class="p">)</span>
@@ -77,18 +76,7 @@
     <span class="sd">&quot;&quot;&quot;Generates a shibe reaction.</span>
 <span class="sd">    Syntax: {command} [topic1]...[topicn]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">topics</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">msg</span> <span class="k">else</span> <span class="p">[</span><span class="n">gen_word</span><span class="p">()]</span>
-
-    <span class="n">reaction</span> <span class="o">=</span> <span class="s">&#39;wow&#39;</span>
-    <span class="n">adverbs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;so&#39;</span><span class="p">,</span> <span class="s">&#39;such&#39;</span><span class="p">,</span> <span class="s">&#39;very&#39;</span><span class="p">,</span> <span class="s">&#39;much&#39;</span><span class="p">,</span> <span class="s">&#39;many&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
-        <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">choice</span><span class="p">(</span><span class="n">adverbs</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span>
-
-    <span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;omg&#39;</span><span class="p">,</span> <span class="s">&#39;amaze&#39;</span><span class="p">,</span> <span class="s">&#39;nice&#39;</span><span class="p">,</span> <span class="s">&#39;clap&#39;</span><span class="p">,</span> <span class="s">&#39;cool&#39;</span><span class="p">,</span> <span class="s">&#39;doge&#39;</span><span class="p">,</span> <span class="s">&#39;shibe&#39;</span><span class="p">,</span> <span class="s">&#39;ooh&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
-        <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">choice</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span>
-    <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; wow&#39;</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">reaction</span><span class="p">)</span></div>
+    <span class="n">send</span><span class="p">(</span><span class="n">gen_shibe</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
 </pre></div>
 
           </div>
