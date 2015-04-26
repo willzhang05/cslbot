@@ -79,7 +79,7 @@
 <span class="kn">import</span> <span class="nn">threading</span>
 
 <span class="c"># FIXME: hack to allow sibling imports</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/..&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/..&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="BotTest"><a class="viewcode-back" href="../../scripts.html#scripts.test.BotTest">[docs]</a><span class="k">class</span> <span class="nc">BotTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
