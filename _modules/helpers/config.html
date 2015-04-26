@@ -109,7 +109,7 @@
 
 </div>
 <div class="viewcode-block" id="do_setup"><a class="viewcode-back" href="../../helpers.html#helpers.config.do_setup">[docs]</a><span class="k">def</span> <span class="nf">do_setup</span><span class="p">(</span><span class="n">configfile</span><span class="p">):</span>
-    <span class="n">examplefile</span> <span class="o">=</span> <span class="n">configfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;cfg&#39;</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
+    <span class="n">examplefile</span> <span class="o">=</span> <span class="s">&#39;static/config.example&#39;</span>
     <span class="n">copyfile</span><span class="p">(</span><span class="n">examplefile</span><span class="p">,</span> <span class="n">configfile</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>

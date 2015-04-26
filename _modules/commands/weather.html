@@ -68,14 +68,15 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
 <span class="kn">import</span> <span class="nn">geoip2</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">arguments</span>
 <span class="kn">from</span> <span class="nn">helpers.orm</span> <span class="kn">import</span> <span class="n">Weather_prefs</span>
 <span class="kn">from</span> <span class="nn">helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
 <span class="kn">from</span> <span class="nn">helpers.geoip</span> <span class="kn">import</span> <span class="n">get_zipcode</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">Requirement</span><span class="p">,</span> <span class="n">resource_filename</span>
 
 
 <div class="viewcode-block" id="get_default"><a class="viewcode-back" href="../../commands.html#commands.weather.get_default">[docs]</a><span class="k">def</span> <span class="nf">get_default</span><span class="p">(</span><span class="n">nick</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
@@ -86,9 +87,18 @@
             <span class="c"># an IP, etc.</span>
             <span class="n">hostmask</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">hostip</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">r&quot;\d{1,3}[.-]\d{1,3}[.-]\d{1,3}[.-]\d{1,3}&quot;</span><span class="p">,</span> <span class="n">hostmask</span><span class="p">)</span>
+            <span class="c"># If that failed, could be a v6 addr</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">hostip</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">socket</span><span class="o">.</span><span class="n">inet_pton</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span> <span class="n">hostmask</span><span class="p">)</span>
+                    <span class="n">hostip</span> <span class="o">=</span> <span class="n">hostmask</span>
+                <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">hostip</span> <span class="o">=</span> <span class="n">hostip</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">hostip</span><span class="p">:</span>
-                <span class="n">hostip</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">hostip</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-                <span class="n">db_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">][</span><span class="s">&#39;geoip&#39;</span><span class="p">])</span>
+                <span class="n">hostip</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">hostip</span><span class="p">)</span>
+                <span class="n">db_file</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">][</span><span class="s">&#39;geoip&#39;</span><span class="p">])</span>
                 <span class="n">location</span> <span class="o">=</span> <span class="n">get_zipcode</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">hostip</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">send</span><span class="p">(</span><span class="s">&quot;No default location for </span><span class="si">%s</span><span class="s">, GeoIP guesses that your zip code is </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">nick</span><span class="p">,</span> <span class="n">location</span><span class="p">))</span>
