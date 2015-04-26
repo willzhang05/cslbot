@@ -94,6 +94,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Sql</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">=</span> <span class="n">workers</span><span class="o">.</span><span class="n">Workers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s">&#39;reloaded&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">}</span>
@@ -107,7 +108,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">admins</span> <span class="o">=</span> <span class="p">{</span><span class="n">nick</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">nick</span> <span class="ow">in</span> <span class="n">admins</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">srcdir</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_to_ctrlchan</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Sql</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BotHandler.get_data"><a class="viewcode-back" href="../../helpers.html#helpers.handler.BotHandler.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Saves the handler&#39;s data for :func:`bot.IrcBot.do_reload`&quot;&quot;&quot;</span>
