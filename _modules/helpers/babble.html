@@ -181,7 +181,10 @@
     <span class="k">if</span> <span class="n">initial_run</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
             <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;DROP INDEX IF EXISTS ix_babble_key&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cursor</span><span class="o">.</span><span class="n">bind</span><span class="o">.</span><span class="n">dialect</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;mysql&#39;</span><span class="p">:</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;DROP INDEX ix_babble_key ON babble&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;DROP INDEX IF EXISTS ix_babble_key&#39;</span><span class="p">)</span>
         <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Babble</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">delete</span><span class="p">())</span>
         <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Babble_count</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">delete</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
