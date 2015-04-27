@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>scripts.gen_babble &mdash; IrcBot 0.7 documentation</title>
+    <title>scripts.migrate &mdash; IrcBot 0.7 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -50,7 +50,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for scripts.gen_babble</h1><div class="highlight"><pre>
+  <h1>Source code for scripts.migrate</h1><div class="highlight"><pre>
 <span class="c">#!/usr/bin/env python3</span>
 <span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
 <span class="c">#</span>
@@ -67,38 +67,28 @@
 <span class="c"># You should have received a copy of the GNU General Public License</span>
 <span class="c"># along with this program; if not, write to the Free Software</span>
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">join</span>
+
 <span class="c"># Make this work from git.</span>
 <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;../.git&#39;</span><span class="p">)):</span>
     <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;..&#39;</span><span class="p">))</span>
 
-<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">configparser</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">helpers.babble</span> <span class="kn">import</span> <span class="n">build_markov</span>
-<span class="kn">from</span> <span class="nn">helpers.sql</span> <span class="kn">import</span> <span class="n">get_session</span>
+<span class="kn">from</span> <span class="nn">alembic</span> <span class="kn">import</span> <span class="n">command</span><span class="p">,</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">Requirement</span><span class="p">,</span> <span class="n">resource_filename</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../scripts.html#scripts.gen_babble.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">confdir</span><span class="o">=</span><span class="s">&quot;/etc/cslbot&quot;</span><span class="p">):</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../scripts.html#scripts.migrate.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">confdir</span><span class="o">=</span><span class="s">&quot;/etc/cslbot&quot;</span><span class="p">):</span>
+    <span class="n">botconfig</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">confdir</span><span class="p">,</span> <span class="s">&#39;config.cfg&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--nick&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;The nick to generate babble cache for (testing only).&#39;</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">session</span> <span class="o">=</span> <span class="n">get_session</span><span class="p">(</span><span class="n">config</span><span class="p">)()</span>
-    <span class="n">cmdchar</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;cmdchar&#39;</span><span class="p">]</span>
-    <span class="n">ctrlchan</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Generating markov.&#39;</span><span class="p">)</span>
-    <span class="c"># FIXME: support locking for other dialects?</span>
-    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">bind</span><span class="o">.</span><span class="n">dialect</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;postgresql&#39;</span><span class="p">:</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;LOCK TABLE babble IN EXCLUSIVE MODE NOWAIT&#39;</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;LOCK TABLE babble_count IN EXCLUSIVE MODE NOWAIT&#39;</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;LOCK TABLE babble_last IN EXCLUSIVE MODE NOWAIT&#39;</span><span class="p">)</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">build_markov</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">cmdchar</span><span class="p">,</span> <span class="n">ctrlchan</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">nick</span><span class="p">,</span> <span class="n">initial_run</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Finished markov in </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">))</span>
+        <span class="n">botconfig</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">conf_obj</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>
+    <span class="n">script_location</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="n">botconfig</span><span class="p">[</span><span class="s">&#39;alembic&#39;</span><span class="p">][</span><span class="s">&#39;script_location&#39;</span><span class="p">])</span>
+    <span class="n">conf_obj</span><span class="o">.</span><span class="n">set_main_option</span><span class="p">(</span><span class="s">&#39;script_location&#39;</span><span class="p">,</span> <span class="n">script_location</span><span class="p">)</span>
+    <span class="n">conf_obj</span><span class="o">.</span><span class="n">set_main_option</span><span class="p">(</span><span class="s">&#39;bot_config_path&#39;</span><span class="p">,</span> <span class="n">confdir</span><span class="p">)</span>
+    <span class="n">command</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="n">conf_obj</span><span class="p">,</span> <span class="s">&#39;head&#39;</span><span class="p">)</span>
 
 </div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
