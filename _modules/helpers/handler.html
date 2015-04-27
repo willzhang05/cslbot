@@ -535,12 +535,12 @@
         <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="n">cmdlen</span><span class="p">:]</span>
         <span class="n">cmd_name</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):]</span> <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span>
 
-        <span class="n">cmdargs</span><span class="p">,</span> <span class="n">filtersend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filtered_send</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">filtersend</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">send</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
-            <span class="k">return</span>
-
         <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">is_registered</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">):</span>
+            <span class="n">cmdargs</span><span class="p">,</span> <span class="n">filtersend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filtered_send</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">filtersend</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">send</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
+                <span class="k">return</span>
+
             <span class="n">cmd_obj</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">cmd_obj</span><span class="o">.</span><span class="n">is_limited</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">abusecheck</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmd_obj</span><span class="o">.</span><span class="n">limit</span><span class="p">,</span> <span class="n">cmd</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cmdchar</span><span class="p">):]):</span>
                 <span class="k">return</span>
