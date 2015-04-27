@@ -71,7 +71,8 @@
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">Requirement</span><span class="p">,</span> <span class="n">resource_filename</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">join</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
@@ -87,9 +88,9 @@
     <span class="n">AUX</span><span class="p">[</span><span class="s">&#39;hooks&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;extrahooks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)]</span>
 
 </div>
-<div class="viewcode-block" id="init_groups"><a class="viewcode-back" href="../../helpers.html#helpers.modutils.init_groups">[docs]</a><span class="k">def</span> <span class="nf">init_groups</span><span class="p">(</span><span class="n">groups</span><span class="p">):</span>
+<div class="viewcode-block" id="init_groups"><a class="viewcode-back" href="../../helpers.html#helpers.modutils.init_groups">[docs]</a><span class="k">def</span> <span class="nf">init_groups</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">confdir</span><span class="p">):</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/../groups.cfg&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">confdir</span><span class="p">,</span> <span class="s">&#39;groups.cfg&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
         <span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">cfgfile</span><span class="p">)</span>
     <span class="n">add_to_groups</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span> <span class="s">&#39;commands&#39;</span><span class="p">)</span>
     <span class="n">add_to_groups</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span> <span class="s">&#39;hooks&#39;</span><span class="p">)</span>
@@ -135,8 +136,7 @@
 </div>
 <div class="viewcode-block" id="get_enabled"><a class="viewcode-back" href="../../helpers.html#helpers.modutils.get_enabled">[docs]</a><span class="k">def</span> <span class="nf">get_enabled</span><span class="p">(</span><span class="n">moddir</span><span class="p">,</span> <span class="n">mod_type</span><span class="p">):</span>
     <span class="n">enabled</span><span class="p">,</span> <span class="n">disabled</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
-    <span class="n">full_path</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;..&#39;</span><span class="p">))</span>
-    <span class="n">full_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="n">moddir</span><span class="p">)</span>
+    <span class="n">full_dir</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="n">moddir</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">full_dir</span><span class="p">,</span> <span class="s">&#39;*.py&#39;</span><span class="p">)):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">mod_pkg</span> <span class="o">=</span> <span class="n">moddir</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">)</span>

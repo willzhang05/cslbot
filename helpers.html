@@ -416,7 +416,7 @@
 <span id="helpers-core-module"></span><h2>helpers.core module<a class="headerlink" href="#module-helpers.core" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="helpers.core.IrcBot">
-<em class="property">class </em><code class="descclassname">helpers.core.</code><code class="descname">IrcBot</code><span class="sig-paren">(</span><em>botconfig</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/core.html#IrcBot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.core.IrcBot" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">helpers.core.</code><code class="descname">IrcBot</code><span class="sig-paren">(</span><em>confdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/core.html#IrcBot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.core.IrcBot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">irc.bot.SingleServerIRCBot</span></code></p>
 <dl class="method">
 <dt id="helpers.core.IrcBot.do_sasl">
@@ -512,7 +512,7 @@
 <span id="helpers-handler-module"></span><h2>helpers.handler module<a class="headerlink" href="#module-helpers.handler" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="helpers.handler.BotHandler">
-<em class="property">class </em><code class="descclassname">helpers.handler.</code><code class="descname">BotHandler</code><span class="sig-paren">(</span><em>config</em>, <em>connection</em>, <em>channels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">helpers.handler.</code><code class="descname">BotHandler</code><span class="sig-paren">(</span><em>config</em>, <em>connection</em>, <em>channels</em>, <em>confdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/handler.html#BotHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.handler.BotHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="helpers.handler.BotHandler.abusecheck">
@@ -768,7 +768,7 @@ a message.</p>
 
 <dl class="function">
 <dt id="helpers.misc.do_pull">
-<code class="descclassname">helpers.misc.</code><code class="descname">do_pull</code><span class="sig-paren">(</span><em>srcdir</em>, <em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#do_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.do_pull" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">helpers.misc.</code><code class="descname">do_pull</code><span class="sig-paren">(</span><em>srcdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#do_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.do_pull" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -803,7 +803,7 @@ a message.</p>
 
 <dl class="function">
 <dt id="helpers.misc.get_version">
-<code class="descclassname">helpers.misc.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.get_version" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">helpers.misc.</code><code class="descname">get_version</code><span class="sig-paren">(</span><em>srcdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/misc.html#get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.misc.get_version" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -876,7 +876,7 @@ a message.</p>
 
 <dl class="function">
 <dt id="helpers.modutils.init_groups">
-<code class="descclassname">helpers.modutils.</code><code class="descname">init_groups</code><span class="sig-paren">(</span><em>groups</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/modutils.html#init_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.modutils.init_groups" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">helpers.modutils.</code><code class="descname">init_groups</code><span class="sig-paren">(</span><em>groups</em>, <em>confdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/modutils.html#init_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.modutils.init_groups" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1419,7 +1419,7 @@ a message.</p>
 
 <dl class="function">
 <dt id="helpers.reloader.load_modules">
-<code class="descclassname">helpers.reloader.</code><code class="descname">load_modules</code><span class="sig-paren">(</span><em>config</em>, <em>send=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/reloader.html#load_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.reloader.load_modules" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">helpers.reloader.</code><code class="descname">load_modules</code><span class="sig-paren">(</span><em>config</em>, <em>confdir</em>, <em>send=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/reloader.html#load_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#helpers.reloader.load_modules" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
