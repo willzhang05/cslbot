@@ -77,6 +77,7 @@
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">ssl</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
@@ -88,6 +89,7 @@
 <div class="viewcode-block" id="IrcBot"><a class="viewcode-back" href="../../helpers.html#helpers.core.IrcBot">[docs]</a><span class="k">class</span> <span class="nc">IrcBot</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">SingleServerIRCBot</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confdir</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Setup everything.&quot;&quot;&quot;</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">confdir</span> <span class="o">=</span> <span class="n">confdir</span>
         <span class="n">config_file</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">confdir</span><span class="p">,</span> <span class="s">&#39;config.cfg&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
@@ -160,6 +162,12 @@
             <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">nick</span>
+</div>
+<div class="viewcode-block" id="IrcBot.shutdown"><a class="viewcode-back" href="../../helpers.html#helpers.core.IrcBot.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;connection&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;Bot received SIGTERM&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="IrcBot.shutdown_mp"><a class="viewcode-back" href="../../helpers.html#helpers.core.IrcBot.shutdown_mp">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_mp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Shutdown all the multiprocessing.</span>
