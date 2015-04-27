@@ -89,7 +89,14 @@
 
 <div class="viewcode-block" id="init_server"><a class="viewcode-back" href="../../helpers.html#helpers.server.init_server">[docs]</a><span class="k">def</span> <span class="nf">init_server</span><span class="p">(</span><span class="n">bot</span><span class="p">):</span>
     <span class="n">port</span> <span class="o">=</span> <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;core&#39;</span><span class="p">,</span> <span class="s">&#39;serverport&#39;</span><span class="p">)</span>
-    <span class="n">server</span> <span class="o">=</span> <span class="n">BotNetServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">BotNetHandler</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">BotNetServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">BotNetHandler</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">shutdown_mp</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ex</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="mi">98</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Please make sure that there is no other service running on port </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">port</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ex</span>
     <span class="n">server</span><span class="o">.</span><span class="n">bot</span> <span class="o">=</span> <span class="n">bot</span>
     <span class="n">bot</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">start_thread</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">server</span>

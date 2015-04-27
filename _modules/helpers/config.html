@@ -71,6 +71,8 @@
 
 <span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">mkdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
 <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">Requirement</span><span class="p">,</span> <span class="n">resource_string</span>
 
 
@@ -112,10 +114,20 @@
     <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
     <span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="n">resource_string</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="s">&#39;static/config.example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     <span class="n">do_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cfgfile</span><span class="p">)</span>
+    <span class="n">configdir</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">configdir</span><span class="p">):</span>
+            <span class="n">mkdir</span><span class="p">(</span><span class="n">configdir</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfgfile</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cfgfile</span><span class="p">)</span>
+        <span class="n">groupsfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">configdir</span><span class="p">,</span> <span class="s">&#39;groups.cfg&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">groupsfile</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">groupsfile</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resource_string</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="s">&#39;static/groups.example&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">PermissionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Please make sure that the user you are running CslBot as has permission to write to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">configdir</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&#39;WARNING: you must set the db.engine option for the bot to work.&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Configuration succeded, please review config.cfg and restart the bot.&quot;</span><span class="p">)</span></div>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Configuration succeded, please review </span><span class="si">%s</span><span class="s"> and restart the bot.&quot;</span> <span class="o">%</span> <span class="n">configfile</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
