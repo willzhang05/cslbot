@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cslbot.commands.issue &mdash; CslBot 0.14 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.14',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="CslBot 0.14 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">CslBot 0.14 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cslbot.commands.issue</h1><div class="highlight"><pre>
+<span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or</span>
+<span class="c"># modify it under the terms of the GNU General Public License</span>
+<span class="c"># as published by the Free Software Foundation; either version 2</span>
+<span class="c"># of the License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, write to the Free Software</span>
+<span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+<span class="kn">from</span> <span class="nn">..helpers</span> <span class="kn">import</span> <span class="n">arguments</span>
+<span class="kn">from</span> <span class="nn">..helpers.orm</span> <span class="kn">import</span> <span class="n">Issues</span>
+<span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
+<span class="kn">from</span> <span class="nn">..helpers.misc</span> <span class="kn">import</span> <span class="n">create_issue</span>
+
+
+<span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;issue&#39;</span><span class="p">,</span> <span class="s">&#39;bug&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.issue.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Files a github issue or gets a open one.</span>
+<span class="sd">    Syntax: {command} &lt;title [--desc description]|--get &lt;number&gt;&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;githubrepo&#39;</span><span class="p">]</span>
+    <span class="n">apikey</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;githubapikey&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;GitHub repository undefined in config.cfg!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgParser</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--get&#39;</span><span class="p">,</span> <span class="s">&#39;--show&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--description&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;No description given.&quot;</span><span class="p">)</span>
+    <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;privmsg&#39;</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&#39;You want to let everybody know about your problems, right?&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">get</span> <span class="ow">or</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">issue</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;https://api.github.com/repos/</span><span class="si">%s</span><span class="s">/issues/</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">)))</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s">&#39;message&#39;</span> <span class="ow">in</span> <span class="n">issue</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid Issue Number&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">) -- </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">issue</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">],</span> <span class="n">issue</span><span class="p">[</span><span class="s">&#39;state&#39;</span><span class="p">],</span> <span class="n">issue</span><span class="p">[</span><span class="s">&#39;html_url&#39;</span><span class="p">]))</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+        <span class="n">issues</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s">&#39;token </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">apikey</span><span class="p">}</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;https://api.github.com/repos/</span><span class="si">%s</span><span class="s">/issues&#39;</span> <span class="o">%</span> <span class="n">repo</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;per_page&#39;</span><span class="p">:</span> <span class="s">&#39;100&#39;</span><span class="p">,</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="n">n</span><span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+                <span class="n">issues</span> <span class="o">+=</span> <span class="n">page</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;No open issues to choose from!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">issue</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span>
+            <span class="n">num_issues</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">issues</span> <span class="k">if</span> <span class="s">&#39;pull_request&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;There are </span><span class="si">%d</span><span class="s"> open issues, here&#39;s one.&quot;</span> <span class="o">%</span> <span class="n">num_issues</span><span class="p">)</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;#</span><span class="si">%d</span><span class="s"> -- </span><span class="si">%s</span><span class="s"> -- </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">issue</span><span class="p">[</span><span class="s">&#39;number&#39;</span><span class="p">],</span> <span class="n">issue</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">],</span> <span class="n">issue</span><span class="p">[</span><span class="s">&#39;html_url&#39;</span><span class="p">]))</span>
+    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;is_admin&#39;</span><span class="p">](</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">]):</span>
+        <span class="n">url</span><span class="p">,</span> <span class="n">success</span> <span class="o">=</span> <span class="n">create_issue</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">],</span> <span class="n">repo</span><span class="p">,</span> <span class="n">apikey</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Issue created -- </span><span class="si">%s</span><span class="s"> -- </span><span class="si">%s</span><span class="s"> -- </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Error creating issue: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">Issues</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">])</span>
+        <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;New Issue: #</span><span class="si">%d</span><span class="s"> -- </span><span class="si">%s</span><span class="s"> -- </span><span class="si">%s</span><span class="s">, Submitted by </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">]),</span> <span class="n">target</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">])</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Issue submitted for approval.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Invalid arguments.&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2013-2015, Fox Wilson, Peter Foley, Srijay Kasturi, Samuel Damashek, James Forcier and Reed Koser.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cslbot.helpers.textutils &mdash; CslBot 0.14 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.14',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="CslBot 0.14 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">CslBot 0.14 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cslbot.helpers.textutils</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or</span>
+<span class="c"># modify it under the terms of the GNU General Public License</span>
+<span class="c"># as published by the Free Software Foundation; either version 2</span>
+<span class="c"># of the License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, write to the Free Software</span>
+<span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,</span>
+<span class="c"># USA.</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">Requirement</span><span class="p">,</span> <span class="n">resource_string</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span>
+<span class="kn">from</span> <span class="nn">lxml.html</span> <span class="kn">import</span> <span class="n">fromstring</span><span class="p">,</span> <span class="n">tostring</span>
+<span class="kn">from</span> <span class="nn">html</span> <span class="kn">import</span> <span class="n">escape</span><span class="p">,</span> <span class="n">unescape</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randrange</span><span class="p">,</span> <span class="n">randint</span>
+
+<span class="n">slogan_cache</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="removevowels"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.removevowels">[docs]</a><span class="k">def</span> <span class="nf">removevowels</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;[aeiouy]&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="gen_word"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_word">[docs]</a><span class="k">def</span> <span class="nf">gen_word</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://randomword.setgetgo.com/get.php&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="gen_hashtag"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_hashtag">[docs]</a><span class="k">def</span> <span class="nf">gen_hashtag</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="s">&#39;#&#39;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">ord</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)))</span>
+
+</div>
+<div class="viewcode-block" id="gen_yoda"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_yoda">[docs]</a><span class="k">def</span> <span class="nf">gen_yoda</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">post</span><span class="p">(</span><span class="s">&quot;http://www.yodaspeak.co.uk/index.php&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;YodaMe&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">fromstring</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">errors</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">findtext</span><span class="p">(</span><span class="s">&#39;.//textarea[@readonly]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="gen_gizoogle"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_gizoogle">[docs]</a><span class="k">def</span> <span class="nf">gen_gizoogle</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">post</span><span class="p">(</span><span class="s">&quot;http://www.gizoogle.net/textilizer.php&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;translatetext&#39;</span><span class="p">:</span> <span class="n">escape</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-7&#39;</span><span class="p">)})</span>
+    <span class="c"># This mess is needed because gizoogle has a malformed textarea, so the text isn&#39;t within the tag</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">unescape</span><span class="p">(</span><span class="n">tostring</span><span class="p">(</span><span class="n">fromstring</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;.//textarea&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-7&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;.*&lt;/textarea&gt;&quot;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">unescape</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="gen_shakespeare"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_shakespeare">[docs]</a><span class="k">def</span> <span class="nf">gen_shakespeare</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c"># Originally from http://www.shmoop.com/shakespeare-translator/</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resource_string</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="s">&#39;cslbot/static/shakespeare-dictionary.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="n">replist</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\b(&#39;</span> <span class="o">+</span> <span class="s">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">replist</span><span class="p">)</span> <span class="o">+</span> <span class="s">r&#39;)\b&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">table</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()],</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+</div>
+<div class="viewcode-block" id="gen_praise"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_praise">[docs]</a><span class="k">def</span> <span class="nf">gen_praise</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">praise</span> <span class="o">=</span> <span class="n">get_praise</span><span class="p">()</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">praise</span><span class="p">:</span>
+        <span class="n">praise</span> <span class="o">=</span> <span class="n">get_praise</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">praise</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_praise"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.get_praise">[docs]</a><span class="k">def</span> <span class="nf">get_praise</span><span class="p">():</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">fromstring</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.madsci.org/cgi-bin/cgiwrap/~lynn/jardin/SCG&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;body/center/h2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="gen_fwilson"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_fwilson">[docs]</a><span class="k">def</span> <span class="nf">gen_fwilson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;fwil&#39;</span><span class="p">):</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s">&#39;w&#39;</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s">&#39;w&#39;</span> <span class="k">if</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="k">else</span> <span class="s">&#39;f&#39;</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">&#39;w&#39;</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;wh</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;e&#39;</span> <span class="o">*</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;fwil</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">q</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="gen_creffett"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_creffett">[docs]</a><span class="k">def</span> <span class="nf">gen_creffett</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&#39;</span><span class="se">\x02\x03</span><span class="s">8,4</span><span class="si">%s</span><span class="s">!!!&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="gen_slogan"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_slogan">[docs]</a><span class="k">def</span> <span class="nf">gen_slogan</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c"># Originally from sloganizer.com</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">slogan_cache</span><span class="p">:</span>
+        <span class="n">slogan_cache</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">resource_string</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="s">&#39;cslbot/static/slogans.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">choice</span><span class="p">(</span><span class="n">slogan_cache</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="gen_morse"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_morse">[docs]</a><span class="k">def</span> <span class="nf">gen_morse</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">morse_codes</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;a&quot;</span><span class="p">:</span> <span class="s">&quot;.-&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">:</span> <span class="s">&quot;-...&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">:</span> <span class="s">&quot;-.-.&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">:</span> <span class="s">&quot;-..&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">:</span> <span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="s">&quot;f&quot;</span><span class="p">:</span> <span class="s">&quot;..-.&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;g&quot;</span><span class="p">:</span> <span class="s">&quot;--.&quot;</span><span class="p">,</span> <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="s">&quot;....&quot;</span><span class="p">,</span> <span class="s">&quot;i&quot;</span><span class="p">:</span> <span class="s">&quot;..&quot;</span><span class="p">,</span> <span class="s">&quot;j&quot;</span><span class="p">:</span> <span class="s">&quot;.---&quot;</span><span class="p">,</span> <span class="s">&quot;k&quot;</span><span class="p">:</span> <span class="s">&quot;-.-&quot;</span><span class="p">,</span> <span class="s">&quot;l&quot;</span><span class="p">:</span> <span class="s">&quot;.-..&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;m&quot;</span><span class="p">:</span> <span class="s">&quot;--&quot;</span><span class="p">,</span> <span class="s">&quot;n&quot;</span><span class="p">:</span> <span class="s">&quot;-.&quot;</span><span class="p">,</span> <span class="s">&quot;o&quot;</span><span class="p">:</span> <span class="s">&quot;---&quot;</span><span class="p">,</span> <span class="s">&quot;p&quot;</span><span class="p">:</span> <span class="s">&quot;.--.&quot;</span><span class="p">,</span> <span class="s">&quot;q&quot;</span><span class="p">:</span> <span class="s">&quot;--.-&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">:</span> <span class="s">&quot;.-.&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;s&quot;</span><span class="p">:</span> <span class="s">&quot;...&quot;</span><span class="p">,</span> <span class="s">&quot;t&quot;</span><span class="p">:</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;u&quot;</span><span class="p">:</span> <span class="s">&quot;..-&quot;</span><span class="p">,</span> <span class="s">&quot;v&quot;</span><span class="p">:</span> <span class="s">&quot;...-&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">:</span> <span class="s">&quot;.--&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">:</span> <span class="s">&quot;-..-&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;y&quot;</span><span class="p">:</span> <span class="s">&quot;-.--&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">:</span> <span class="s">&quot;--..&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">:</span> <span class="s">&quot;.----&quot;</span><span class="p">,</span> <span class="s">&quot;2&quot;</span><span class="p">:</span> <span class="s">&quot;..---&quot;</span><span class="p">,</span> <span class="s">&quot;3&quot;</span><span class="p">:</span> <span class="s">&quot;...--&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;4&quot;</span><span class="p">:</span> <span class="s">&quot;....-&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">:</span> <span class="s">&quot;.....&quot;</span><span class="p">,</span> <span class="s">&quot;6&quot;</span><span class="p">:</span> <span class="s">&quot;-....&quot;</span><span class="p">,</span> <span class="s">&quot;7&quot;</span><span class="p">:</span> <span class="s">&quot;--...&quot;</span><span class="p">,</span> <span class="s">&quot;8&quot;</span><span class="p">:</span> <span class="s">&quot;---..&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;9&quot;</span><span class="p">:</span> <span class="s">&quot;----.&quot;</span><span class="p">,</span> <span class="s">&quot;0&quot;</span><span class="p">:</span> <span class="s">&quot;-----&quot;</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">:</span> <span class="s">&quot;  &quot;</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">:</span> <span class="s">&quot;.-.-.-&quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="s">&quot;--..--&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;?&quot;</span><span class="p">:</span> <span class="s">&quot;..--..&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;&quot;</span><span class="p">:</span> <span class="s">&quot;.----.&quot;</span><span class="p">,</span> <span class="s">&quot;!&quot;</span><span class="p">:</span> <span class="s">&quot;-.-.--&quot;</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">:</span> <span class="s">&quot;-..-.&quot;</span><span class="p">,</span> <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="s">&quot;-.--.&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;)&quot;</span><span class="p">:</span> <span class="s">&quot;-.--.-&quot;</span><span class="p">,</span> <span class="s">&quot;&amp;&quot;</span><span class="p">:</span> <span class="s">&quot;.-...&quot;</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">:</span> <span class="s">&quot;---...&quot;</span><span class="p">,</span> <span class="s">&quot;;&quot;</span><span class="p">:</span> <span class="s">&quot;-.-.-.&quot;</span><span class="p">,</span> <span class="s">&quot;=&quot;</span><span class="p">:</span> <span class="s">&quot;-...-&quot;</span><span class="p">,</span>
+                   <span class="s">&quot;+&quot;</span><span class="p">:</span> <span class="s">&quot;.-.-.&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">:</span> <span class="s">&quot;-....-&quot;</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">:</span> <span class="s">&quot;..--.-&quot;</span><span class="p">,</span> <span class="s">&#39;&quot;&#39;</span><span class="p">:</span> <span class="s">&quot;.-..-.&quot;</span><span class="p">,</span> <span class="s">&quot;$&quot;</span><span class="p">:</span> <span class="s">&quot;...-..-&quot;</span><span class="p">,</span> <span class="s">&quot;@&quot;</span><span class="p">:</span> <span class="s">&quot;.--.-.&quot;</span><span class="p">}</span>
+    <span class="n">morse</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">morse</span> <span class="o">+=</span> <span class="n">morse_codes</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">morse</span> <span class="o">+=</span> <span class="s">&quot;? &quot;</span>
+    <span class="k">return</span> <span class="n">morse</span>
+
+</div>
+<div class="viewcode-block" id="gen_insult"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_insult">[docs]</a><span class="k">def</span> <span class="nf">gen_insult</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="n">adj</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&quot;acidic&quot;</span><span class="p">,</span> <span class="s">&quot;antique&quot;</span><span class="p">,</span> <span class="s">&quot;contemptible&quot;</span><span class="p">,</span> <span class="s">&quot;culturally-unsound&quot;</span><span class="p">,</span>
+        <span class="s">&quot;despicable&quot;</span><span class="p">,</span> <span class="s">&quot;evil&quot;</span><span class="p">,</span> <span class="s">&quot;fermented&quot;</span><span class="p">,</span> <span class="s">&quot;festering&quot;</span><span class="p">,</span> <span class="s">&quot;foul&quot;</span><span class="p">,</span> <span class="s">&quot;fulminating&quot;</span><span class="p">,</span>
+        <span class="s">&quot;humid&quot;</span><span class="p">,</span> <span class="s">&quot;impure&quot;</span><span class="p">,</span> <span class="s">&quot;inept&quot;</span><span class="p">,</span> <span class="s">&quot;inferior&quot;</span><span class="p">,</span> <span class="s">&quot;industrial&quot;</span><span class="p">,</span> <span class="s">&quot;left-over&quot;</span><span class="p">,</span>
+        <span class="s">&quot;low-quality&quot;</span><span class="p">,</span> <span class="s">&quot;malodorous&quot;</span><span class="p">,</span> <span class="s">&quot;off-color&quot;</span><span class="p">,</span> <span class="s">&quot;penguin-molesting&quot;</span><span class="p">,</span>
+        <span class="s">&quot;petrified&quot;</span><span class="p">,</span> <span class="s">&quot;pointy-nosed&quot;</span><span class="p">,</span> <span class="s">&quot;salty&quot;</span><span class="p">,</span> <span class="s">&quot;sausage-snorfling&quot;</span><span class="p">,</span> <span class="s">&quot;tastless&quot;</span><span class="p">,</span>
+        <span class="s">&quot;tempestuous&quot;</span><span class="p">,</span> <span class="s">&quot;tepid&quot;</span><span class="p">,</span> <span class="s">&quot;tofu-nibbling&quot;</span><span class="p">,</span> <span class="s">&quot;unintelligent&quot;</span><span class="p">,</span> <span class="s">&quot;unoriginal&quot;</span><span class="p">,</span>
+        <span class="s">&quot;uninspiring&quot;</span><span class="p">,</span> <span class="s">&quot;weasel-smelling&quot;</span><span class="p">,</span> <span class="s">&quot;wretched&quot;</span><span class="p">,</span> <span class="s">&quot;spam-sucking&quot;</span><span class="p">,</span>
+        <span class="s">&quot;egg-sucking&quot;</span><span class="p">,</span> <span class="s">&quot;decayed&quot;</span><span class="p">,</span> <span class="s">&quot;halfbaked&quot;</span><span class="p">,</span> <span class="s">&quot;infected&quot;</span><span class="p">,</span> <span class="s">&quot;squishy&quot;</span><span class="p">,</span> <span class="s">&quot;porous&quot;</span><span class="p">,</span>
+        <span class="s">&quot;pickled&quot;</span><span class="p">,</span> <span class="s">&quot;coughed-up&quot;</span><span class="p">,</span> <span class="s">&quot;thick&quot;</span><span class="p">,</span> <span class="s">&quot;vapid&quot;</span><span class="p">,</span> <span class="s">&quot;hacked-up&quot;</span><span class="p">,</span> <span class="s">&quot;unmuzzleld&quot;</span><span class="p">,</span>
+        <span class="s">&quot;bawdy&quot;</span><span class="p">,</span> <span class="s">&quot;vain&quot;</span><span class="p">,</span> <span class="s">&quot;lumpish&quot;</span><span class="p">,</span> <span class="s">&quot;churlish&quot;</span><span class="p">,</span> <span class="s">&quot;fobbing&quot;</span><span class="p">,</span> <span class="s">&quot;rank&quot;</span><span class="p">,</span> <span class="s">&quot;craven&quot;</span><span class="p">,</span>
+        <span class="s">&quot;puking&quot;</span><span class="p">,</span> <span class="s">&quot;jarring&quot;</span><span class="p">,</span> <span class="s">&quot;fly-bitten&quot;</span><span class="p">,</span> <span class="s">&quot;pox-marked&quot;</span><span class="p">,</span> <span class="s">&quot;fen-sucked&quot;</span><span class="p">,</span>
+        <span class="s">&quot;spongy&quot;</span><span class="p">,</span> <span class="s">&quot;droning&quot;</span><span class="p">,</span> <span class="s">&quot;gleeking&quot;</span><span class="p">,</span> <span class="s">&quot;warped&quot;</span><span class="p">,</span> <span class="s">&quot;currish&quot;</span><span class="p">,</span> <span class="s">&quot;milk-livered&quot;</span><span class="p">,</span>
+        <span class="s">&quot;surly&quot;</span><span class="p">,</span> <span class="s">&quot;mammering&quot;</span><span class="p">,</span> <span class="s">&quot;ill-borne&quot;</span><span class="p">,</span> <span class="s">&quot;beef-witted&quot;</span><span class="p">,</span> <span class="s">&quot;tickle-brained&quot;</span><span class="p">,</span>
+        <span class="s">&quot;half-faced&quot;</span><span class="p">,</span> <span class="s">&quot;headless&quot;</span><span class="p">,</span> <span class="s">&quot;wayward&quot;</span><span class="p">,</span> <span class="s">&quot;rump-fed&quot;</span><span class="p">,</span> <span class="s">&quot;onion-eyed&quot;</span><span class="p">,</span>
+        <span class="s">&quot;beslubbering&quot;</span><span class="p">,</span> <span class="s">&quot;villainous&quot;</span><span class="p">,</span> <span class="s">&quot;lewd-minded&quot;</span><span class="p">,</span> <span class="s">&quot;cockered&quot;</span><span class="p">,</span> <span class="s">&quot;full-gorged&quot;</span><span class="p">,</span>
+        <span class="s">&quot;rude-snouted&quot;</span><span class="p">,</span> <span class="s">&quot;crook-pated&quot;</span><span class="p">,</span> <span class="s">&quot;pribbling&quot;</span><span class="p">,</span> <span class="s">&quot;dread-bolted&quot;</span><span class="p">,</span>
+        <span class="s">&quot;fool-born&quot;</span><span class="p">,</span> <span class="s">&quot;puny&quot;</span><span class="p">,</span> <span class="s">&quot;fawning&quot;</span><span class="p">,</span> <span class="s">&quot;sheep-biting&quot;</span><span class="p">,</span> <span class="s">&quot;dankish&quot;</span><span class="p">,</span> <span class="s">&quot;goatish&quot;</span><span class="p">,</span>
+        <span class="s">&quot;weather-bitten&quot;</span><span class="p">,</span> <span class="s">&quot;knotty-pated&quot;</span><span class="p">,</span> <span class="s">&quot;malt-wormy&quot;</span><span class="p">,</span> <span class="s">&quot;saucyspleened&quot;</span><span class="p">,</span>
+        <span class="s">&quot;motley-mind&quot;</span><span class="p">,</span> <span class="s">&quot;it-fowling&quot;</span><span class="p">,</span> <span class="s">&quot;vassal-willed&quot;</span><span class="p">,</span> <span class="s">&quot;loggerheaded&quot;</span><span class="p">,</span>
+        <span class="s">&quot;clapper-clawed&quot;</span><span class="p">,</span> <span class="s">&quot;frothy&quot;</span><span class="p">,</span> <span class="s">&quot;ruttish&quot;</span><span class="p">,</span> <span class="s">&quot;clouted&quot;</span><span class="p">,</span> <span class="s">&quot;common-kissing&quot;</span><span class="p">,</span>
+        <span class="s">&quot;pignutted&quot;</span><span class="p">,</span> <span class="s">&quot;folly-fallen&quot;</span><span class="p">,</span> <span class="s">&quot;plume-plucked&quot;</span><span class="p">,</span> <span class="s">&quot;flap-mouthed&quot;</span><span class="p">,</span>
+        <span class="s">&quot;swag-bellied&quot;</span><span class="p">,</span> <span class="s">&quot;dizzy-eyed&quot;</span><span class="p">,</span> <span class="s">&quot;gorbellied&quot;</span><span class="p">,</span> <span class="s">&quot;weedy&quot;</span><span class="p">,</span> <span class="s">&quot;reeky&quot;</span><span class="p">,</span>
+        <span class="s">&quot;measled&quot;</span><span class="p">,</span> <span class="s">&quot;spur-galled&quot;</span><span class="p">,</span> <span class="s">&quot;mangled&quot;</span><span class="p">,</span> <span class="s">&quot;impertinent&quot;</span><span class="p">,</span> <span class="s">&quot;bootless&quot;</span><span class="p">,</span>
+        <span class="s">&quot;toad-spotted&quot;</span><span class="p">,</span> <span class="s">&quot;hasty-witted&quot;</span><span class="p">,</span> <span class="s">&quot;horn-beat&quot;</span><span class="p">,</span> <span class="s">&quot;yeasty&quot;</span><span class="p">,</span> <span class="s">&quot;boil-brained&quot;</span><span class="p">,</span>
+        <span class="s">&quot;tottering&quot;</span><span class="p">,</span> <span class="s">&quot;hedge-born&quot;</span><span class="p">,</span> <span class="s">&quot;hugger-muggered&quot;</span><span class="p">,</span> <span class="s">&quot;elf-skinned&quot;</span><span class="p">]</span>
+    <span class="n">amt</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&quot;accumulation&quot;</span><span class="p">,</span> <span class="s">&quot;bucket&quot;</span><span class="p">,</span> <span class="s">&quot;coagulation&quot;</span><span class="p">,</span> <span class="s">&quot;enema-bucketful&quot;</span><span class="p">,</span> <span class="s">&quot;gob&quot;</span><span class="p">,</span>
+        <span class="s">&quot;half-mouthful&quot;</span><span class="p">,</span> <span class="s">&quot;heap&quot;</span><span class="p">,</span> <span class="s">&quot;mass&quot;</span><span class="p">,</span> <span class="s">&quot;mound&quot;</span><span class="p">,</span> <span class="s">&quot;petrification&quot;</span><span class="p">,</span> <span class="s">&quot;pile&quot;</span><span class="p">,</span>
+        <span class="s">&quot;puddle&quot;</span><span class="p">,</span> <span class="s">&quot;stack&quot;</span><span class="p">,</span> <span class="s">&quot;thimbleful&quot;</span><span class="p">,</span> <span class="s">&quot;tongueful&quot;</span><span class="p">,</span> <span class="s">&quot;ooze&quot;</span><span class="p">,</span> <span class="s">&quot;quart&quot;</span><span class="p">,</span> <span class="s">&quot;bag&quot;</span><span class="p">,</span>
+        <span class="s">&quot;plate&quot;</span><span class="p">,</span> <span class="s">&quot;ass-full&quot;</span><span class="p">,</span> <span class="s">&quot;assload&quot;</span><span class="p">]</span>
+    <span class="n">noun</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&quot;bat toenails&quot;</span><span class="p">,</span> <span class="s">&quot;bug spit&quot;</span><span class="p">,</span> <span class="s">&quot;cat hair&quot;</span><span class="p">,</span> <span class="s">&quot;chicken piss&quot;</span><span class="p">,</span> <span class="s">&quot;dog vomit&quot;</span><span class="p">,</span>
+        <span class="s">&quot;dung&quot;</span><span class="p">,</span> <span class="s">&quot;fat-woman&#39;s stomach-bile&quot;</span><span class="p">,</span> <span class="s">&quot;fish heads&quot;</span><span class="p">,</span> <span class="s">&quot;guano&quot;</span><span class="p">,</span> <span class="s">&quot;gunk&quot;</span><span class="p">,</span>
+        <span class="s">&quot;pond scum&quot;</span><span class="p">,</span> <span class="s">&quot;rat retch&quot;</span><span class="p">,</span> <span class="s">&quot;red dye number-9&quot;</span><span class="p">,</span> <span class="s">&quot;Sun IPC manuals&quot;</span><span class="p">,</span>
+        <span class="s">&quot;waffle-house grits&quot;</span><span class="p">,</span> <span class="s">&quot;yoo-hoo&quot;</span><span class="p">,</span> <span class="s">&quot;dog balls&quot;</span><span class="p">,</span> <span class="s">&quot;seagull puke&quot;</span><span class="p">,</span>
+        <span class="s">&quot;cat bladders&quot;</span><span class="p">,</span> <span class="s">&quot;pus&quot;</span><span class="p">,</span> <span class="s">&quot;urine samples&quot;</span><span class="p">,</span> <span class="s">&quot;squirrel guts&quot;</span><span class="p">,</span>
+        <span class="s">&quot;snake assholes&quot;</span><span class="p">,</span> <span class="s">&quot;snake bait&quot;</span><span class="p">,</span> <span class="s">&quot;buzzard gizzards&quot;</span><span class="p">,</span> <span class="s">&quot;cat-hair-balls&quot;</span><span class="p">,</span>
+        <span class="s">&quot;rat-farts&quot;</span><span class="p">,</span> <span class="s">&quot;pods&quot;</span><span class="p">,</span> <span class="s">&quot;armadillo snouts&quot;</span><span class="p">,</span> <span class="s">&quot;entrails&quot;</span><span class="p">,</span> <span class="s">&quot;snake snot&quot;</span><span class="p">,</span>
+        <span class="s">&quot;eel ooze&quot;</span><span class="p">,</span> <span class="s">&quot;slurpee-backwash&quot;</span><span class="p">,</span> <span class="s">&quot;toxic waste&quot;</span><span class="p">,</span> <span class="s">&quot;Stimpy-drool&quot;</span><span class="p">,</span> <span class="s">&quot;poopy&quot;</span><span class="p">,</span>
+        <span class="s">&quot;poop&quot;</span><span class="p">,</span> <span class="s">&quot;craptacular carpet droppings&quot;</span><span class="p">,</span> <span class="s">&quot;jizzum&quot;</span><span class="p">,</span> <span class="s">&quot;cold sores&quot;</span><span class="p">,</span>
+        <span class="s">&quot;anal warts&quot;</span><span class="p">]</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is a </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> of </span><span class="si">%s</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">choice</span><span class="p">(</span><span class="n">adj</span><span class="p">),</span> <span class="n">choice</span><span class="p">(</span><span class="n">amt</span><span class="p">),</span> <span class="n">choice</span><span class="p">(</span><span class="n">noun</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">msg</span>
+
+</div>
+<div class="viewcode-block" id="char_to_bin"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.char_to_bin">[docs]</a><span class="k">def</span> <span class="nf">char_to_bin</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="c"># We need to be able to handle wchars</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="gen_binary"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_binary">[docs]</a><span class="k">def</span> <span class="nf">gen_binary</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">char_to_bin</span><span class="p">,</span> <span class="n">string</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="do_xkcd_sub"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.do_xkcd_sub">[docs]</a><span class="k">def</span> <span class="nf">do_xkcd_sub</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">hook</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="c"># http://xkcd.com/1288/</span>
+    <span class="n">substitutions</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;witnesses&#39;</span><span class="p">:</span> <span class="s">&#39;these dudes I know&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;allegedly&#39;</span><span class="p">:</span> <span class="s">&#39;kinda probably&#39;</span><span class="p">,</span> <span class="s">&#39;new study&#39;</span><span class="p">:</span> <span class="s">&#39;tumblr post&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;rebuild&#39;</span><span class="p">:</span> <span class="s">&#39;avenge&#39;</span><span class="p">,</span> <span class="s">&#39;space&#39;</span><span class="p">:</span> <span class="s">&#39;SPAAAAAACCCEEEEE&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;google glass&#39;</span><span class="p">:</span> <span class="s">&#39;virtual boy&#39;</span><span class="p">,</span> <span class="s">&#39;smartphone&#39;</span><span class="p">:</span> <span class="s">&#39;pokedex&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;electric&#39;</span><span class="p">:</span> <span class="s">&#39;atomic&#39;</span><span class="p">,</span> <span class="s">&#39;senator&#39;</span><span class="p">:</span> <span class="s">&#39;elf-lord&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">:</span> <span class="s">&#39;cat&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;election&#39;</span><span class="p">:</span> <span class="s">&#39;eating contest&#39;</span><span class="p">,</span> <span class="s">&#39;congressional leaders&#39;</span><span class="p">:</span>
+                     <span class="s">&#39;river spirits&#39;</span><span class="p">,</span> <span class="s">&#39;homeland security&#39;</span><span class="p">:</span> <span class="s">&#39;homestar runner&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;could not be reached for comment&#39;</span><span class="p">:</span>
+                     <span class="s">&#39;is guilty and everyone knows it&#39;</span><span class="p">}</span>
+    <span class="c"># http://xkcd.com/1031/</span>
+    <span class="n">substitutions</span><span class="p">[</span><span class="s">&#39;keyboard&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;leopard&#39;</span>
+    <span class="c"># http://xkcd.com/1418/</span>
+    <span class="n">substitutions</span><span class="p">[</span><span class="s">&#39;force&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;horse&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">msg</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">hook</span> <span class="ow">or</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.001</span> <span class="ow">or</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">replacement</span> <span class="ow">in</span> <span class="n">substitutions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&quot;\b</span><span class="si">%s</span><span class="s">\b&quot;</span> <span class="o">%</span> <span class="n">text</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;(.*)(?:-ass )(.*)&#39;</span><span class="p">,</span> <span class="s">r&#39;\1 ass-\2&#39;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">msg</span> <span class="o">==</span> <span class="n">output</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span> <span class="k">if</span> <span class="n">hook</span> <span class="k">else</span> <span class="n">msg</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+</div>
+<div class="viewcode-block" id="reverse"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.reverse">[docs]</a><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">msg</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="gen_lenny"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_lenny">[docs]</a><span class="k">def</span> <span class="nf">gen_lenny</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> ( ͡° ͜ʖ ͡°)&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+
+</div>
+<div class="viewcode-block" id="gen_shibe"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_shibe">[docs]</a><span class="k">def</span> <span class="nf">gen_shibe</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">topics</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">msg</span> <span class="k">else</span> <span class="p">[</span><span class="n">gen_word</span><span class="p">()]</span>
+
+    <span class="n">reaction</span> <span class="o">=</span> <span class="s">&#39;wow&#39;</span>
+    <span class="n">adverbs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;so&#39;</span><span class="p">,</span> <span class="s">&#39;such&#39;</span><span class="p">,</span> <span class="s">&#39;very&#39;</span><span class="p">,</span> <span class="s">&#39;much&#39;</span><span class="p">,</span> <span class="s">&#39;many&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
+        <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">choice</span><span class="p">(</span><span class="n">adverbs</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;omg&#39;</span><span class="p">,</span> <span class="s">&#39;amaze&#39;</span><span class="p">,</span> <span class="s">&#39;nice&#39;</span><span class="p">,</span> <span class="s">&#39;clap&#39;</span><span class="p">,</span> <span class="s">&#39;cool&#39;</span><span class="p">,</span> <span class="s">&#39;doge&#39;</span><span class="p">,</span> <span class="s">&#39;shibe&#39;</span><span class="p">,</span> <span class="s">&#39;ooh&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
+        <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">choice</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span>
+    <span class="n">reaction</span> <span class="o">+=</span> <span class="s">&#39; wow&#39;</span>
+    <span class="k">return</span> <span class="n">reaction</span>
+</div>
+<span class="n">output_filters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;passthrough&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="s">&quot;hashtag&quot;</span><span class="p">:</span> <span class="n">gen_hashtag</span><span class="p">,</span>
+    <span class="s">&quot;fwilson&quot;</span><span class="p">:</span> <span class="n">gen_fwilson</span><span class="p">,</span>
+    <span class="s">&quot;creffett&quot;</span><span class="p">:</span> <span class="n">gen_creffett</span><span class="p">,</span>
+    <span class="s">&quot;slogan&quot;</span><span class="p">:</span> <span class="n">gen_slogan</span><span class="p">,</span>
+    <span class="s">&quot;insult&quot;</span><span class="p">:</span> <span class="n">gen_insult</span><span class="p">,</span>
+    <span class="s">&quot;morse&quot;</span><span class="p">:</span> <span class="n">gen_morse</span><span class="p">,</span>
+    <span class="s">&quot;removevowels&quot;</span><span class="p">:</span> <span class="n">removevowels</span><span class="p">,</span>
+    <span class="s">&quot;binary&quot;</span><span class="p">:</span> <span class="n">gen_binary</span><span class="p">,</span>
+    <span class="s">&quot;xkcd&quot;</span><span class="p">:</span> <span class="n">do_xkcd_sub</span><span class="p">,</span>
+    <span class="s">&quot;praise&quot;</span><span class="p">:</span> <span class="n">gen_praise</span><span class="p">,</span>
+    <span class="s">&quot;reverse&quot;</span><span class="p">:</span> <span class="n">reverse</span><span class="p">,</span>
+    <span class="s">&quot;lenny&quot;</span><span class="p">:</span> <span class="n">gen_lenny</span><span class="p">,</span>
+    <span class="s">&quot;yoda&quot;</span><span class="p">:</span> <span class="n">gen_yoda</span><span class="p">,</span>
+    <span class="s">&quot;gizoogle&quot;</span><span class="p">:</span> <span class="n">gen_gizoogle</span><span class="p">,</span>
+    <span class="s">&quot;shakespeare&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span><span class="p">,</span>
+    <span class="s">&quot;bard&quot;</span><span class="p">:</span> <span class="n">gen_shakespeare</span><span class="p">,</span>
+    <span class="s">&quot;shibe&quot;</span><span class="p">:</span> <span class="n">gen_shibe</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2013-2015, Fox Wilson, Peter Foley, Srijay Kasturi, Samuel Damashek, James Forcier and Reed Koser.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

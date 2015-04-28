@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cslbot.helpers.command &mdash; CslBot 0.14 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.14',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="CslBot 0.14 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">CslBot 0.14 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cslbot.helpers.command</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or</span>
+<span class="c"># modify it under the terms of the GNU General Public License</span>
+<span class="c"># as published by the Free Software Foundation; either version 2</span>
+<span class="c"># of the License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, write to the Free Software</span>
+<span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,</span>
+<span class="c"># USA.</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">modutils</span><span class="p">,</span> <span class="n">backtrace</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getdoc</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">.orm</span> <span class="kn">import</span> <span class="n">Commands</span><span class="p">,</span> <span class="n">Log</span>
+
+<span class="n">_known_commands</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_disabled_commands</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="scan_for_commands"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.scan_for_commands">[docs]</a><span class="k">def</span> <span class="nf">scan_for_commands</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scans folder for commands</span>
+
+<span class="sd">    :param str folder: The folder in which to look for commands</span>
+<span class="sd">    :rtype: dict, list</span>
+<span class="sd">    :return: The dict represents a list of known commands, while the list is a list of modules that failed to reload</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_disabled_commands</span>
+    <span class="n">_known_commands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">_disabled_commands</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">get_disabled</span><span class="p">(</span><span class="s">&quot;commands&quot;</span><span class="p">)</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s">&quot;commands&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">errors</span>
+
+</div>
+<div class="viewcode-block" id="is_registered"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.is_registered">[docs]</a><span class="k">def</span> <span class="nf">is_registered</span><span class="p">(</span><span class="n">command_name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">command_name</span> <span class="ow">in</span> <span class="n">_known_commands</span>
+
+</div>
+<div class="viewcode-block" id="get_command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.get_command">[docs]</a><span class="k">def</span> <span class="nf">get_command</span><span class="p">(</span><span class="n">command_name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_known_commands</span><span class="p">[</span><span class="n">command_name</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="get_commands"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.get_commands">[docs]</a><span class="k">def</span> <span class="nf">get_commands</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">_known_commands</span>
+
+</div>
+<div class="viewcode-block" id="get_enabled_commands"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.get_enabled_commands">[docs]</a><span class="k">def</span> <span class="nf">get_enabled_commands</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_known_commands</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="get_disabled_commands"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.get_disabled_commands">[docs]</a><span class="k">def</span> <span class="nf">get_disabled_commands</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_known_commands</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="disable_command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.disable_command">[docs]</a><span class="k">def</span> <span class="nf">disable_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; adds a command to the disabled comands list&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;commands.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">command</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is not a loaded module&quot;</span> <span class="o">%</span> <span class="n">command</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
+        <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;Disabled command </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">command</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;That command is already disabled!&quot;</span>
+
+</div>
+<div class="viewcode-block" id="enable_command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.enable_command">[docs]</a><span class="k">def</span> <span class="nf">enable_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; removes a command from the disabled commands list&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">:</span>
+        <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s">&quot;Enabled all modules.&quot;</span>
+    <span class="k">elif</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
+        <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> reenabled&quot;</span> <span class="o">%</span> <span class="n">command</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;That command isn&#39;t disabled!&quot;</span>
+
+</div>
+<div class="viewcode-block" id="record_command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.record_command">[docs]</a><span class="k">def</span> <span class="nf">record_command</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="n">Commands</span><span class="p">(</span><span class="n">nick</span><span class="o">=</span><span class="n">nick</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="check_command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.check_command">[docs]</a><span class="k">def</span> <span class="nf">check_command</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="c"># only care about the last 10 seconds.</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="c"># the last one is the command we&#39;re currently executing, so get the penultimate one.</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Log</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Log</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="n">target</span><span class="p">,</span> <span class="n">Log</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s">&#39;pubmsg&#39;</span><span class="p">,</span> <span class="n">Log</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Log</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">last</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">last</span><span class="o">.</span><span class="n">msg</span> <span class="o">==</span> <span class="n">msg</span> <span class="ow">and</span> <span class="n">last</span><span class="o">.</span><span class="n">source</span> <span class="o">!=</span> <span class="n">nick</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+</div>
+<div class="viewcode-block" id="Command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.Command">[docs]</a><span class="k">class</span> <span class="nc">Command</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">admin</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">_known_commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">names</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="n">limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin</span> <span class="o">=</span> <span class="n">admin</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_known_commands</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;There is already a command registered with the name </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="p">)</span>
+            <span class="n">_known_commands</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span>
+                <span class="n">thread_id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;Thread-\d+&#39;</span><span class="p">,</span> <span class="n">thread</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">thread</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> running command.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session_scope</span><span class="p">()</span> <span class="k">as</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]:</span>
+                    <span class="n">func</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">backtrace</span><span class="o">.</span><span class="n">handle_traceback</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s">&quot;commands.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">thread</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> idle, last ran command.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doc</span> <span class="o">=</span> <span class="n">getdoc</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Warning:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;has no or very little documentation&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exe</span> <span class="o">=</span> <span class="n">wrapper</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+<div class="viewcode-block" id="Command.run"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.Command.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
+            <span class="n">send</span><span class="p">(</span><span class="s">&quot;Sorry, that command is disabled.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span>
+            <span class="k">with</span> <span class="n">handler</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session_scope</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">record_command</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="n">handler</span><span class="o">.</span><span class="n">workers</span><span class="o">.</span><span class="n">start_thread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exe</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Command.get_doc"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.Command.get_doc">[docs]</a>    <span class="k">def</span> <span class="nf">get_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc</span>
+</div>
+<div class="viewcode-block" id="Command.is_limited"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.Command.is_limited">[docs]</a>    <span class="k">def</span> <span class="nf">is_limited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">!=</span> <span class="mi">0</span>
+</div>
+<div class="viewcode-block" id="Command.requires_admin"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.Command.requires_admin">[docs]</a>    <span class="k">def</span> <span class="nf">requires_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">admin</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2013-2015, Fox Wilson, Peter Foley, Srijay Kasturi, Samuel Damashek, James Forcier and Reed Koser.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

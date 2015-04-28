@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>IrcBot &mdash; IrcBot 0.7 documentation</title>
+    <title>IrcBot &mdash; CslBot 0.14 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.7',
+        VERSION:     '0.14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="IrcBot 0.7 documentation" href="index.html" />
-    <link rel="next" title="bot module" href="bot.html" />
-    <link rel="prev" title="Welcome to IrcBot’s documentation!" href="index.html" />
+    <link rel="top" title="CslBot 0.14 documentation" href="index.html" />
+    <link rel="next" title="cslbot package" href="cslbot.html" />
+    <link rel="prev" title="Welcome to CslBot’s documentation!" href="index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -42,12 +42,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="bot.html" title="bot module"
+          <a href="cslbot.html" title="cslbot package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to IrcBot’s documentation!"
+          <a href="index.html" title="Welcome to CslBot’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IrcBot 0.7 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">CslBot 0.14 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,184 +60,175 @@
 <h1>IrcBot<a class="headerlink" href="#ircbot" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bot.html">bot module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="commands.tjhsst.html">commands.tjhsst package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="commands.tjhsst.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="commands.tjhsst.html#module-commands.tjhsst.ahamilto">commands.tjhsst.ahamilto module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="commands.tjhsst.html#module-commands.tjhsst.creffett">commands.tjhsst.creffett module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="commands.tjhsst.html#module-commands.tjhsst.fwilson">commands.tjhsst.fwilson module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="commands.tjhsst.html#module-commands.tjhsst.srepetsk">commands.tjhsst.srepetsk module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="commands.tjhsst.html#module-commands.tjhsst">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cslbot.html">cslbot package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cslbot.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cslbot.commands.html">cslbot.commands package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.8ball">cslbot.commands.8ball module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.about">cslbot.commands.about module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.abuse">cslbot.commands.abuse module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.acronym">cslbot.commands.acronym module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.admins">cslbot.commands.admins module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.babble">cslbot.commands.babble module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.bard">cslbot.commands.bard module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.bc">cslbot.commands.bc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.bike">cslbot.commands.bike module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.blame">cslbot.commands.blame module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.botsnack">cslbot.commands.botsnack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.botspam">cslbot.commands.botspam module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.cadmin">cslbot.commands.cadmin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.cancel">cslbot.commands.cancel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.channels">cslbot.commands.channels module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.choose">cslbot.commands.choose module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.cidr">cslbot.commands.cidr module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.coin">cslbot.commands.coin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.cve">cslbot.commands.cve module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.ddate">cslbot.commands.ddate module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.defersay">cslbot.commands.defersay module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.define">cslbot.commands.define module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.demorse">cslbot.commands.demorse module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.distro">cslbot.commands.distro module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.dvorak">cslbot.commands.dvorak module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.ebay">cslbot.commands.ebay module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.eix">cslbot.commands.eix module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.errno">cslbot.commands.errno module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.filter">cslbot.commands.filter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.fml">cslbot.commands.fml module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.fortune">cslbot.commands.fortune module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.fweather">cslbot.commands.fweather module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.gcc">cslbot.commands.gcc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.gizoogle">cslbot.commands.gizoogle module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.google">cslbot.commands.google module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.grep">cslbot.commands.grep module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.guarded">cslbot.commands.guarded module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.help">cslbot.commands.help module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.highlight">cslbot.commands.highlight module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.hooks">cslbot.commands.hooks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.ignore">cslbot.commands.ignore module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.imdb">cslbot.commands.imdb module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.inspect">cslbot.commands.inspect module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.insult">cslbot.commands.insult module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.ipa">cslbot.commands.ipa module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.issue">cslbot.commands.issue module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.isup">cslbot.commands.isup module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.jargon">cslbot.commands.jargon module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.join">cslbot.commands.join module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.kill">cslbot.commands.kill module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.lmgtfy">cslbot.commands.lmgtfy module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.man">cslbot.commands.man module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.metar">cslbot.commands.metar module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.microwave">cslbot.commands.microwave module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.mission">cslbot.commands.mission module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.mode">cslbot.commands.mode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.morse">cslbot.commands.morse module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.msg">cslbot.commands.msg module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.nicks">cslbot.commands.nicks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.note">cslbot.commands.note module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.nuke">cslbot.commands.nuke module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.part">cslbot.commands.part module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.pester">cslbot.commands.pester module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.ping">cslbot.commands.ping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.praise">cslbot.commands.praise module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.pull">cslbot.commands.pull module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.quit">cslbot.commands.quit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.quote">cslbot.commands.quote module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.random">cslbot.commands.random module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.reddit">cslbot.commands.reddit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.roman">cslbot.commands.roman module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.s">cslbot.commands.s module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.score">cslbot.commands.score module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.seen">cslbot.commands.seen module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.sha512">cslbot.commands.sha512 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.shibe">cslbot.commands.shibe module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.signal">cslbot.commands.signal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.slap">cslbot.commands.slap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.slogan">cslbot.commands.slogan module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.stats">cslbot.commands.stats module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.stock">cslbot.commands.stock module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.stopwatch">cslbot.commands.stopwatch module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.summon">cslbot.commands.summon module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.threads">cslbot.commands.threads module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.throw">cslbot.commands.throw module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.time">cslbot.commands.time module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.timeout">cslbot.commands.timeout module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.timeuntil">cslbot.commands.timeuntil module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.tjbash">cslbot.commands.tjbash module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.translate">cslbot.commands.translate module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.uptime">cslbot.commands.uptime module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.urban">cslbot.commands.urban module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.version">cslbot.commands.version module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.vote">cslbot.commands.vote module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.wai">cslbot.commands.wai module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.weather">cslbot.commands.weather module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.wiki">cslbot.commands.wiki module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.wikipath">cslbot.commands.wikipath module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.wolf">cslbot.commands.wolf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.word">cslbot.commands.word module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.wtf">cslbot.commands.wtf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.xkcd">cslbot.commands.xkcd module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands.yoda">cslbot.commands.yoda module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.commands.html#module-cslbot.commands">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cslbot.helpers.html">cslbot.helpers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.admin">cslbot.helpers.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.arguments">cslbot.helpers.arguments module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.babble">cslbot.helpers.babble module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.backtrace">cslbot.helpers.backtrace module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.command">cslbot.helpers.command module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.config">cslbot.helpers.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.control">cslbot.helpers.control module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.core">cslbot.helpers.core module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.exception">cslbot.helpers.exception module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.geoip">cslbot.helpers.geoip module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.handler">cslbot.helpers.handler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.hook">cslbot.helpers.hook module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.identity">cslbot.helpers.identity module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.misc">cslbot.helpers.misc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.modutils">cslbot.helpers.modutils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.orm">cslbot.helpers.orm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.reddit">cslbot.helpers.reddit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.reloader">cslbot.helpers.reloader module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.server">cslbot.helpers.server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.sql">cslbot.helpers.sql module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.textutils">cslbot.helpers.textutils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.urlutils">cslbot.helpers.urlutils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers.workers">cslbot.helpers.workers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.helpers.html#module-cslbot.helpers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cslbot.hooks.html">cslbot.hooks package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.autodeop">cslbot.hooks.autodeop module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.babble">cslbot.hooks.babble module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.band">cslbot.hooks.band module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.bob">cslbot.hooks.bob module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.butt">cslbot.hooks.butt module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.caps">cslbot.hooks.caps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.ctf">cslbot.hooks.ctf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.note">cslbot.hooks.note module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.reddit">cslbot.hooks.reddit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.scores">cslbot.hooks.scores module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.stallman">cslbot.hooks.stallman module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.understanding">cslbot.hooks.understanding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.url">cslbot.hooks.url module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks.xkcd">cslbot.hooks.xkcd module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.hooks.html#module-cslbot.hooks">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cslbot.tjhsst.html">cslbot.tjhsst package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.tjhsst.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.tjhsst.html#module-cslbot.tjhsst.ahamilto">cslbot.tjhsst.ahamilto module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.tjhsst.html#module-cslbot.tjhsst.creffett">cslbot.tjhsst.creffett module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.tjhsst.html#module-cslbot.tjhsst.fwilson">cslbot.tjhsst.fwilson module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.tjhsst.html#module-cslbot.tjhsst.srepetsk">cslbot.tjhsst.srepetsk module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cslbot.tjhsst.html#module-cslbot.tjhsst">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.8ball">commands.8ball module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.about">commands.about module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.abuse">commands.abuse module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.acronym">commands.acronym module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.admins">commands.admins module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.babble">commands.babble module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.bard">commands.bard module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.bc">commands.bc module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.bike">commands.bike module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.blame">commands.blame module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.botsnack">commands.botsnack module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.botspam">commands.botspam module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.cadmin">commands.cadmin module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.cancel">commands.cancel module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.channels">commands.channels module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.choose">commands.choose module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.cidr">commands.cidr module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.coin">commands.coin module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.cve">commands.cve module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ddate">commands.ddate module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.defersay">commands.defersay module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.define">commands.define module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.demorse">commands.demorse module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.distro">commands.distro module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.dvorak">commands.dvorak module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ebay">commands.ebay module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.eix">commands.eix module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.errno">commands.errno module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.filter">commands.filter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.fml">commands.fml module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.fortune">commands.fortune module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.fweather">commands.fweather module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.gcc">commands.gcc module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.gizoogle">commands.gizoogle module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.google">commands.google module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.grep">commands.grep module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.guarded">commands.guarded module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.help">commands.help module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.highlight">commands.highlight module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.hooks">commands.hooks module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ignore">commands.ignore module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.imdb">commands.imdb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.inspect">commands.inspect module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.insult">commands.insult module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ipa">commands.ipa module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.issue">commands.issue module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.isup">commands.isup module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.jargon">commands.jargon module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.join">commands.join module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.kill">commands.kill module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.lmgtfy">commands.lmgtfy module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.man">commands.man module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.metar">commands.metar module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.microwave">commands.microwave module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.mission">commands.mission module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.mode">commands.mode module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.morse">commands.morse module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.msg">commands.msg module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.nicks">commands.nicks module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.note">commands.note module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.nuke">commands.nuke module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.part">commands.part module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.pester">commands.pester module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.ping">commands.ping module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.praise">commands.praise module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.pull">commands.pull module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.quit">commands.quit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.quote">commands.quote module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.random">commands.random module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.reddit">commands.reddit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.roman">commands.roman module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.s">commands.s module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.score">commands.score module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.seen">commands.seen module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.sha512">commands.sha512 module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.shibe">commands.shibe module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.signal">commands.signal module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.slap">commands.slap module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.slogan">commands.slogan module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.stats">commands.stats module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.stock">commands.stock module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.stopwatch">commands.stopwatch module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.summon">commands.summon module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.threads">commands.threads module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.throw">commands.throw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.time">commands.time module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.timeout">commands.timeout module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.timeuntil">commands.timeuntil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.tjbash">commands.tjbash module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.translate">commands.translate module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.uptime">commands.uptime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.urban">commands.urban module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.version">commands.version module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.vote">commands.vote module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.wai">commands.wai module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.weather">commands.weather module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.wiki">commands.wiki module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.wikipath">commands.wikipath module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.wolf">commands.wolf module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.word">commands.word module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.wtf">commands.wtf module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.xkcd">commands.xkcd module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands.yoda">commands.yoda module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="helpers.html">helpers package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.admin">helpers.admin module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.arguments">helpers.arguments module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.babble">helpers.babble module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.backtrace">helpers.backtrace module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.command">helpers.command module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.config">helpers.config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.control">helpers.control module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.core">helpers.core module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.exception">helpers.exception module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.geoip">helpers.geoip module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.handler">helpers.handler module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.hook">helpers.hook module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.identity">helpers.identity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.misc">helpers.misc module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.modutils">helpers.modutils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.orm">helpers.orm module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.reddit">helpers.reddit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.reloader">helpers.reloader module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.server">helpers.server module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.sql">helpers.sql module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.textutils">helpers.textutils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.urlutils">helpers.urlutils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers.workers">helpers.workers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html#module-helpers">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="hooks.html">hooks package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.autodeop">hooks.autodeop module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.babble">hooks.babble module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.band">hooks.band module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.bob">hooks.bob module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.butt">hooks.butt module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.caps">hooks.caps module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.ctf">hooks.ctf module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.note">hooks.note module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.reddit">hooks.reddit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.scores">hooks.scores module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.stallman">hooks.stallman module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.understanding">hooks.understanding module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.url">hooks.url module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks.xkcd">hooks.xkcd module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html#module-hooks">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.client">scripts.client module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.gen_babble">scripts.gen_babble module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.migrate">scripts.migrate module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.parsedata">scripts.parsedata module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.parselogs">scripts.parselogs module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.reload">scripts.reload module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts.test">scripts.test module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#module-scripts">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cslbot.html#module-cslbot">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -252,10 +243,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to IrcBot&#8217;s documentation!</a></p>
+                        title="previous chapter">Welcome to CslBot&#8217;s documentation!</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="bot.html"
-                        title="next chapter">bot module</a></p>
+  <p class="topless"><a href="cslbot.html"
+                        title="next chapter">cslbot package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
