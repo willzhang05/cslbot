@@ -275,7 +275,7 @@
 </div>
 <div class="viewcode-block" id="append_filters"><a class="viewcode-back" href="../../helpers.html#helpers.misc.append_filters">[docs]</a><span class="k">def</span> <span class="nf">append_filters</span><span class="p">(</span><span class="n">filters</span><span class="p">):</span>
     <span class="n">filter_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">filters</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">filters</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">next_filter</span> <span class="ow">in</span> <span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">filter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">textutils</span><span class="o">.</span><span class="n">output_filters</span><span class="p">[</span><span class="n">next_filter</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
