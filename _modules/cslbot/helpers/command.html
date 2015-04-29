@@ -69,7 +69,6 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,</span>
 <span class="c"># USA.</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">threading</span>
@@ -119,7 +118,7 @@
 </div>
 <div class="viewcode-block" id="disable_command"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.disable_command">[docs]</a><span class="k">def</span> <span class="nf">disable_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; adds a command to the disabled comands list&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;commands.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">command</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_registered</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
         <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is not a loaded module&quot;</span> <span class="o">%</span> <span class="n">command</span>
     <span class="k">if</span> <span class="n">command</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
         <span class="n">_disabled_commands</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
@@ -189,7 +188,7 @@
         <span class="k">return</span> <span class="n">wrapper</span>
 
 <div class="viewcode-block" id="Command.run"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.command.Command.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">_disabled_commands</span><span class="p">]:</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&quot;Sorry, that command is disabled.&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
