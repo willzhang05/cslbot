@@ -264,17 +264,15 @@
 
 <dl class="function">
 <dt id="cslbot.helpers.command.scan_for_commands">
-<code class="descclassname">cslbot.helpers.command.</code><code class="descname">scan_for_commands</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/command.html#scan_for_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.command.scan_for_commands" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scans folder for commands</p>
+<code class="descclassname">cslbot.helpers.command.</code><code class="descname">scan_for_commands</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/command.html#scan_for_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.command.scan_for_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scans for commands</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.4)"><em>str</em></a>) &#8211; The folder in which to look for commands</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict, list</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict, list</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dict represents a list of known commands, while the list is a list of modules that failed to reload</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The dict represents a list of known commands, while the list is a list of modules that failed to reload</td>
 </tr>
 </tbody>
 </table>
@@ -720,17 +718,15 @@ a message.</p>
 
 <dl class="function">
 <dt id="cslbot.helpers.hook.scan_for_hooks">
-<code class="descclassname">cslbot.helpers.hook.</code><code class="descname">scan_for_hooks</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/hook.html#scan_for_hooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.hook.scan_for_hooks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scans folder for hooks</p>
+<code class="descclassname">cslbot.helpers.hook.</code><code class="descname">scan_for_hooks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/hook.html#scan_for_hooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.hook.scan_for_hooks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scans for hooks</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.4)"><em>str</em></a>) &#8211; The folder in which to look for hooks</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.4)">list</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.4)">list</a></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of modules that failed to reload</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of modules that failed to reload</td>
 </tr>
 </tbody>
 </table>
@@ -862,12 +858,12 @@ a message.</p>
 
 <dl class="function">
 <dt id="cslbot.helpers.modutils.get_enabled">
-<code class="descclassname">cslbot.helpers.modutils.</code><code class="descname">get_enabled</code><span class="sig-paren">(</span><em>moddir</em>, <em>mod_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/modutils.html#get_enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.modutils.get_enabled" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cslbot.helpers.modutils.</code><code class="descname">get_enabled</code><span class="sig-paren">(</span><em>mod_type</em>, <em>package='CslBot'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/modutils.html#get_enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.modutils.get_enabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="cslbot.helpers.modutils.get_modules">
-<code class="descclassname">cslbot.helpers.modutils.</code><code class="descname">get_modules</code><span class="sig-paren">(</span><em>folder</em>, <em>mod_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/modutils.html#get_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.modutils.get_modules" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cslbot.helpers.modutils.</code><code class="descname">get_modules</code><span class="sig-paren">(</span><em>mod_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/modutils.html#get_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.modutils.get_modules" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -930,7 +926,7 @@ a message.</p>
 
 <dl class="function">
 <dt id="cslbot.helpers.modutils.scan_and_reimport">
-<code class="descclassname">cslbot.helpers.modutils.</code><code class="descname">scan_and_reimport</code><span class="sig-paren">(</span><em>folder</em>, <em>mod_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/modutils.html#scan_and_reimport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.modutils.scan_and_reimport" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cslbot.helpers.modutils.</code><code class="descname">scan_and_reimport</code><span class="sig-paren">(</span><em>mod_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/modutils.html#scan_and_reimport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.modutils.scan_and_reimport" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scans folder for modules.</p>
 </dd></dl>
 

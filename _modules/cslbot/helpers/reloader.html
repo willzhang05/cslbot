@@ -80,13 +80,13 @@
 <div class="viewcode-block" id="load_modules"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.reloader.load_modules">[docs]</a><span class="k">def</span> <span class="nf">load_modules</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">confdir</span><span class="p">,</span> <span class="n">send</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">):</span>
     <span class="n">modutils</span><span class="o">.</span><span class="n">init_aux</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">])</span>
     <span class="n">modutils</span><span class="o">.</span><span class="n">init_groups</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;groups&#39;</span><span class="p">],</span> <span class="n">confdir</span><span class="p">)</span>
-    <span class="n">errored_commands</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">scan_for_commands</span><span class="p">(</span><span class="s">&#39;commands&#39;</span><span class="p">)</span>
+    <span class="n">errored_commands</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">scan_for_commands</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">errored_commands</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Failed to load some commands.&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errored_commands</span><span class="p">:</span>
             <span class="n">send</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">False</span>
-    <span class="n">errored_hooks</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">scan_for_hooks</span><span class="p">(</span><span class="s">&#39;hooks&#39;</span><span class="p">)</span>
+    <span class="n">errored_hooks</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">scan_for_hooks</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">errored_hooks</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Failed to reload some hooks.&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errored_hooks</span><span class="p">:</span>
@@ -120,7 +120,7 @@
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">bot</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="c"># Reimport helpers</span>
-    <span class="n">errored_helpers</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="s">&#39;helpers&#39;</span><span class="p">,</span> <span class="s">&#39;helpers&#39;</span><span class="p">)</span>
+    <span class="n">errored_helpers</span> <span class="o">=</span> <span class="n">modutils</span><span class="o">.</span><span class="n">scan_and_reimport</span><span class="p">(</span><span class="s">&#39;helpers&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">errored_helpers</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Failed to load some helpers.&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errored_helpers</span><span class="p">:</span>
