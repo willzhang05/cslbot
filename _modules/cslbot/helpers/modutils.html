@@ -151,7 +151,7 @@
 </div>
 <div class="viewcode-block" id="get_modules"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.modutils.get_modules">[docs]</a><span class="k">def</span> <span class="nf">get_modules</span><span class="p">(</span><span class="n">mod_type</span><span class="p">):</span>
     <span class="n">core_enabled</span><span class="p">,</span> <span class="n">core_disabled</span> <span class="o">=</span> <span class="n">get_enabled</span><span class="p">(</span><span class="n">mod_type</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">AUX</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">AUX</span><span class="p">):</span>
         <span class="n">aux_enabled</span><span class="p">,</span> <span class="n">aux_disabled</span> <span class="o">=</span> <span class="n">get_enabled</span><span class="p">(</span><span class="n">mod_type</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
         <span class="n">core_enabled</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">aux_enabled</span><span class="p">)</span>
         <span class="n">core_disabled</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">aux_disabled</span><span class="p">)</span>
