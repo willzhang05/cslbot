@@ -71,11 +71,41 @@
 
 <span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">mkdir</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
 <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">Requirement</span><span class="p">,</span> <span class="n">resource_string</span>
 
 
+<div class="viewcode-block" id="migrate_config"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.config.migrate_config">[docs]</a><span class="k">def</span> <span class="nf">migrate_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">config_obj</span><span class="p">):</span>
+    <span class="n">example_obj</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
+    <span class="n">example_obj</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="n">resource_string</span><span class="p">(</span><span class="n">Requirement</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;CslBot&#39;</span><span class="p">),</span> <span class="s">&#39;cslbot/static/config.example&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="n">modified</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">example_obj</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config_obj</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Adding config section </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+            <span class="n">config_obj</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+            <span class="n">modified</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">example_obj</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">config_obj</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Adding default value for config option </span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+                <span class="n">config_obj</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">option</span><span class="p">]</span> <span class="o">=</span> <span class="n">example_obj</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">option</span><span class="p">]</span>
+                <span class="n">modified</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">modified</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Writing updated config file.&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config_obj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_config"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.config.load_config">[docs]</a><span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+    <span class="n">config_obj</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">configparser</span><span class="o">.</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">config_obj</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">migrate_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">config_obj</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">config_obj</span>
+
+</div>
 <div class="viewcode-block" id="do_config"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.config.do_config">[docs]</a><span class="k">def</span> <span class="nf">do_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
     <span class="n">nickregex</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;nickregex&#39;</span><span class="p">]</span>
     <span class="n">channelregex</span> <span class="o">=</span> <span class="s">&quot;#[^ ,]{1,49}&quot;</span>
