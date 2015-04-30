@@ -428,8 +428,8 @@
 <em class="property">class </em><code class="descclassname">cslbot.helpers.core.</code><code class="descname">IrcBot</code><span class="sig-paren">(</span><em>confdir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/core.html#IrcBot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.core.IrcBot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">irc.bot.SingleServerIRCBot</span></code></p>
 <dl class="method">
-<dt id="cslbot.helpers.core.IrcBot.do_sasl">
-<code class="descname">do_sasl</code><span class="sig-paren">(</span><em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/core.html#IrcBot.do_sasl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.core.IrcBot.do_sasl" title="Permalink to this definition">¶</a></dt>
+<dt id="cslbot.helpers.core.IrcBot.do_cap">
+<code class="descname">do_cap</code><span class="sig-paren">(</span><em>_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/core.html#IrcBot.do_cap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.core.IrcBot.do_cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
@@ -610,7 +610,7 @@
 
 <dl class="method">
 <dt id="cslbot.helpers.handler.BotHandler.get_admins">
-<code class="descname">get_admins</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.get_admins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.get_admins" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_admins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.get_admins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.get_admins" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check verification for all admins.</p>
 </dd></dl>
 
@@ -625,6 +625,11 @@
 <code class="descname">get_filtered_send</code><span class="sig-paren">(</span><em>cmdargs</em>, <em>send</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.get_filtered_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.get_filtered_send" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse out any filters.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="cslbot.helpers.handler.BotHandler.get_nickstatus">
+<code class="descname">get_nickstatus</code><span class="sig-paren">(</span><em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.get_nickstatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.get_nickstatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="cslbot.helpers.handler.BotHandler.get_split_pos">
