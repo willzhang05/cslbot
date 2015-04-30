@@ -68,6 +68,7 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
+<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span>
 <span class="kn">from</span> <span class="nn">.urlutils</span> <span class="kn">import</span> <span class="n">get_title</span><span class="p">,</span> <span class="n">get_short</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -83,8 +84,9 @@
 </div>
 <div class="viewcode-block" id="random_post"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.reddit.random_post">[docs]</a><span class="k">def</span> <span class="nf">random_post</span><span class="p">(</span><span class="n">subreddit</span><span class="p">,</span> <span class="n">apikey</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Gets a random post from a subreddit and returns a title and shortlink to it &quot;&quot;&quot;</span>
-    <span class="n">urlstr</span> <span class="o">=</span> <span class="s">&#39;http://reddit.com</span><span class="si">%s</span><span class="s">/random?</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;/r/&#39;</span> <span class="o">+</span> <span class="n">subreddit</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">urlstr</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;CslBot/1.0&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">url</span>
+    <span class="n">subreddit</span> <span class="o">=</span> <span class="s">&#39;/r/random&#39;</span> <span class="k">if</span> <span class="n">subreddit</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="s">&#39;/r/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">subreddit</span>
+    <span class="n">urlstr</span> <span class="o">=</span> <span class="s">&#39;http://reddit.com</span><span class="si">%s</span><span class="s">/random?</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subreddit</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">Request</span><span class="p">(</span><span class="n">urlstr</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;CslBot/1.0&#39;</span><span class="p">}))</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
     <span class="k">return</span> <span class="s">&#39;** </span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">get_title</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="n">get_short</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">apikey</span><span class="p">))</span></div>
 </pre></div>
 
