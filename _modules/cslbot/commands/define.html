@@ -85,7 +85,7 @@
     <span class="n">defs</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">defn</span> <span class="ow">in</span> <span class="n">xml</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;./entry/def/dt&#39;</span><span class="p">):</span>
         <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">defn</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;*[not(self::ca|self::dx|self::vi|self::un|self::sx)]&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">defn</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;*[not(self::ca|self::dx|self::dx_def|self::vi|self::un|self::sx)]&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strip_colon</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">tail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -104,7 +104,7 @@
         <span class="n">suggestion</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;./suggestion&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">suggestion</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
-        <span class="n">defn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_def</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">suggestion</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">defn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_def</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">suggestion</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">defn</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
         <span class="k">else</span><span class="p">:</span>
