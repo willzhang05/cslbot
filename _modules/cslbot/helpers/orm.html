@@ -162,12 +162,6 @@
     <span class="n">pending</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="Nicks"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.orm.Nicks">[docs]</a><span class="k">class</span> <span class="nc">Nicks</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">old</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">UnicodeText</span><span class="p">)</span>
-    <span class="n">new</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">UnicodeText</span><span class="p">)</span>
-    <span class="n">time</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
-
-</div>
 <div class="viewcode-block" id="Babble"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.orm.Babble">[docs]</a><span class="k">class</span> <span class="nc">Babble</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;mysql_row_format&#39;</span><span class="p">:</span> <span class="s">&#39;dynamic&#39;</span><span class="p">}</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Unicode</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">512</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
