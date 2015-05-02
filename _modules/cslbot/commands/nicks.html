@@ -67,18 +67,19 @@
 <span class="c"># along with this program; if not, write to the Free Software</span>
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
 <span class="kn">from</span> <span class="nn">..helpers.identity</span> <span class="kn">import</span> <span class="n">get_chain</span>
 <span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
 
 
-<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;nicks&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">])</span>
+<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;nicks&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;handler&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.nicks.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets previous nicks.</span>
 <span class="sd">    Syntax: {command} &lt;nick&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Which nick?&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="n">users</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;handler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;target&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">users</span><span class="p">())</span> <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;target&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;private&#39;</span> <span class="k">else</span> <span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">]]</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
     <span class="n">chain</span> <span class="o">=</span> <span class="n">get_chain</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">chain</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot; -&gt; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chain</span><span class="p">))</span>
