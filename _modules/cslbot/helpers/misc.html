@@ -289,13 +289,7 @@
     <span class="k">elif</span> <span class="s">&#39;message&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;message&#39;</span><span class="p">],</span> <span class="bp">False</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&quot;Unknown error&quot;</span><span class="p">,</span> <span class="bp">False</span>
-
-</div>
-<div class="viewcode-block" id="get_token"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.get_token">[docs]</a><span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
-    <span class="n">postdata</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;grant_type&#39;</span><span class="p">:</span> <span class="s">&#39;client_credentials&#39;</span><span class="p">,</span> <span class="s">&#39;client_id&#39;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span> <span class="s">&#39;client_secret&#39;</span><span class="p">:</span> <span class="n">secret</span><span class="p">,</span> <span class="s">&#39;scope&#39;</span><span class="p">:</span> <span class="s">&#39;http://api.microsofttranslator.com&#39;</span><span class="p">}</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">post</span><span class="p">(</span><span class="s">&#39;https://datamarket.accesscontrol.windows.net/v2/OAuth2-13&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">postdata</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;access_token&#39;</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="s">&quot;Unknown error&quot;</span><span class="p">,</span> <span class="bp">False</span></div>
 </pre></div>
 
           </div>
