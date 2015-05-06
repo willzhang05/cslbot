@@ -72,7 +72,7 @@
 <span class="kn">from</span> <span class="nn">..helpers.textutils</span> <span class="kn">import</span> <span class="n">gen_random_translate</span>
 
 
-<span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;randtranslate&#39;</span><span class="p">,</span> <span class="s">&#39;randomtranslate&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
+<span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;randtrans&#39;</span><span class="p">,</span> <span class="s">&#39;randtranslate&#39;</span><span class="p">,</span> <span class="s">&#39;randomtranslate&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.randtranslate.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Translate something into a random language</span>
 <span class="sd">    Syntax: {command} &lt;text&gt;</span>
@@ -84,9 +84,7 @@
     <span class="k">except</span> <span class="n">arguments</span><span class="o">.</span><span class="n">ArgumentException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">return</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">msg</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">cmdargs</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">gen_random_translate</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">]))</span></div>
+    <span class="n">send</span><span class="p">(</span><span class="n">gen_random_translate</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">msg</span><span class="p">),</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">]))</span></div>
 </pre></div>
 
           </div>
