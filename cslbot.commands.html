@@ -856,6 +856,16 @@ Syntax: {command} [&#8211;int] [len]</p>
 <dd></dd></dl>
 
 </div>
+<div class="section" id="module-cslbot.commands.randtranslate">
+<span id="cslbot-commands-randtranslate-module"></span><h2>cslbot.commands.randtranslate module<a class="headerlink" href="#module-cslbot.commands.randtranslate" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cslbot.commands.randtranslate.cmd">
+<code class="descclassname">cslbot.commands.randtranslate.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/randtranslate.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.randtranslate.cmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translate something into a random language
+Syntax: {command} &lt;text&gt;</p>
+</dd></dl>
+
+</div>
 <div class="section" id="module-cslbot.commands.reddit">
 <span id="cslbot-commands-reddit-module"></span><h2>cslbot.commands.reddit module<a class="headerlink" href="#module-cslbot.commands.reddit" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1153,13 +1163,9 @@ Syntax: {command} [searchstring]</p>
 <dt id="cslbot.commands.translate.cmd">
 <code class="descclassname">cslbot.commands.translate.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/translate.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.translate.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate something.
-Syntax: {command} &lt;text&gt;</p>
+Syntax: {command} [&#8211;lang &lt;language code&gt;] &lt;text&gt;
+See <a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh456380.aspx">https://msdn.microsoft.com/en-us/library/hh456380.aspx</a> for a list of valid language codes</p>
 </dd></dl>
-
-<dl class="function">
-<dt id="cslbot.commands.translate.get_token">
-<code class="descclassname">cslbot.commands.translate.</code><code class="descname">get_token</code><span class="sig-paren">(</span><em>client_id</em>, <em>secret</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/translate.html#get_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.translate.get_token" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 <div class="section" id="module-cslbot.commands.uptime">
@@ -1491,6 +1497,7 @@ Syntax: {command} &lt;msg&gt;</p>
 <li><a class="reference internal" href="#module-cslbot.commands.quit">cslbot.commands.quit module</a></li>
 <li><a class="reference internal" href="#module-cslbot.commands.quote">cslbot.commands.quote module</a></li>
 <li><a class="reference internal" href="#module-cslbot.commands.random">cslbot.commands.random module</a></li>
+<li><a class="reference internal" href="#module-cslbot.commands.randtranslate">cslbot.commands.randtranslate module</a></li>
 <li><a class="reference internal" href="#module-cslbot.commands.reddit">cslbot.commands.reddit module</a></li>
 <li><a class="reference internal" href="#module-cslbot.commands.roman">cslbot.commands.roman module</a></li>
 <li><a class="reference internal" href="#module-cslbot.commands.s">cslbot.commands.s module</a></li>
