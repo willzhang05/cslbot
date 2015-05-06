@@ -324,6 +324,15 @@
     <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;sentence&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;ec&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;em&#39;</span><span class="p">]</span>
 
 </div>
+<div class="viewcode-block" id="gen_paraphrase"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_paraphrase">[docs]</a><span class="k">def</span> <span class="nf">gen_paraphrase</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c"># Don&#39;t die if no api key</span>
+    <span class="k">if</span> <span class="n">token_cache</span><span class="p">[</span><span class="s">&#39;token&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;nokey&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">msg</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s">&#39;Bearer </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">token_cache</span><span class="p">[</span><span class="s">&#39;token&#39;</span><span class="p">]}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://api.microsofttranslator.com/V3/json/paraphrase&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;language&#39;</span><span class="p">:</span> <span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="s">&#39;sentence&#39;</span><span class="p">:</span> <span class="n">transform_text</span><span class="p">(</span><span class="n">msg</span><span class="p">)},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;paraphrases&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;ec&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;em&#39;</span><span class="p">]</span>
+
+</div>
 <div class="viewcode-block" id="gen_translate"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_translate">[docs]</a><span class="k">def</span> <span class="nf">gen_translate</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">outputlang</span><span class="o">=</span><span class="s">&#39;en&#39;</span><span class="p">):</span>
     <span class="c"># Don&#39;t die if no api key</span>
     <span class="k">if</span> <span class="n">token_cache</span><span class="p">[</span><span class="s">&#39;token&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;nokey&#39;</span><span class="p">:</span>
@@ -384,7 +393,8 @@
     <span class="s">&quot;shibe&quot;</span><span class="p">:</span> <span class="n">gen_shibe</span><span class="p">,</span>
     <span class="s">&quot;underscore&quot;</span><span class="p">:</span> <span class="n">gen_underscore</span><span class="p">,</span>
     <span class="s">&quot;translate&quot;</span><span class="p">:</span> <span class="n">gen_translate</span><span class="p">,</span>
-    <span class="s">&quot;randtrans&quot;</span><span class="p">:</span> <span class="n">gen_random_translate</span>
+    <span class="s">&quot;randtrans&quot;</span><span class="p">:</span> <span class="n">gen_random_translate</span><span class="p">,</span>
+    <span class="s">&quot;paraphrase&quot;</span><span class="p">:</span> <span class="n">gen_paraphrase</span>
 <span class="p">}</span>
 </pre></div>
 

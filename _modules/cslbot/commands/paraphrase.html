@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>cslbot.commands.randtranslate &mdash; CslBot 0.15 documentation</title>
+    <title>cslbot.commands.paraphrase &mdash; CslBot 0.15 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -50,7 +50,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for cslbot.commands.randtranslate</h1><div class="highlight"><pre>
+  <h1>Source code for cslbot.commands.paraphrase</h1><div class="highlight"><pre>
 <span class="c"># Copyright (C) 2013-2015 Samuel Damashek, Peter Foley, James Forcier, Srijay Kasturi, Reed Koser, Christopher Reffett, and Fox Wilson</span>
 <span class="c">#</span>
 <span class="c"># This program is free software; you can redistribute it and/or</span>
@@ -68,18 +68,18 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
 <span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
-<span class="kn">from</span> <span class="nn">..helpers.textutils</span> <span class="kn">import</span> <span class="n">gen_random_translate</span>
+<span class="kn">from</span> <span class="nn">..helpers.textutils</span> <span class="kn">import</span> <span class="n">gen_paraphrase</span>
 
 
-<span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;randtrans&#39;</span><span class="p">,</span> <span class="s">&#39;randtranslate&#39;</span><span class="p">,</span> <span class="s">&#39;randomtranslate&#39;</span><span class="p">])</span>
-<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.randtranslate.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Translate something into a random language</span>
+<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;paraphrase&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.paraphrase.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Paraphrase a sentence.</span>
 <span class="sd">    Syntax: {command} &lt;text&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Translate what?&quot;</span><span class="p">)</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot;Paraphrase what?&quot;</span><span class="p">)</span>
         <span class="k">return</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">gen_random_translate</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
+    <span class="n">send</span><span class="p">(</span><span class="n">gen_paraphrase</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
 </pre></div>
 
           </div>
