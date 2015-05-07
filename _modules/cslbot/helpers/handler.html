@@ -204,6 +204,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">do_kick</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 </div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BotHandler.get_max_length"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.handler.BotHandler.get_max_length">[docs]</a>    <span class="k">def</span> <span class="nf">get_max_length</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
+        <span class="n">overhead</span> <span class="o">=</span> <span class="s">r&quot;PRIVMSG </span><span class="si">%s</span><span class="s">: \r\n&quot;</span> <span class="o">%</span> <span class="n">target</span>
+        <span class="c"># FIXME: what the hell is up w/ message length limits?</span>
+        <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;action&#39;</span><span class="p">:</span>
+            <span class="n">overhead</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\001</span><span class="s">ACTION </span><span class="se">\001</span><span class="s">&quot;</span>
+            <span class="n">MAX</span> <span class="o">=</span> <span class="mi">454</span>  <span class="c"># 512</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">MAX</span> <span class="o">=</span> <span class="mi">453</span>  <span class="c"># 512</span>
+        <span class="k">return</span> <span class="n">MAX</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">overhead</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</div>
 <div class="viewcode-block" id="BotHandler.send"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.handler.BotHandler.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">,</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Send a message.</span>
 
@@ -217,19 +228,32 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">target</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;core&#39;</span><span class="p">][</span><span class="s">&#39;ctrlchan&#39;</span><span class="p">]:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="n">i</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">400</span><span class="p">:</span>
-            <span class="n">split_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_split_pos</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="c"># Avoid spam from commands that produce excessive output.</span>
+        <span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">650</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_LEN</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ignore_length</span><span class="p">:</span>
+            <span class="n">split_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_split_pos</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">MAX_LEN</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[:</span><span class="n">split_pos</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;...&quot;</span>
+        <span class="n">max_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_length</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
+        <span class="c"># We can&#39;t send messages &gt; 512 bytes to irc.</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
+            <span class="n">split_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_split_pos</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">max_len</span><span class="p">)</span>
             <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">[:</span><span class="n">split_pos</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="n">split_pos</span><span class="p">:]</span>
         <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-        <span class="c"># Avoid sending more then two lines to avoid Excess Flood errors and spam</span>
-        <span class="n">msgs</span> <span class="o">=</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">ignore_length</span> <span class="k">else</span> <span class="n">msgs</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">msgs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_log</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">msgtype</span> <span class="o">==</span> <span class="s">&#39;action&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">rate_limited_send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BotHandler.get_split_pos"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.handler.BotHandler.get_split_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_pos</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">max_len</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tries to find a empty space close to the max line length.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">max_len</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39; &#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="n">max_len</span>
 </div>
 <div class="viewcode-block" id="BotHandler.rate_limited_send"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.handler.BotHandler.rate_limited_send">[docs]</a>    <span class="k">def</span> <span class="nf">rate_limited_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">flood_lock</span><span class="p">:</span>
@@ -238,15 +262,6 @@
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="n">elapsed</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">privmsg</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_msg_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-</div>
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="BotHandler.get_split_pos"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.handler.BotHandler.get_split_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_pos</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gets the proper split position at or around position 400 of</span>
-<span class="sd">           a message.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">385</span><span class="p">,</span> <span class="mi">415</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39; &#39;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">i</span>
-        <span class="k">return</span> <span class="mi">400</span>
 </div>
 <div class="viewcode-block" id="BotHandler.do_log"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.handler.BotHandler.do_log">[docs]</a>    <span class="k">def</span> <span class="nf">do_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">nick</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgtype</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Handles logging.</span>
