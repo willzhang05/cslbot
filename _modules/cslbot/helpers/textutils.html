@@ -101,7 +101,7 @@
     <span class="k">return</span> <span class="n">token_cache</span><span class="p">[</span><span class="s">&#39;token&#39;</span><span class="p">]</span>
 
 </div>
-<div class="viewcode-block" id="removevowels"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.removevowels">[docs]</a><span class="k">def</span> <span class="nf">removevowels</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_removevowels"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_removevowels">[docs]</a><span class="k">def</span> <span class="nf">gen_removevowels</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;[aeiouy]&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
 
 </div>
@@ -260,7 +260,7 @@
     <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">char_to_bin</span><span class="p">,</span> <span class="n">string</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="do_xkcd_sub"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.do_xkcd_sub">[docs]</a><span class="k">def</span> <span class="nf">do_xkcd_sub</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">hook</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_xkcd_sub"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.textutils.gen_xkcd_sub">[docs]</a><span class="k">def</span> <span class="nf">gen_xkcd_sub</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">hook</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="c"># http://xkcd.com/1288/</span>
     <span class="n">substitutions</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;witnesses&#39;</span><span class="p">:</span> <span class="s">&#39;these dudes I know&#39;</span><span class="p">,</span>
                      <span class="s">&#39;allegedly&#39;</span><span class="p">:</span> <span class="s">&#39;kinda probably&#39;</span><span class="p">,</span> <span class="s">&#39;new study&#39;</span><span class="p">:</span> <span class="s">&#39;tumblr post&#39;</span><span class="p">,</span>
@@ -380,9 +380,9 @@
     <span class="s">&quot;slogan&quot;</span><span class="p">:</span> <span class="n">gen_slogan</span><span class="p">,</span>
     <span class="s">&quot;insult&quot;</span><span class="p">:</span> <span class="n">gen_insult</span><span class="p">,</span>
     <span class="s">&quot;morse&quot;</span><span class="p">:</span> <span class="n">gen_morse</span><span class="p">,</span>
-    <span class="s">&quot;removevowels&quot;</span><span class="p">:</span> <span class="n">removevowels</span><span class="p">,</span>
+    <span class="s">&quot;removevowels&quot;</span><span class="p">:</span> <span class="n">gen_removevowels</span><span class="p">,</span>
     <span class="s">&quot;binary&quot;</span><span class="p">:</span> <span class="n">gen_binary</span><span class="p">,</span>
-    <span class="s">&quot;xkcd&quot;</span><span class="p">:</span> <span class="n">do_xkcd_sub</span><span class="p">,</span>
+    <span class="s">&quot;xkcd&quot;</span><span class="p">:</span> <span class="n">gen_xkcd_sub</span><span class="p">,</span>
     <span class="s">&quot;praise&quot;</span><span class="p">:</span> <span class="n">gen_praise</span><span class="p">,</span>
     <span class="s">&quot;reverse&quot;</span><span class="p">:</span> <span class="n">reverse</span><span class="p">,</span>
     <span class="s">&quot;lenny&quot;</span><span class="p">:</span> <span class="n">gen_lenny</span><span class="p">,</span>
