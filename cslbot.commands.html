@@ -1025,11 +1025,6 @@ Syntax: {command} &lt;&#8211;high|&#8211;low|&#8211;userhigh|&#8211;nick &lt;nic
 <code class="descclassname">cslbot.commands.stats.</code><code class="descname">get_nick_totals</code><span class="sig-paren">(</span><em>session</em>, <em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stats.html#get_nick_totals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stats.get_nick_totals" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="cslbot.commands.stats.get_nicks">
-<code class="descclassname">cslbot.commands.stats.</code><code class="descname">get_nicks</code><span class="sig-paren">(</span><em>session</em>, <em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stats.html#get_nicks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stats.get_nicks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-cslbot.commands.stock">
 <span id="cslbot-commands-stock-module"></span><h2>cslbot.commands.stock module<a class="headerlink" href="#module-cslbot.commands.stock" title="Permalink to this headline">¶</a></h2>
@@ -1062,12 +1057,17 @@ Syntax: {command} [symbol]</p>
 <dt id="cslbot.commands.stopwatch.cmd">
 <code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">cmd</code><span class="sig-paren">(</span><em>send</em>, <em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start/stops/resume/get stopwatch
-Syntax: {command} &lt;start|stop|resume|get|list&gt;</p>
+Syntax: {command} &lt;start|stop|resume|delete|get|list&gt;</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="cslbot.commands.stopwatch.create_sw">
-<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">create_sw</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#create_sw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.create_sw" title="Permalink to this definition">¶</a></dt>
+<dt id="cslbot.commands.stopwatch.create_stopwatch">
+<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">create_stopwatch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#create_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.create_stopwatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.commands.stopwatch.delete_stopwatch">
+<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">delete_stopwatch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#delete_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.delete_stopwatch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1076,23 +1076,23 @@ Syntax: {command} &lt;start|stop|resume|get|list&gt;</p>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="cslbot.commands.stopwatch.get_status">
-<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">get_status</code><span class="sig-paren">(</span><em>session</em>, <em>sw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.get_status" title="Permalink to this definition">¶</a></dt>
+<dt id="cslbot.commands.stopwatch.get_stopwatch">
+<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">get_stopwatch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#get_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.get_stopwatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.commands.stopwatch.list_stopwatch">
+<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">list_stopwatch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#list_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.list_stopwatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.commands.stopwatch.resume_stopwatch">
+<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">resume_stopwatch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#resume_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.resume_stopwatch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="cslbot.commands.stopwatch.stop_stopwatch">
-<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">stop_stopwatch</code><span class="sig-paren">(</span><em>session</em>, <em>sw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#stop_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.stop_stopwatch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="cslbot.commands.stopwatch.stopwatch_list">
-<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">stopwatch_list</code><span class="sig-paren">(</span><em>session</em>, <em>send</em>, <em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#stopwatch_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.stopwatch_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="cslbot.commands.stopwatch.stopwatch_resume">
-<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">stopwatch_resume</code><span class="sig-paren">(</span><em>session</em>, <em>sw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#stopwatch_resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.stopwatch_resume" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cslbot.commands.stopwatch.</code><code class="descname">stop_stopwatch</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/commands/stopwatch.html#stop_stopwatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.commands.stopwatch.stop_stopwatch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
