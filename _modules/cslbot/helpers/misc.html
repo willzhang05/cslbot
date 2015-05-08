@@ -82,7 +82,7 @@
 <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">post</span><span class="p">,</span> <span class="n">get</span>
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">ReadTimeout</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">orm</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">orm</span><span class="p">,</span> <span class="n">urlutils</span>
 
 
 <div class="viewcode-block" id="parse_time"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.parse_time">[docs]</a><span class="k">def</span> <span class="nf">parse_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
@@ -235,16 +235,17 @@
     <span class="k">return</span> <span class="n">unquote</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="get_urban"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.get_urban">[docs]</a><span class="k">def</span> <span class="nf">get_urban</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">get_urban_definition</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+<div class="viewcode-block" id="get_urban"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.get_urban">[docs]</a><span class="k">def</span> <span class="nf">get_urban</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">get_rand_word</span><span class="p">()</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">get_urban_definition</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">output</span>
+        <span class="n">defn</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">get_urban_definition</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">defn</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">defn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">defn</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">get_urban_definition</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">defn</span><span class="p">,</span> <span class="n">url</span>
 
 </div>
-<div class="viewcode-block" id="get_urban_definition"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.get_urban_definition">[docs]</a><span class="k">def</span> <span class="nf">get_urban_definition</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+<div class="viewcode-block" id="get_urban_definition"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.get_urban_definition">[docs]</a><span class="k">def</span> <span class="nf">get_urban_definition</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span>
     <span class="n">term</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -263,8 +264,9 @@
         <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;Invalid Index&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="s">&#39;definition&#39;</span><span class="p">]</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-    <span class="k">return</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://urbandictionary.com/define.php?term=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">term</span>
+    <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">urlutils</span><span class="o">.</span><span class="n">get_short</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="get_version"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.misc.get_version">[docs]</a><span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="n">srcdir</span><span class="p">):</span>

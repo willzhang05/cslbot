@@ -71,12 +71,15 @@
 <span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
 
 
-<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;urban&#39;</span><span class="p">)</span>
+<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;urban&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.urban.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets a definition from urban dictionary.</span>
 <span class="sd">    Syntax: {command} [#&lt;num&gt;] &lt;term&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">get_urban</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;googleapikey&#39;</span><span class="p">]</span>
+    <span class="n">defn</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">get_urban</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">defn</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="s">&quot;See full definition at </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
