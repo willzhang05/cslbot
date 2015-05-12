@@ -67,17 +67,19 @@
 <span class="c"># along with this program; if not, write to the Free Software</span>
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
-<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">lxml.etree</span> <span class="kn">import</span> <span class="n">fromstring</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
 <span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
 
 
-<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;fml&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">],</span> <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;fml&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="cmd"><a class="viewcode-back" href="../../../cslbot.commands.html#cslbot.commands.fml.cmd">[docs]</a><span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets a random FML post.</span>
 <span class="sd">    Syntax: {command}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;http://api.fmylife.com/view/random/nosex/?key=</span><span class="si">%s</span><span class="s">&amp;language=en&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;fmlkey&#39;</span><span class="p">])</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//text&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&quot;http://api.fmylife.com/view/random&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;language&#39;</span><span class="p">:</span> <span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;fmlkey&#39;</span><span class="p">]})</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">fromstring</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&#39;//text&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

@@ -68,7 +68,7 @@
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
-<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">lxml.etree</span> <span class="kn">import</span> <span class="n">fromstring</span>
 <span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
 <span class="kn">from</span> <span class="nn">..helpers.urlutils</span> <span class="kn">import</span> <span class="n">get_short</span>
 
@@ -82,11 +82,11 @@
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;Evaluate what?&quot;</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;format&#39;</span><span class="p">:</span> <span class="s">&#39;plaintext&#39;</span><span class="p">,</span> <span class="s">&#39;reinterpret&#39;</span><span class="p">:</span> <span class="s">&#39;true&#39;</span><span class="p">,</span> <span class="s">&#39;input&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="p">,</span> <span class="s">&#39;appid&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;wolframapikey&#39;</span><span class="p">]}</span>
-    <span class="n">xml</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://api.wolframalpha.com/v2/query&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">xml</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;http://api.wolframalpha.com/v2/query&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;WolframAlpha is having issues.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
-    <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">xml</span> <span class="o">=</span> <span class="n">fromstring</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;./pod&#39;</span><span class="p">)</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;config&#39;</span><span class="p">][</span><span class="s">&#39;api&#39;</span><span class="p">][</span><span class="s">&#39;googleapikey&#39;</span><span class="p">]</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">get_short</span><span class="p">(</span><span class="s">&quot;http://www.wolframalpha.com/input/?i=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
