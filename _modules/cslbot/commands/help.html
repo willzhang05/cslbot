@@ -67,7 +67,7 @@
 <span class="c"># along with this program; if not, write to the Free Software</span>
 <span class="c"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
 
-<span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span><span class="p">,</span> <span class="n">get_commands</span><span class="p">,</span> <span class="n">get_command</span><span class="p">,</span> <span class="n">is_registered</span>
+<span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span><span class="p">,</span> <span class="n">get_command</span><span class="p">,</span> <span class="n">is_registered</span><span class="p">,</span> <span class="n">get_enabled_commands</span>
 
 
 <span class="nd">@Command</span><span class="p">(</span><span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">])</span>
@@ -91,7 +91,7 @@
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                     <span class="n">send</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="n">cmdchar</span> <span class="o">+</span> <span class="n">msg</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">modules</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">get_commands</span><span class="p">())</span>
+        <span class="n">modules</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">get_enabled_commands</span><span class="p">())</span>
         <span class="n">cmdlist</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">cmdchar</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">modules</span><span class="p">)</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&#39;Commands: </span><span class="si">%s%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cmdchar</span><span class="p">,</span> <span class="n">cmdlist</span><span class="p">),</span> <span class="n">target</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">],</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">help &lt;command&gt; for more info on a command.&#39;</span> <span class="o">%</span> <span class="n">cmdchar</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;nick&#39;</span><span class="p">])</span></div>
