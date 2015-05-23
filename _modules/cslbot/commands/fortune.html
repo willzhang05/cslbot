@@ -78,7 +78,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">msg</span> <span class="o">==</span> <span class="s">&#39;list&#39;</span><span class="p">:</span>
         <span class="n">fortunes</span> <span class="o">=</span> <span class="n">list_fortunes</span><span class="p">()</span> <span class="o">+</span> <span class="n">list_fortunes</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">send</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fortunes</span><span class="p">))</span>
+        <span class="n">send</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fortunes</span><span class="p">),</span> <span class="n">ignore_length</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">get_fortune</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
