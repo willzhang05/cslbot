@@ -631,12 +631,6 @@
 <em class="property">static </em><code class="descname">get_max_length</code><span class="sig-paren">(</span><em>target</em>, <em>msgtype</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.get_max_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.get_max_length" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="staticmethod">
-<dt id="cslbot.helpers.handler.BotHandler.get_split_pos">
-<em class="property">static </em><code class="descname">get_split_pos</code><span class="sig-paren">(</span><em>message</em>, <em>max_len</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.get_split_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.get_split_pos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tries to find a empty space close to the max line length.</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="cslbot.helpers.handler.BotHandler.handle_event">
 <code class="descname">handle_event</code><span class="sig-paren">(</span><em>msg</em>, <em>send</em>, <em>c</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.handle_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.handle_event" title="Permalink to this definition">¶</a></dt>
@@ -680,6 +674,12 @@
 <dt id="cslbot.helpers.handler.BotHandler.set_data">
 <code class="descname">set_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called from <code class="xref py py-func docutils literal"><span class="pre">bot.IrcBot.do_reload()</span></code> to restore the handler&#8217;s data.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cslbot.helpers.handler.BotHandler.split_msg">
+<em class="property">static </em><code class="descname">split_msg</code><span class="sig-paren">(</span><em>msgs</em>, <em>max_len</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.split_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.split_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits as close to the end as possible.</p>
 </dd></dl>
 
 <dl class="method">
