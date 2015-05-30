@@ -72,7 +72,7 @@
 <span class="kn">from</span> <span class="nn">..helpers</span> <span class="kn">import</span> <span class="n">arguments</span>
 <span class="kn">from</span> <span class="nn">..helpers.orm</span> <span class="kn">import</span> <span class="n">Issues</span>
 <span class="kn">from</span> <span class="nn">..helpers.command</span> <span class="kn">import</span> <span class="n">Command</span>
-<span class="kn">from</span> <span class="nn">..helpers.misc</span> <span class="kn">import</span> <span class="n">create_issue</span>
+<span class="kn">from</span> <span class="nn">..helpers.web</span> <span class="kn">import</span> <span class="n">create_issue</span>
 
 
 <span class="nd">@Command</span><span class="p">([</span><span class="s">&#39;issue&#39;</span><span class="p">,</span> <span class="s">&#39;bug&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s">&#39;nick&#39;</span><span class="p">])</span>

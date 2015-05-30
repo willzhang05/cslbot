@@ -77,6 +77,7 @@
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">post</span>
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">ConnectTimeout</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">misc</span>
 <span class="kn">from</span> <span class="nn">.exception</span> <span class="kn">import</span> <span class="n">CommandFailedException</span>
 
 
@@ -139,10 +140,7 @@
             <span class="k">raise</span> <span class="n">CommandFailedException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">CommandFailedException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="o">.</span><span class="n">strerror</span><span class="p">)</span>
-    <span class="c"># FIXME: handle unicode properly</span>
-    <span class="c"># Truncate over-long titles.</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[:</span><span class="mi">253</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;...&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">truncate_msg</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">title</span></div>
 </pre></div>
 

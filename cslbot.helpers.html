@@ -676,12 +676,6 @@
 <dd><p>Called from <code class="xref py py-func docutils literal"><span class="pre">bot.IrcBot.do_reload()</span></code> to restore the handler&#8217;s data.</p>
 </dd></dl>
 
-<dl class="staticmethod">
-<dt id="cslbot.helpers.handler.BotHandler.split_msg">
-<em class="property">static </em><code class="descname">split_msg</code><span class="sig-paren">(</span><em>msgs</em>, <em>max_len</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.split_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.split_msg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Splits as close to the end as possible.</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="cslbot.helpers.handler.BotHandler.update_nickstatus">
 <code class="descname">update_nickstatus</code><span class="sig-paren">(</span><em>nick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/handler.html#BotHandler.update_nickstatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.handler.BotHandler.update_nickstatus" title="Permalink to this definition">¶</a></dt>
@@ -778,11 +772,6 @@
 <div class="section" id="module-cslbot.helpers.misc">
 <span id="cslbot-helpers-misc-module"></span><h2>cslbot.helpers.misc module<a class="headerlink" href="#module-cslbot.helpers.misc" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="cslbot.helpers.misc.create_issue">
-<code class="descclassname">cslbot.helpers.misc.</code><code class="descname">create_issue</code><span class="sig-paren">(</span><em>title</em>, <em>desc</em>, <em>nick</em>, <em>repo</em>, <em>apikey</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#create_issue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.create_issue" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="cslbot.helpers.misc.do_nuke">
 <code class="descclassname">cslbot.helpers.misc.</code><code class="descname">do_nuke</code><span class="sig-paren">(</span><em>c</em>, <em>nick</em>, <em>target</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#do_nuke"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.do_nuke" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -805,21 +794,6 @@
 <dl class="function">
 <dt id="cslbot.helpers.misc.get_fortune">
 <code class="descclassname">cslbot.helpers.misc.</code><code class="descname">get_fortune</code><span class="sig-paren">(</span><em>msg</em>, <em>name='fortune'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#get_fortune"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.get_fortune" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="cslbot.helpers.misc.get_rand_word">
-<code class="descclassname">cslbot.helpers.misc.</code><code class="descname">get_rand_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#get_rand_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.get_rand_word" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="cslbot.helpers.misc.get_urban">
-<code class="descclassname">cslbot.helpers.misc.</code><code class="descname">get_urban</code><span class="sig-paren">(</span><em>msg</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#get_urban"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.get_urban" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="cslbot.helpers.misc.get_urban_definition">
-<code class="descclassname">cslbot.helpers.misc.</code><code class="descname">get_urban_definition</code><span class="sig-paren">(</span><em>msg</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#get_urban_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.get_urban_definition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -855,6 +829,17 @@
 <dl class="function">
 <dt id="cslbot.helpers.misc.random">
 <code class="descclassname">cslbot.helpers.misc.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; x in the interval [0, 1).<a class="headerlink" href="#cslbot.helpers.misc.random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.helpers.misc.split_msg">
+<code class="descclassname">cslbot.helpers.misc.</code><code class="descname">split_msg</code><span class="sig-paren">(</span><em>msgs</em>, <em>max_len</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#split_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.split_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits as close to the end as possible.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cslbot.helpers.misc.truncate_msg">
+<code class="descclassname">cslbot.helpers.misc.</code><code class="descname">truncate_msg</code><span class="sig-paren">(</span><em>msg</em>, <em>max_len</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/misc.html#truncate_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.misc.truncate_msg" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1643,6 +1628,29 @@
 <dd></dd></dl>
 
 </div>
+<div class="section" id="module-cslbot.helpers.web">
+<span id="cslbot-helpers-web-module"></span><h2>cslbot.helpers.web module<a class="headerlink" href="#module-cslbot.helpers.web" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cslbot.helpers.web.create_issue">
+<code class="descclassname">cslbot.helpers.web.</code><code class="descname">create_issue</code><span class="sig-paren">(</span><em>title</em>, <em>desc</em>, <em>nick</em>, <em>repo</em>, <em>apikey</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/web.html#create_issue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.web.create_issue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.helpers.web.get_rand_word">
+<code class="descclassname">cslbot.helpers.web.</code><code class="descname">get_rand_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/web.html#get_rand_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.web.get_rand_word" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.helpers.web.get_urban">
+<code class="descclassname">cslbot.helpers.web.</code><code class="descname">get_urban</code><span class="sig-paren">(</span><em>msg</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/web.html#get_urban"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.web.get_urban" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cslbot.helpers.web.get_urban_definition">
+<code class="descclassname">cslbot.helpers.web.</code><code class="descname">get_urban_definition</code><span class="sig-paren">(</span><em>msg</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cslbot/helpers/web.html#get_urban_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cslbot.helpers.web.get_urban_definition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="module-cslbot.helpers.workers">
 <span id="cslbot-helpers-workers-module"></span><h2>cslbot.helpers.workers module<a class="headerlink" href="#module-cslbot.helpers.workers" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1759,6 +1767,7 @@
 <li><a class="reference internal" href="#module-cslbot.helpers.sql">cslbot.helpers.sql module</a></li>
 <li><a class="reference internal" href="#module-cslbot.helpers.textutils">cslbot.helpers.textutils module</a></li>
 <li><a class="reference internal" href="#module-cslbot.helpers.urlutils">cslbot.helpers.urlutils module</a></li>
+<li><a class="reference internal" href="#module-cslbot.helpers.web">cslbot.helpers.web module</a></li>
 <li><a class="reference internal" href="#module-cslbot.helpers.workers">cslbot.helpers.workers module</a></li>
 <li><a class="reference internal" href="#module-cslbot.helpers">Module contents</a></li>
 </ul>
