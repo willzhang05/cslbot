@@ -74,6 +74,7 @@
 <span class="kn">from</span> <span class="nn">lxml.html</span> <span class="kn">import</span> <span class="n">parse</span>
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">urllib.error</span> <span class="kn">import</span> <span class="n">URLError</span><span class="p">,</span> <span class="n">HTTPError</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">post</span>
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">ConnectTimeout</span>
 <span class="kn">from</span> <span class="nn">.exception</span> <span class="kn">import</span> <span class="n">CommandFailedException</span>
@@ -83,7 +84,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">msg</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">post</span><span class="p">(</span><span class="s">&#39;https://www.googleapis.com/urlshortener/v1/url?key=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&#39;longUrl&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="p">}),</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">post</span><span class="p">(</span><span class="s">&#39;https://www.googleapis.com/urlshortener/v1/url&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&#39;longUrl&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="p">}),</span>
                     <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">ConnectTimeout</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="c"># Sanitize the error before throwing it</span>
@@ -97,13 +98,12 @@
 <div class="viewcode-block" id="get_title"><a class="viewcode-back" href="../../../cslbot.helpers.html#cslbot.helpers.urlutils.get_title">[docs]</a><span class="k">def</span> <span class="nf">get_title</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
     <span class="n">title</span> <span class="o">=</span> <span class="s">&#39;No Title Found&#39;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="c"># Strip unicode</span>
-        <span class="c"># FIXME: do we want to do this?</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;ascii&#39;</span><span class="p">,</span> <span class="s">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;://&#39;</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;://&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="n">url</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">url</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;idna&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">url</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">url</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">url</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span>
         <span class="c"># User-Agent is really hard to get right :(</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;Mozilla/5.0 CslBot&#39;</span><span class="p">}</span>
         <span class="c"># We don&#39;t care if the cert is valid or not.</span>
@@ -135,10 +135,11 @@
     <span class="k">except</span> <span class="n">ConnectionResetError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">CommandFailedException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">URLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="o">.</span><span class="n">strerror</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="s">&#39;strerror&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="o">.</span><span class="n">strerror</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">CommandFailedException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">CommandFailedException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="o">.</span><span class="n">strerror</span><span class="p">)</span>
+    <span class="c"># FIXME: handle unicode properly</span>
     <span class="c"># Truncate over-long titles.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
         <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[:</span><span class="mi">253</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;...&quot;</span>
