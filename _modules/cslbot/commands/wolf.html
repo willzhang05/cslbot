@@ -97,7 +97,8 @@
     <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">send</span><span class="p">(</span><span class="s">&quot;No Output parsable&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="c"># Only send the first three lines of output</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">3</span><span class="p">]:</span>
             <span class="n">send</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
     <span class="n">send</span><span class="p">(</span><span class="s">&quot;See </span><span class="si">%s</span><span class="s"> for more info&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span></div>
 </pre></div>
