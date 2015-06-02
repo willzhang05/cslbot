@@ -241,7 +241,11 @@
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span> <span class="o">&lt;</span> <span class="n">max_len</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">msgs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgs</span>
-        <span class="n">msg</span> <span class="o">+=</span> <span class="n">msgs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">char</span> <span class="o">=</span> <span class="n">msgs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="c"># If we have a space within 15 chars of the length limit, split there to avoid words being broken up.</span>
+        <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s">&#39; &#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">max_len</span> <span class="o">-</span> <span class="mi">15</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgs</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="n">char</span>
     <span class="k">return</span> <span class="n">msg</span><span class="p">,</span> <span class="n">msgs</span>
 
 </div>
