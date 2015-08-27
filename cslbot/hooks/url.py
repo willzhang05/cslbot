@@ -16,10 +16,12 @@
 
 import re
 import time
+import logging
 import multiprocessing
 from ..helpers import urlutils
 from ..helpers.orm import Urls
 from ..helpers.hook import Hook
+from ..helpers.exception import CommandFailedException
 
 
 def get_urls(msg):
@@ -47,7 +49,17 @@ def handle(send, msg, args):
         # Prevent botloops
         if args['db'].query(Urls).filter(Urls.url == url, Urls.time > time.time() - 10).count() > 1:
             return
-        title = urlutils.get_title(url)
+        title = None
+        ex = None
+        for _ in range(3):
+            try:
+                title = urlutils.get_title(url)
+            except CommandFailedException as e:
+                # FIXME: there has to be a better way to do this
+                ex = e
+                logging.error(ex)
+        if title is None:
+            raise ex
         key = args['config']['api']['googleapikey']
         short = urlutils.get_short(url, key)
         last = args['db'].query(Urls).filter(Urls.url == url).order_by(Urls.time.desc()).first()

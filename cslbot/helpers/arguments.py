@@ -17,6 +17,7 @@
 import argparse
 import dateutil.parser
 import re
+from requests import get
 
 
 class ArgumentException(Exception):
@@ -60,6 +61,19 @@ class DateParser(argparse.Action):
             namespace.date = dateutil.parser.parse(value)
         except (ValueError, OverflowError) as e:
             raise ArgumentException("Couldn't parse a date from %s: %s" % (value, e))
+
+
+class TumblrParser(argparse.Action):
+
+    def __call__(self, parser, namespace, value, option_strings):
+        if value is None:
+            return
+        if '.' not in value:
+            value += ".tumblr.com"
+        response = get('http://api.tumblr.com/v2/blog/%s/info' % value, params={'api_key': namespace.config['api']['tumblrconsumerkey']}).json()
+        if response['meta']['status'] != 200:
+            raise ArgumentException("Error in checking status of blog %s: %s" % (value, response['meta']['msg']))
+        namespace.blogname = value
 
 
 class ArgParser(argparse.ArgumentParser):
